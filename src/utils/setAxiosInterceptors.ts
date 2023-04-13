@@ -1,5 +1,4 @@
 import axios from "axios";
-import dayjs from "dayjs";
 
 export default () => {
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
