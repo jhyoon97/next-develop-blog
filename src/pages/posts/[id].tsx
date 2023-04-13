@@ -5,7 +5,7 @@ import { NotionRenderer } from "react-notion-x";
 import { Code } from "react-notion-x/build/third-party/code";
 
 // utils
-import { getPage } from "utils/notino";
+import { getPage } from "utils/notion";
 
 export const getStaticPaths = async () => {
   const {
