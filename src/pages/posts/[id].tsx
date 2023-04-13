@@ -17,12 +17,12 @@ export const getStaticPaths = async () => {
   });
 
   return {
-    paths: results.map((item) => ({ params: { id: item.id } })),
+    paths: results.map((item: any) => ({ params: { id: item.id } })),
     fallback: true,
   };
 };
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async (context: any) => {
   const page = await getPage(context.params.id);
 
   return {
@@ -32,7 +32,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-const Index = ({ page }) => {
+const Index = ({ page }: any) => {
   return (
     <>
       <Head>

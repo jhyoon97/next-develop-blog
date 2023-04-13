@@ -15,7 +15,7 @@ export const getStaticProps = async () => {
   };
 };
 
-const Index = ({ page }) => {
+const Index = ({ page }: any) => {
   return (
     <>
       <Head>
