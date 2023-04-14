@@ -1,18 +1,19 @@
 import Head from "next/head";
+import { GetStaticProps } from "next";
 import { NotionRenderer } from "react-notion-x";
 import { Code } from "react-notion-x/build/third-party/code";
 
 // utils
 import { getPage } from "utils/notion";
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({}) => {
   const page = await getPage("e3a2de15-4f9e-4cf4-8da1-1319e5dd4210");
 
   return {
     props: {
       page,
     },
-    revalidate: 60,
+    revalidate: 3500,
   };
 };
 
