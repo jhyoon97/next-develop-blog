@@ -6,14 +6,13 @@ import { Code } from "react-notion-x/build/third-party/code";
 // utils
 import { getPage } from "utils/notion";
 
-export const getStaticProps: GetStaticProps = async ({}) => {
+export const getStaticProps: GetStaticProps = async () => {
   const page = await getPage("e3a2de15-4f9e-4cf4-8da1-1319e5dd4210");
 
   return {
     props: {
       page,
     },
-    revalidate: 3500,
   };
 };
 
