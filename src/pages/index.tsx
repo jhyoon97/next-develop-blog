@@ -1,9 +1,10 @@
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
 import { NotionRenderer } from "react-notion-x";
 import { Code } from "react-notion-x/build/third-party/code";
 
 // utils
+import { mapImageUrl } from "utils";
 import { getPage } from "utils/notion";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -28,7 +29,11 @@ const Index = ({ page }: any) => {
       </Head>
 
       <div>
-        <NotionRenderer recordMap={page} components={{ Code }} />
+        <NotionRenderer
+          recordMap={page}
+          components={{ Code }}
+          mapImageUrl={mapImageUrl}
+        />
       </div>
     </>
   );
