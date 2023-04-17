@@ -1,6 +1,6 @@
-# [개발 블로그]
+# 개발 블로그
 
-link: https://next-develop-blog.vercel.app/
+link: https://jhdev.vercel.app/
 
 ## Package manager
 
