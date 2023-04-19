@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       title,
       initialPageData: data,
     },
-    revalidate: 10,
+    revalidate: 3500,
   };
 };
 
@@ -63,14 +63,6 @@ const PostDetail = ({ title, initialPageData }: Props) => {
   const [imagesForValidate, setImagesForValidate] = useState<string[]>([]);
 
   useEffect(() => {
-    if (postId) {
-      setTimeout(() => {
-        pageQuery.refetch();
-      }, 3000);
-    }
-  }, [postId]);
-
-  useEffect(() => {
     if (pageQuery.data) {
       setImagesForValidate(
         getPageImageUrls(pageQuery.data, { mapImageUrl: (url: string) => url })
@@ -91,6 +83,7 @@ const PostDetail = ({ title, initialPageData }: Props) => {
         <ImageListValidate
           onError={() => {
             if (!expiredImageFlag.current) {
+              pageQuery.refetch();
               expiredImageFlag.current = true;
             }
           }}
