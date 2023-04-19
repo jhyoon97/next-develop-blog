@@ -15,13 +15,16 @@ import type { APIPostListResponse } from "@types";
 // components
 import ImageListValidate from "components/ImageListValidate";
 
+// utils
+import { getList, getPage } from "utils/notion";
+
 interface Props {
   title: string;
   initialPageData: ExtendedRecordMap;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await axios.get("/api/post");
+  const data = await getList();
 
   return {
     paths: (data as APIPostListResponse).map((item) => ({
@@ -32,7 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { data } = await axios.get(`/api/post/${params?.postId}`);
+  const data = await getPage(params?.postId);
   const title = getPageTitle(data);
 
   return {
