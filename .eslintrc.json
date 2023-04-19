@@ -53,6 +53,8 @@
     // 부분 비활성화: emotion을 위해 css만 규칙 무시하도록 설정
     "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     // 비활성화: props에 spread 연산 허용
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    // 비활성화: Typescript any 허용
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

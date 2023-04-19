@@ -1,13 +1,18 @@
 import axios from "axios";
 
+export const notionAxios = axios.create({
+  baseURL: "https://api.notion.com/v1",
+  headers: {
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+    "Notion-Version": "2022-06-28",
+  },
+});
+
 export default () => {
   axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 
   axios.interceptors.request.use(
     (req) => {
-      req.headers.Authorization = `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`;
-      req.headers["Notion-Version"] = "2022-06-28";
-
       return req;
     },
     (err) => {
