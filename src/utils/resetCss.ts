@@ -86,7 +86,6 @@ export default css`
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
   }
   /* HTML5 display-role reset for older browsers */
@@ -124,5 +123,8 @@ export default css`
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+  * {
+    font-family: "Noto Sans KR", sans-serif;
   }
 `;
