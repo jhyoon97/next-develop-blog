@@ -93,13 +93,7 @@ const PostDetail = ({ title, initialPageData }: Props) => {
           images={imagesForValidate}
         />
 
-        <NotionRenderer
-          recordMap={pageQuery.data}
-          components={{ Code }}
-          mapImageUrl={(url: string): string => {
-            return url;
-          }}
-        />
+        <NotionRenderer recordMap={pageQuery.data} components={{ Code }} />
       </div>
     </>
   );
