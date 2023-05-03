@@ -95,6 +95,9 @@ const PostDetail = ({ title, initialPageData }: Props) => {
         />
 
         <NotionRenderer
+          css={{
+            width: "100%",
+          }}
           recordMap={pageQuery.data}
           components={{ Code, Image: ImageSkeleton }}
           forceCustomImages={pageQuery.isRefetching}

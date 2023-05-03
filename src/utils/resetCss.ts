@@ -7,6 +7,7 @@ export default css`
     font: inherit;
     color: inherit;
     font-family: "Noto Sans KR", sans-serif;
+    font-size: 1rem;
   }
   *,
   :after,
@@ -23,6 +24,9 @@ export default css`
     overflow-wrap: break-word;
     word-break: break-word;
     tab-size: 4;
+  }
+  html {
+    font-size: 16px;
   }
   html,
   body {
