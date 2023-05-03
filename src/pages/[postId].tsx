@@ -14,6 +14,7 @@ import type { APIPostListResponse } from "@types";
 
 // components
 import ImageListValidate from "components/ImageListValidate";
+import ImageSkeleton from "components/ImageSkeleton";
 
 // utils
 import { getList, getPage } from "utils/notion";
@@ -93,7 +94,11 @@ const PostDetail = ({ title, initialPageData }: Props) => {
           images={imagesForValidate}
         />
 
-        <NotionRenderer recordMap={pageQuery.data} components={{ Code }} />
+        <NotionRenderer
+          recordMap={pageQuery.data}
+          components={{ Code, Image: ImageSkeleton }}
+          forceCustomImages={pageQuery.isRefetching}
+        />
       </div>
     </>
   );

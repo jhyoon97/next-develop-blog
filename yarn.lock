@@ -2888,6 +2888,7 @@ __metadata:
     prettier: ^2.8.7
     react: 18.2.0
     react-dom: 18.2.0
+    react-loading-skeleton: ^3.3.0
     react-notion-x: ^6.16.0
     react-query: ^3.39.3
     typescript: 5.0.4
@@ -3412,6 +3413,15 @@ __metadata:
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
+  languageName: node
+  linkType: hard
+
+"react-loading-skeleton@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "react-loading-skeleton@npm:3.3.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 23b0ea0701a59ba4408db4dd5d3785120591ddbc7c27e49b02a233b069cb31f1a980f677ce520f2f0cc0c021969e2a2faa65849c20ebc5b5435bc99541a1c6e5
   languageName: node
   linkType: hard
 
