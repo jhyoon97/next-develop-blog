@@ -27,6 +27,12 @@ interface Props {
 
 const notionRenderer = css`
   padding: 0;
+
+  .notion-asset-wrapper-image {
+    div {
+      width: fit-content !important;
+    }
+  }
 `;
 
 export const getStaticPaths: GetStaticPaths = async () => {
