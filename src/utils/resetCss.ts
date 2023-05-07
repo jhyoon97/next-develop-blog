@@ -9,6 +9,9 @@ export default css`
     font-family: "Noto Sans KR", sans-serif;
     font-size: 1rem;
   }
+  code[class*="language-"] * {
+    font-family: inherit;
+  }
   *,
   :after,
   :before {
