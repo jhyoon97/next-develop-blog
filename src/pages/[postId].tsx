@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { css } from "@emotion/react";
 import { useQuery } from "react-query";
 import { NotionRenderer } from "react-notion-x";
 import { getPageTitle, getPageImageUrls } from "notion-utils";
@@ -23,6 +24,10 @@ interface Props {
   title: string;
   initialPageData: ExtendedRecordMap;
 }
+
+const notionRenderer = css`
+  padding: 0;
+`;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const data = await getList();
@@ -95,9 +100,7 @@ const PostDetail = ({ title, initialPageData }: Props) => {
         />
 
         <NotionRenderer
-          css={{
-            width: "100%",
-          }}
+          css={notionRenderer}
           recordMap={pageQuery.data}
           components={{ Code, Image: ImageSkeleton }}
           forceCustomImages={pageQuery.isRefetching}
