@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import dayjs from "dayjs";
 import { css } from "@emotion/react";
 
 // types
@@ -13,6 +14,30 @@ const postListBox = css`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+const postItemBox = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+
+  &:not(:last-of-type) {
+    margin-bottom: 1rem;
+  }
+`;
+
+const postTitle = css`
+  color: #333;
+`;
+
+const postDate = css`
+  color: #afafaf;
+  font-size: 0.8rem;
 `;
 
 interface Props {
@@ -43,8 +68,11 @@ const PostDetail = ({ initialData }: Props) => {
       <div>
         <ul css={postListBox}>
           {initialData.map((item) => (
-            <Link key={item.id} href={`/${item.id}`}>
-              {item.title}
+            <Link key={item.id} css={postItemBox} href={`/${item.id}`}>
+              <span css={postTitle}>{item.title}</span>
+              <span css={postDate}>
+                {dayjs(item.createdAt).format("YYYY-MM-DD")}
+              </span>
             </Link>
           ))}
         </ul>
