@@ -1,65 +1,25 @@
 import { useState, useEffect, useRef } from "react";
+import { css } from "@emotion/react";
 import Head from "next/head";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { css } from "@emotion/react";
 import { useQuery } from "react-query";
-import { NotionRenderer } from "react-notion-x";
-import { getPageTitle, getPageImageUrls } from "notion-utils";
-import { Code } from "react-notion-x/build/third-party/code";
 
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
-import type { ExtendedRecordMap } from "notion-types";
 import type { APIPostListResponse } from "@types";
 
 // components
 import ImageListValidate from "components/ImageListValidate";
-import ImageSkeleton from "components/ImageSkeleton";
 
 // utils
-import { getList, getPage } from "utils/notion";
+import { getList } from "utils/notion";
 
 interface Props {
-  title: string;
-  initialPageData: ExtendedRecordMap;
+  blocks: any;
 }
 
-const notionRenderer = css`
-  padding: 0;
-
-  .notion-asset-wrapper-image {
-    div {
-      width: fit-content !important;
-    }
-  }
-`;
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await getList();
-
-  return {
-    paths: (data as APIPostListResponse).map((item) => ({
-      params: { postId: item.id },
-    })),
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const data = await getPage(params?.postId);
-  const title = getPageTitle(data);
-
-  return {
-    props: {
-      title,
-      initialPageData: data,
-    },
-    revalidate: 3500,
-  };
-};
-
-const PostDetail = ({ title, initialPageData }: Props) => {
+const PostDetail = ({ blocks }: Props) => {
   const router = useRouter();
   const { postId } = router.query;
   const pageQuery = useQuery(
@@ -70,25 +30,26 @@ const PostDetail = ({ title, initialPageData }: Props) => {
       return data;
     },
     {
-      initialData: initialPageData,
+      initialData: blocks,
       enabled: false,
     }
   );
   const expiredImageFlag = useRef(false);
   const [imagesForValidate, setImagesForValidate] = useState<string[]>([]);
 
-  useEffect(() => {
+  /* useEffect(() => {
+    // 노션 공식 API로 변경하고 다시 구현 필요
     if (pageQuery.data) {
       setImagesForValidate(
         getPageImageUrls(pageQuery.data, { mapImageUrl: (url: string) => url })
       );
     }
-  }, [pageQuery.data]);
+  }, [pageQuery.data]); */
 
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>title</title>
         <meta name="description" content="jhdev 개발 블로그" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -105,15 +66,32 @@ const PostDetail = ({ title, initialPageData }: Props) => {
           images={imagesForValidate}
         />
 
-        <NotionRenderer
-          css={notionRenderer}
-          recordMap={pageQuery.data}
-          components={{ Code, Image: ImageSkeleton }}
-          forceCustomImages={pageQuery.isRefetching}
-        />
+        {/* 노션 공식 API blocks API로 변경하고 렌더러 직접 구현 필요 */}
       </div>
     </>
   );
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getList();
+
+  return {
+    paths: (data as APIPostListResponse).map((item) => ({
+      params: { postId: item.id },
+    })),
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  // const blocks = await getBlocks(params?.postId);
+
+  return {
+    props: {
+      blocks: [],
+    },
+    revalidate: 3500,
+  };
 };
 
 export default PostDetail;
