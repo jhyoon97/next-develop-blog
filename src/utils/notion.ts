@@ -7,8 +7,11 @@ import dayjs from "dayjs";
 import type { ExtendedRecordMap } from "notion-types";
 import type { NotionDatabasesQueryResponse, APIPostListResponse } from "@types";
 
+// config
+import config from "config";
+
 const notionClient = new Client({
-  auth: process.env.NEXT_PUBLIC_API_KEY,
+  auth: config.notion.apiKey,
 });
 
 const notionCompatClient = new NotionCompatAPI(notionClient);
@@ -21,7 +24,7 @@ export const getPage = async (pageId: any): Promise<ExtendedRecordMap> => {
 
 export const getList = async (): Promise<APIPostListResponse> => {
   const { results } = (await notionClient.databases.query({
-    database_id: process.env.NEXT_PUBLIC_DATABASE as string,
+    database_id: config.notion.databaseId as string,
     sorts: [
       {
         property: "날짜",
