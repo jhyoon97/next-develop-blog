@@ -1,15 +1,18 @@
 import axios from "axios";
 
+// config
+import config from "config";
+
 export const notionAxios = axios.create({
   baseURL: "https://api.notion.com/v1",
   headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+    Authorization: `Bearer ${config.notion.apiKey}`,
     "Notion-Version": "2022-06-28",
   },
 });
 
 export default () => {
-  axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
+  axios.defaults.baseURL = config.apiHost;
 
   axios.interceptors.request.use(
     (req) => {
