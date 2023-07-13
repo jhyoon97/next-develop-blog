@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 // utils
-import { getList } from "utils/notion";
+import notionServices from "services/notion";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "GET") {
-    const data = await getList();
+    const response = await notionServices.getList();
 
-    res.status(200).json(data);
+    res.status(200).json(response);
   }
 };

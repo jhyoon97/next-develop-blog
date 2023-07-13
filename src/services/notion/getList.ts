@@ -1,18 +1,15 @@
-import { Client } from "@notionhq/client";
 import dayjs from "dayjs";
-
-// types
-import type { NotionDatabasesQueryResponse, APIPostListResponse } from "@types";
 
 // config
 import config from "config";
 
-const notionClient = new Client({
-  auth: config.notion.apiKey,
-});
+// types
+import type { NotionDatabasesQueryResponse, APIPostListResponse } from "@types";
 
-export const getList = async (): Promise<APIPostListResponse> => {
-  const { results } = (await notionClient.databases.query({
+import client from "./client";
+
+export default async (): Promise<APIPostListResponse> => {
+  const response = (await client.databases.query({
     database_id: config.notion.databaseId as string,
     sorts: [
       {
@@ -24,8 +21,8 @@ export const getList = async (): Promise<APIPostListResponse> => {
 
   const data = [];
 
-  for (let i = 0; i < results.length; i += 1) {
-    const item = results[i];
+  for (let i = 0; i < response.results.length; i += 1) {
+    const item = response.results[i];
 
     data.push({
       id: item.id,

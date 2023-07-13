@@ -2,6 +2,7 @@
 import type {
   QueryDatabaseResponse,
   PageObjectResponse,
+  BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 export type NotionDatabasesQueryResponse = Omit<
@@ -16,3 +17,10 @@ export type APIPostListResponse = {
   title: string;
   createdAt: string;
 }[];
+
+export type APIPostResponse = {
+  title: string;
+  createdAt: string;
+  hasTableOfContents: boolean;
+  blocks: BlockObjectResponse[];
+};

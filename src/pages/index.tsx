@@ -7,8 +7,8 @@ import { css } from "@emotion/react";
 import type { GetStaticProps } from "next";
 import type { APIPostListResponse } from "@types";
 
-// utils
-import { getList } from "utils/notion";
+// services
+import notionServices from "services/notion";
 
 const postListBox = css`
   display: flex;
@@ -45,7 +45,7 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const data = await getList();
+  const data = await notionServices.getList();
 
   return {
     props: {

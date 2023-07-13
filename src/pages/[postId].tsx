@@ -7,19 +7,19 @@ import { useQuery } from "react-query";
 
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
-import type { APIPostListResponse } from "@types";
+import type { APIPostListResponse, APIPostResponse } from "@types";
 
 // components
 import ImageListValidate from "components/ImageListValidate";
 
-// utils
-import { getList } from "utils/notion";
+// services
+import notionServices from "services/notion";
 
 interface Props {
-  blocks: any;
+  pageData: APIPostResponse;
 }
 
-const PostDetail = ({ blocks }: Props) => {
+const PostDetail = ({ pageData }: Props) => {
   const router = useRouter();
   const { postId } = router.query;
   const pageQuery = useQuery(
@@ -30,7 +30,7 @@ const PostDetail = ({ blocks }: Props) => {
       return data;
     },
     {
-      initialData: blocks,
+      initialData: pageData,
       enabled: false,
     }
   );
@@ -73,10 +73,10 @@ const PostDetail = ({ blocks }: Props) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await getList();
+  const response = await notionServices.getList();
 
   return {
-    paths: (data as APIPostListResponse).map((item) => ({
+    paths: (response as APIPostListResponse).map((item) => ({
       params: { postId: item.id },
     })),
     fallback: true,
@@ -84,12 +84,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // const blocks = await getBlocks(params?.postId);
+  const pageData = await notionServices.getPage(params?.postId);
 
   return {
-    props: {
-      blocks: [],
-    },
+    props: { pageData },
     revalidate: 3500,
   };
 };
