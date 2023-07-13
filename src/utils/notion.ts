@@ -1,5 +1,6 @@
 import { Client } from "@notionhq/client";
 import { NotionCompatAPI } from "notion-compat";
+import { idToUuid, getPageProperty } from "notion-utils";
 import dayjs from "dayjs";
 
 // types
@@ -12,6 +13,12 @@ const notionClient = new Client({
 
 const notionCompatClient = new NotionCompatAPI(notionClient);
 
+export const getPage = async (pageId: any): Promise<ExtendedRecordMap> => {
+  const data = await notionCompatClient.getPage(pageId);
+
+  return data;
+};
+
 export const getList = async (): Promise<APIPostListResponse> => {
   const { results } = (await notionClient.databases.query({
     database_id: process.env.NEXT_PUBLIC_DATABASE as string,
@@ -23,19 +30,17 @@ export const getList = async (): Promise<APIPostListResponse> => {
     ],
   })) as NotionDatabasesQueryResponse;
 
-  const data = results.map((item) => {
-    return {
+  const data = [];
+
+  for (let i = 0; i < results.length; i += 1) {
+    const item = results[i];
+
+    data.push({
       id: item.id,
       title: (item.properties["이름"] as any).title[0].plain_text,
       createdAt: dayjs(item.created_time).format("YYYY-MM-DD HH:mm:ss"),
-    };
-  });
-
-  return data;
-};
-
-export const getPage = async (pageId: any): Promise<ExtendedRecordMap> => {
-  const data = await notionCompatClient.getPage(pageId);
+    });
+  }
 
   return data;
 };
