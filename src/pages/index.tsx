@@ -44,17 +44,6 @@ interface Props {
   initialData: APIPostListResponse;
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const data = await notionServices.getList();
-
-  return {
-    props: {
-      initialData: data,
-    },
-    revalidate: 600,
-  };
-};
-
 const PostDetail = ({ initialData }: Props) => {
   return (
     <>
@@ -79,6 +68,17 @@ const PostDetail = ({ initialData }: Props) => {
       </div>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const data = await notionServices.getList();
+
+  return {
+    props: {
+      initialData: data,
+    },
+    revalidate: 600,
+  };
 };
 
 export default PostDetail;

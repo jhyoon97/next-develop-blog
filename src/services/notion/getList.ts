@@ -10,7 +10,7 @@ import client from "./client";
 
 export default async (): Promise<APIPostListResponse> => {
   const response = (await client.databases.query({
-    database_id: config.notion.databaseId as string,
+    database_id: config.notion.databaseId,
     sorts: [
       {
         property: "날짜",

@@ -37,6 +37,14 @@ const PostDetail = ({ pageData }: Props) => {
   const expiredImageFlag = useRef(false);
   const [imagesForValidate, setImagesForValidate] = useState<string[]>([]);
 
+  console.log(
+    pageData.blocks
+      .map((item) => item.type)
+      .reduce((acc: string[], item) => {
+        return acc.includes(item) ? acc : acc.concat(item);
+      }, [])
+  );
+
   /* useEffect(() => {
     // 노션 공식 API로 변경하고 다시 구현 필요
     if (pageQuery.data) {
@@ -76,7 +84,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const response = await notionServices.getList();
 
   return {
-    paths: (response as APIPostListResponse).map((item) => ({
+    paths: response.map((item) => ({
       params: { postId: item.id },
     })),
     fallback: true,
@@ -84,11 +92,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const pageData = await notionServices.getPage(params?.postId);
+  if (params && params.postId) {
+    const pageData = await notionServices.getPage(params.postId as string);
+
+    return {
+      props: { pageData },
+      revalidate: 3500,
+    };
+  }
 
   return {
-    props: { pageData },
-    revalidate: 3500,
+    props: { error: true },
   };
 };
 
