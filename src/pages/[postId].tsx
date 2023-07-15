@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { css } from "@emotion/react";
 import Head from "next/head";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -7,10 +6,11 @@ import { useQuery } from "react-query";
 
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
-import type { APIPostListResponse, APIPostResponse } from "@types";
+import type { APIPostResponse } from "@types";
 
 // components
 import ImageListValidate from "components/ImageListValidate";
+import NotionRenderer from "components/NotionRenderer";
 
 // services
 import notionServices from "services/notion";
@@ -36,14 +36,6 @@ const PostDetail = ({ pageData }: Props) => {
   );
   const expiredImageFlag = useRef(false);
   const [imagesForValidate, setImagesForValidate] = useState<string[]>([]);
-
-  console.log(
-    pageData.blocks
-      .map((item) => item.type)
-      .reduce((acc: string[], item) => {
-        return acc.includes(item) ? acc : acc.concat(item);
-      }, [])
-  );
 
   /* useEffect(() => {
     // 노션 공식 API로 변경하고 다시 구현 필요
@@ -74,7 +66,7 @@ const PostDetail = ({ pageData }: Props) => {
           images={imagesForValidate}
         />
 
-        {/* 노션 공식 API blocks API로 변경하고 렌더러 직접 구현 필요 */}
+        <NotionRenderer blocks={pageQuery.data.blocks} />
       </div>
     </>
   );
