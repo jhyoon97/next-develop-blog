@@ -45,7 +45,9 @@ const PostDetail = ({ pageData }: Props) => {
       );
     }
   }, [pageQuery.data]); */
-
+  if (pageQuery.data) {
+    return null;
+  }
   return (
     <>
       <Head>
