@@ -1,6 +1,9 @@
 import { css } from "@emotion/react";
 
-export default css`
+// types
+import type { Theme } from "@emotion/react";
+
+export default (theme: Theme) => css`
   * {
     margin: 0;
     padding: 0;
@@ -30,6 +33,7 @@ export default css`
   }
   html {
     font-size: 16px;
+    background: ${theme.bg};
   }
   html,
   body {

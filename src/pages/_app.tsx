@@ -1,6 +1,6 @@
 import "react-loading-skeleton/dist/skeleton.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Global } from "@emotion/react";
+import { Global, ThemeProvider } from "@emotion/react";
 
 // types
 import type { AppProps } from "next/app";
@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 
 // utils
+import colorTheme from "utils/colorTheme";
 import resetCss from "utils/resetCss";
 import initAxios from "utils/axios";
 
@@ -26,10 +27,12 @@ const client = new QueryClient();
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={client}>
-      <Global styles={resetCss} />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider theme={colorTheme.primary}>
+        <Global styles={(theme) => resetCss(theme)} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

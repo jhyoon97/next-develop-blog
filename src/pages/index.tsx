@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 
 // types
 import type { GetStaticProps } from "next";
 import type { APIPostListResponse } from "@types";
+import type { Theme } from "@emotion/react";
 
 // services
 import notionServices from "services/notion";
@@ -31,12 +32,12 @@ const postItemBox = css`
   }
 `;
 
-const postTitle = css`
-  color: #333;
+const postTitle = (theme: Theme) => css`
+  color: ${theme.postTitle};
 `;
 
-const postDate = css`
-  color: #afafaf;
+const postDate = (theme: Theme) => css`
+  color: ${theme.postDate};
   font-size: 0.8rem;
 `;
 
@@ -45,6 +46,8 @@ interface Props {
 }
 
 const PostDetail = ({ initialData }: Props) => {
+  const theme = useTheme();
+
   return (
     <>
       <Head>
@@ -58,8 +61,8 @@ const PostDetail = ({ initialData }: Props) => {
         <ul css={postListBox}>
           {initialData.map((item) => (
             <Link key={item.id} css={postItemBox} href={`/${item.id}`}>
-              <span css={postTitle}>{item.title}</span>
-              <span css={postDate}>
+              <span css={postTitle(theme)}>{item.title}</span>
+              <span css={postDate(theme)}>
                 {dayjs(item.createdAt).format("YYYY-MM-DD")}
               </span>
             </Link>

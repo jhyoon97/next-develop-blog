@@ -1,12 +1,12 @@
 import { Fragment } from "react";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 
 // types
 import type {
   ParagraphBlockObjectResponse,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-import type { SerializedStyles } from "@emotion/react";
+import type { SerializedStyles, Theme } from "@emotion/react";
 
 interface Props {
   block: ParagraphBlockObjectResponse;
@@ -17,10 +17,11 @@ interface BlockComponentProps {
   href?: string;
 }
 
-const box = css`
+const box = (theme: Theme) => css`
   margin-bottom: 4px;
+  color: ${theme.text};
 `;
-const spanText = (blockComponent: RichTextItemResponse) => css`
+const spanText = (theme: Theme, blockComponent: RichTextItemResponse) => css`
   font-style: ${blockComponent.annotations.italic ? "italic" : "normal"};
   font-weight: ${blockComponent.annotations.bold ? "bold" : "normal"};
   text-decoration: ${(() => {
@@ -33,25 +34,27 @@ const spanText = (blockComponent: RichTextItemResponse) => css`
     return "unset";
   })()};
 `;
-const codeText = (blockComponent: RichTextItemResponse) => css`
+const codeText = (theme: Theme, blockComponent: RichTextItemResponse) => css`
   padding: 1px 4px;
-  background: hsla(44, 6%, 50%, 0.15);
-  color: #eb5757;
+  background: ${theme.codeBg};
+  color: ${theme.code};
   border-radius: 4px;
 `;
-const linkText = (blockComponent: RichTextItemResponse) => css`
-  color: rgba(55, 53, 47, 0.6);
-  border-bottom: 1px solid rgba(55, 53, 47, 0.6);
+const linkText = (theme: Theme, blockComponent: RichTextItemResponse) => css`
+  color: ${theme.link};
+  border-bottom: 1px solid ${theme.link};
 
   &:hover {
-    color: rgba(55, 53, 47, 0.8);
-    border-bottom-color: rgba(55, 53, 47, 0.8);
+    color: ${theme.linkHover};
+    border-bottom-color: ${theme.linkHover};
   }
 `;
 
 const Paragraph = ({ block }: Props) => {
+  const theme = useTheme();
+
   return (
-    <p css={box}>
+    <p css={box(theme)}>
       {block.paragraph.rich_text.map((blockComponent, blockComponentIndex) => {
         const blockComponentProps: BlockComponentProps = {};
         const TextWrapper = (() => {
@@ -61,15 +64,15 @@ const Paragraph = ({ block }: Props) => {
             blockComponent.annotations.strikethrough ||
             blockComponent.annotations.underline
           ) {
-            blockComponentProps.css = spanText(blockComponent);
+            blockComponentProps.css = spanText(theme, blockComponent);
             return "span";
           }
           if (blockComponent.annotations.code) {
-            blockComponentProps.css = codeText(blockComponent);
+            blockComponentProps.css = codeText(theme, blockComponent);
             return "code";
           }
           if (blockComponent.href) {
-            blockComponentProps.css = linkText(blockComponent);
+            blockComponentProps.css = linkText(theme, blockComponent);
             blockComponentProps.href = blockComponent.href;
             return "a";
           }

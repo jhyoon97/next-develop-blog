@@ -1,5 +1,8 @@
 import React from "react";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
+
+// types
+import type { Theme } from "@emotion/react";
 
 interface Props {
   children: React.ReactNode;
@@ -10,13 +13,13 @@ const box = css`
 `;
 
 const header = {
-  box: css`
+  box: (theme: Theme) => css`
     z-index: 2;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: #1f2328;
+    background: ${theme.headerBg};
   `,
   innerBox: css`
     display: flex;
@@ -28,8 +31,8 @@ const header = {
     width: 100%;
     max-width: 1200px;
   `,
-  title: css`
-    color: #fff;
+  title: (theme: Theme) => css`
+    color: ${theme.headerText};
   `,
 };
 
@@ -48,11 +51,13 @@ const body = {
 };
 
 const Layout = ({ children }: Props) => {
+  const theme = useTheme();
+
   return (
     <div css={box}>
-      <header css={header.box}>
+      <header css={header.box(theme)}>
         <div css={header.innerBox}>
-          <h1 css={header.title}>jhdev</h1>
+          <h1 css={header.title(theme)}>jhdev</h1>
         </div>
       </header>
       <div css={body.box}>

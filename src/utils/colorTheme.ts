@@ -1,0 +1,26 @@
+export default {
+  primary: {
+    bg: "#fff",
+    text: "#000",
+    headerText: "#fff",
+    headerBg: "#1f2328",
+    postTitle: "#333",
+    postDate: "#afafaf",
+    code: "#eb5757",
+    codeBg: "#eeeeec",
+    link: "#adaa9f",
+    linkHover: "#6e6b5e",
+  },
+  dark: {
+    bg: "#000",
+    text: "#fff",
+    headerText: "#fff",
+    headerBg: "#1f2328",
+    postTitle: "#fff",
+    postDate: "#fff",
+    code: "#fff",
+    codeBg: "#000",
+    link: "#adaa9f",
+    linkHover: "#6e6b5e",
+  },
+};
