@@ -2,7 +2,10 @@ import { Fragment } from "react";
 import { css } from "@emotion/react";
 
 // types
-import type { ParagraphBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type {
+  ParagraphBlockObjectResponse,
+  RichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 import type { SerializedStyles } from "@emotion/react";
 
 interface Props {
@@ -11,14 +14,40 @@ interface Props {
 
 interface BlockComponentProps {
   css?: SerializedStyles;
+  href?: string;
 }
 
 const box = css`
   margin-bottom: 4px;
 `;
-const spanText = css``;
-const codeText = css``;
-const linkText = css``;
+const spanText = (blockComponent: RichTextItemResponse) => css`
+  font-style: ${blockComponent.annotations.italic ? "italic" : "normal"};
+  font-weight: ${blockComponent.annotations.bold ? "bold" : "normal"};
+  text-decoration: ${(() => {
+    if (blockComponent.annotations.underline) {
+      return "underline";
+    }
+    if (blockComponent.annotations.strikethrough) {
+      return "line-through";
+    }
+    return "unset";
+  })()};
+`;
+const codeText = (blockComponent: RichTextItemResponse) => css`
+  padding: 1px 4px;
+  background: hsla(44, 6%, 50%, 0.15);
+  color: #eb5757;
+  border-radius: 4px;
+`;
+const linkText = (blockComponent: RichTextItemResponse) => css`
+  color: rgba(55, 53, 47, 0.6);
+  border-bottom: 1px solid rgba(55, 53, 47, 0.6);
+
+  &:hover {
+    color: rgba(55, 53, 47, 0.8);
+    border-bottom-color: rgba(55, 53, 47, 0.8);
+  }
+`;
 
 const Paragraph = ({ block }: Props) => {
   return (
@@ -32,15 +61,16 @@ const Paragraph = ({ block }: Props) => {
             blockComponent.annotations.strikethrough ||
             blockComponent.annotations.underline
           ) {
-            blockComponentProps.css = spanText;
+            blockComponentProps.css = spanText(blockComponent);
             return "span";
           }
           if (blockComponent.annotations.code) {
-            blockComponentProps.css = codeText;
+            blockComponentProps.css = codeText(blockComponent);
             return "code";
           }
           if (blockComponent.href) {
-            blockComponentProps.css = linkText;
+            blockComponentProps.css = linkText(blockComponent);
+            blockComponentProps.href = blockComponent.href;
             return "a";
           }
           return Fragment;
