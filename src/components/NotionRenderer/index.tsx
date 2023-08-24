@@ -4,6 +4,9 @@ import { css } from "@emotion/react";
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import Paragraph from "./Paragraph";
+import HeadingLevel1 from "./Heading/HeadingLevel1";
+import HeadingLevel2 from "./Heading/HeadingLevel2";
+import HeadingLevel3 from "./Heading/HeadingLevel3";
 
 interface Props {
   blocks: BlockObjectResponse[];
@@ -22,11 +25,11 @@ const NotionRenderer = ({ blocks }: Props) => {
             case "paragraph":
               return <Paragraph key={block.id} block={block} />;
             case "heading_1":
-              return "<<heading_1>>";
+              return <HeadingLevel1 key={block.id} block={block} />;
             case "heading_2":
-              return "<<heading_2>>";
+              return <HeadingLevel2 key={block.id} block={block} />;
             case "heading_3":
-              return "<<heading_3>>";
+              return <HeadingLevel3 key={block.id} block={block} />;
             case "bulleted_list_item":
               return "<<bulleted_list_item>>";
             case "numbered_list_item":
