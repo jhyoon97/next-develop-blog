@@ -10,7 +10,7 @@ export default (theme: Theme) => css`
     font: inherit;
     color: inherit;
     font-family: "Noto Sans KR", sans-serif;
-    font-size: 1rem;
+    font-size: inherit;
   }
   code[class*="language-"] * {
     font-family: inherit;
