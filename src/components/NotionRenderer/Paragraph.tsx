@@ -20,6 +20,7 @@ interface BlockComponentProps {
 const box = (theme: Theme) => css`
   margin-bottom: 4px;
   color: ${theme.text};
+  font-size: 1rem;
 `;
 const spanText = (theme: Theme, blockComponent: RichTextItemResponse) => css`
   font-style: ${blockComponent.annotations.italic ? "italic" : "normal"};
@@ -57,7 +58,7 @@ const Paragraph = ({ block }: Props) => {
     <p css={box(theme)}>
       {block.paragraph.rich_text.map((blockComponent, blockComponentIndex) => {
         const blockComponentProps: BlockComponentProps = {};
-        const TextWrapper = (() => {
+        const WrapperTag = (() => {
           if (
             blockComponent.annotations.bold ||
             blockComponent.annotations.italic ||
@@ -80,13 +81,13 @@ const Paragraph = ({ block }: Props) => {
         })();
 
         return (
-          <TextWrapper
+          <WrapperTag
             // eslint-disable-next-line react/no-array-index-key
             key={blockComponentIndex}
             {...blockComponentProps}
           >
             {blockComponent.plain_text}
-          </TextWrapper>
+          </WrapperTag>
         );
       })}
     </p>
