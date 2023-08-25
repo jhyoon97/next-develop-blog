@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import type { Heading3BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Theme } from "@emotion/react";
 
-import HeadingText from "./HeadingText";
+import RichText from "../RichText";
 
 interface Props {
   block: Heading3BlockObjectResponse;
@@ -20,7 +20,7 @@ const HeadingLevel3 = ({ block }: Props) => {
   // 헤더에서 h1태그 사용중이므로 h4태그 사용
   return (
     <h4 css={box}>
-      <HeadingText richText={block.heading_3.rich_text} />
+      <RichText richText={block.heading_3.rich_text} />
     </h4>
   );
 };
