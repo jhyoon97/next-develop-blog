@@ -11,6 +11,7 @@ interface Props {
 }
 
 const box = (theme: Theme) => css`
+  margin-bottom: 1rem;
   color: ${theme.text};
   font-size: 1.3rem;
   font-weight: bold;
