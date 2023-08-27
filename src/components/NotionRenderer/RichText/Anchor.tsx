@@ -42,6 +42,8 @@ const Anchor = ({ nestedRichTextItem }: Props) => {
 
         return "#";
       })()}
+      target="_blank"
+      rel="noreferrer"
     >
       {(() => {
         if ("richText" in nestedRichTextItem) {

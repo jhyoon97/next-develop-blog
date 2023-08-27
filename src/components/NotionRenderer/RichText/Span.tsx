@@ -49,11 +49,21 @@ const spanText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
 const Span = ({ richTextItem }: Props) => {
   const theme = useTheme();
 
-  return (
-    <span css={() => spanText(theme, richTextItem)}>
-      {richTextItem.plain_text}
-    </span>
-  );
+  if (
+    richTextItem.annotations.bold ||
+    richTextItem.annotations.italic ||
+    richTextItem.annotations.strikethrough ||
+    richTextItem.annotations.underline ||
+    richTextItem.annotations.color !== "default"
+  ) {
+    return (
+      <span css={() => spanText(theme, richTextItem)}>
+        {richTextItem.plain_text}
+      </span>
+    );
+  }
+
+  return <>{richTextItem.plain_text}</>;
 };
 
 export default Span;

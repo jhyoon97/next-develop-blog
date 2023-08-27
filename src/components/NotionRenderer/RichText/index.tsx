@@ -179,22 +179,10 @@ const RichText = ({ richText }: Props) => {
             if (item.annotations.code) {
               return <Code key={index} nestedRichTextItem={item} />;
             }
-            if (
-              item.annotations.bold ||
-              item.annotations.italic ||
-              item.annotations.strikethrough ||
-              item.annotations.underline ||
-              item.annotations.color !== "default"
-            ) {
-              return <Span key={index} richTextItem={item} />;
-            }
+            return <Span key={index} richTextItem={item} />;
           }
 
-          if ("groupType" in item) {
-            return null;
-          }
-
-          return item.plain_text;
+          return null;
         })();
       })}
     </>

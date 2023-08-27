@@ -55,6 +55,8 @@
     // 비활성화: props에 spread 연산 허용
     "react/jsx-props-no-spreading": "off",
     // 비활성화: Typescript any 허용
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    // 허용: 부
+    "allowExpressions": true
   }
 }
