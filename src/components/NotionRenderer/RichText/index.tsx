@@ -1,17 +1,26 @@
-import { useMemo, Fragment } from "react";
-import { css, useTheme } from "@emotion/react";
+/* eslint-disable react/no-array-index-key */
+/*
+컴포넌트 구조
+RichText
+ㄴ Code
+    ㄴ Link
+        ㄴ Span
+    ㄴ Span
+ㄴ Link
+    ㄴ Span
+ㄴ Span
+*/
+import { useMemo } from "react";
 
 // types
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
-import type { SerializedStyles, Theme } from "@emotion/react";
+
+import Span from "./Span";
+import Anchor from "./Anchor";
+import Code from "./Code";
 
 interface Props {
   richText: Array<RichTextItemResponse>;
-}
-
-interface RichTextItemProps {
-  css?: SerializedStyles;
-  href?: string;
 }
 
 interface LinkRichTextInCode {
@@ -24,42 +33,11 @@ interface RichTextGroup {
   richText: Array<RichTextItemResponse | LinkRichTextInCode>;
 }
 
-type NestedRichText = Array<RichTextItemResponse | RichTextGroup>;
+export type NestedRichTextItem = RichTextItemResponse | RichTextGroup;
 
-const spanText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
-  font-style: ${richTextItem.annotations.italic ? "italic" : "inherit"};
-  font-weight: ${richTextItem.annotations.bold ? "bold" : "inherit"};
-  text-decoration: ${(() => {
-    const decorations = [];
-
-    if (richTextItem.annotations.underline) {
-      decorations.push("underline");
-    }
-    if (richTextItem.annotations.strikethrough) {
-      decorations.push("line-through");
-    }
-    return decorations.join(" ") || "unset";
-  })()};
-`;
-const codeText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
-  padding: 1px 4px;
-  background: ${theme.codeBg};
-  color: ${theme.code};
-  border-radius: 4px;
-`;
-const linkText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
-  color: ${theme.link};
-  border-bottom: 1px solid ${theme.link};
-
-  &:hover {
-    color: ${theme.linkHover};
-    border-bottom-color: ${theme.linkHover};
-  }
-`;
+type NestedRichText = Array<NestedRichTextItem>;
 
 const RichText = ({ richText }: Props) => {
-  const theme = useTheme();
-
   const nestedRichText = useMemo<NestedRichText>(() => {
     const groupByCode = richText.reduce<NestedRichText>(
       (acc, item, index, arr) => {
@@ -89,8 +67,9 @@ const RichText = ({ richText }: Props) => {
         if (
           "href" in item &&
           item.href &&
-          item.annotations.code ===
-            (arr[index + 1] as RichTextItemResponse)?.annotations.code
+          (item.annotations.code ===
+            (arr[index + 1] as RichTextItemResponse)?.annotations.code ||
+            index + 1 === arr.length)
         ) {
           // 코드로 감싸져있지 않은 링크
           const lastAccItem = acc[acc.length - 1];
@@ -129,12 +108,15 @@ const RichText = ({ richText }: Props) => {
         // 코드 내의 링크
         return {
           ...item,
-          richText: item.richText.reduce((acc, item, index, arr) => {
+          richText: item.richText.reduce<
+            Array<RichTextItemResponse | LinkRichTextInCode>
+          >((acc, innerItem, index, arr) => {
             if (
-              "href" in item &&
-              item.href &&
-              item.annotations.code ===
-                (arr[index + 1] as RichTextItemResponse)?.annotations.code
+              "href" in innerItem &&
+              innerItem.href &&
+              (innerItem.annotations.code ===
+                (arr[index + 1] as RichTextItemResponse)?.annotations.code ||
+                index + 1 === arr.length)
             ) {
               // 코드로 감싸져있지 않은 링크
               const lastAccItem = acc[acc.length - 1];
@@ -142,30 +124,32 @@ const RichText = ({ richText }: Props) => {
               if (
                 lastAccItem &&
                 "groupType" in lastAccItem &&
-                item.href === (arr[index - 1] as RichTextItemResponse)?.href
+                innerItem.href ===
+                  (arr[index - 1] as RichTextItemResponse)?.href
               ) {
                 // 그룹과 href값이 같은 경우에만 포함
                 const newAcc = [...acc];
 
                 (newAcc[newAcc.length - 1] as RichTextGroup).richText.push(
-                  item
+                  innerItem
                 );
 
                 return newAcc;
               }
 
               if (
-                "href" in item &&
-                item.href === (arr[index + 1] as RichTextItemResponse)?.href
+                "href" in innerItem &&
+                innerItem.href ===
+                  (arr[index + 1] as RichTextItemResponse)?.href
               ) {
                 // 다음 아이템의 href값과 일치하면 그룹 생성
-                return acc.concat({ groupType: "link", richText: [item] });
+                return acc.concat({ groupType: "link", richText: [innerItem] });
               }
 
-              return acc.concat(item);
+              return acc.concat(innerItem);
             }
 
-            return acc.concat(item);
+            return acc.concat(innerItem);
           }, []),
         };
       }
@@ -176,44 +160,42 @@ const RichText = ({ richText }: Props) => {
     return groupByLinkInCode;
   }, [richText]);
 
-  console.log(nestedRichText);
-
   return (
     <>
-      {richText.map((richTextItem, richTextIndex) => {
-        const richTextItemProps: RichTextItemProps = {};
-        const WrapperTag = (() => {
-          if (richTextItem.annotations.code) {
-            richTextItemProps.css = codeText(theme, richTextItem);
-            return "code";
-          }
-          if (richTextItem.href) {
-            richTextItemProps.css = linkText(theme, richTextItem);
-            richTextItemProps.href = richTextItem.href;
-            return "a";
-          }
+      {nestedRichText.map((item, index) => {
+        return (() => {
           if (
-            richTextItem.annotations.bold ||
-            richTextItem.annotations.italic ||
-            richTextItem.annotations.strikethrough ||
-            richTextItem.annotations.underline ||
-            richTextItem.annotations.color !== "default"
+            ("href" in item && item.href) ||
+            ("groupType" in item && item.groupType === "link")
           ) {
-            richTextItemProps.css = spanText(theme, richTextItem);
-            return "span";
+            return <Anchor key={index} nestedRichTextItem={item} />;
           }
-          return Fragment;
-        })();
 
-        return (
-          <WrapperTag
-            // eslint-disable-next-line react/no-array-index-key
-            key={richTextIndex}
-            {...richTextItemProps}
-          >
-            {richTextItem.plain_text}
-          </WrapperTag>
-        );
+          if ("groupType" in item && item.groupType === "code") {
+            return <Code key={index} nestedRichTextItem={item} />;
+          }
+
+          if ("annotations" in item) {
+            if (item.annotations.code) {
+              return <Code key={index} nestedRichTextItem={item} />;
+            }
+            if (
+              item.annotations.bold ||
+              item.annotations.italic ||
+              item.annotations.strikethrough ||
+              item.annotations.underline ||
+              item.annotations.color !== "default"
+            ) {
+              return <Span key={index} richTextItem={item} />;
+            }
+          }
+
+          if ("groupType" in item) {
+            return null;
+          }
+
+          return item.plain_text;
+        })();
       })}
     </>
   );
