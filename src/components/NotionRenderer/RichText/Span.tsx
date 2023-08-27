@@ -24,14 +24,14 @@ const spanText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
   })()};
   color: ${(() => {
     if (richTextItem.annotations.color === "default") {
-      return theme.text;
+      return "inherit";
     }
 
     if (!richTextItem.annotations.color.endsWith("background")) {
       return theme.notionRichText[richTextItem.annotations.color];
     }
 
-    return theme.text;
+    return "inherit";
   })()};
   background: ${(() => {
     if (richTextItem.annotations.color === "default") {
