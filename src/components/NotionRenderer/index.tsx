@@ -7,6 +7,7 @@ import Paragraph from "./Paragraph";
 import HeadingLevel1 from "./Heading/HeadingLevel1";
 import HeadingLevel2 from "./Heading/HeadingLevel2";
 import HeadingLevel3 from "./Heading/HeadingLevel3";
+import Code from "./Code";
 
 interface Props {
   blocks: BlockObjectResponse[];
@@ -30,14 +31,14 @@ const NotionRenderer = ({ blocks }: Props) => {
               return <HeadingLevel2 key={block.id} block={block} />;
             case "heading_3":
               return <HeadingLevel3 key={block.id} block={block} />;
+            case "code":
+              return <Code key={block.id} block={block} />;
             case "bulleted_list_item":
               return "<<bulleted_list_item>>";
             case "numbered_list_item":
               return "<<numbered_list_item>>";
             case "image":
               return "<<image>>";
-            case "code":
-              return "<<code>>";
             case "link_preview":
               return "<<link_preview>>";
             case "bookmark":
