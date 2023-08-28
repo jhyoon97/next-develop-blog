@@ -67,8 +67,8 @@ const RichText = ({ richText }: Props) => {
         if (
           "href" in item &&
           item.href &&
-          (item.annotations.code ===
-            (arr[index + 1] as RichTextItemResponse)?.annotations.code ||
+          (item?.annotations?.code ===
+            (arr[index + 1] as RichTextItemResponse)?.annotations?.code ||
             index + 1 === arr.length)
         ) {
           // 코드로 감싸져있지 않은 링크
@@ -160,10 +160,19 @@ const RichText = ({ richText }: Props) => {
     return groupByLinkInCode;
   }, [richText]);
 
+  console.log(nestedRichText);
+
   return (
     <>
       {nestedRichText.map((item, index) => {
         return (() => {
+          if (
+            ("annotations" in item && item.annotations.code) ||
+            ("groupType" in item && item.groupType === "code")
+          ) {
+            return <Code key={index} nestedRichTextItem={item} />;
+          }
+
           if (
             ("href" in item && item.href) ||
             ("groupType" in item && item.groupType === "link")
@@ -171,14 +180,7 @@ const RichText = ({ richText }: Props) => {
             return <Anchor key={index} nestedRichTextItem={item} />;
           }
 
-          if ("groupType" in item && item.groupType === "code") {
-            return <Code key={index} nestedRichTextItem={item} />;
-          }
-
           if ("annotations" in item) {
-            if (item.annotations.code) {
-              return <Code key={index} nestedRichTextItem={item} />;
-            }
             return <Span key={index} richTextItem={item} />;
           }
 

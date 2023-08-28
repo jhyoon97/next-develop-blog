@@ -13,7 +13,7 @@ interface Props {
 }
 
 const codeText = (theme: Theme) => css`
-  padding: 1px 4px;
+  padding: 2px 4px;
   background: ${theme.codeBg};
   color: ${theme.code};
   border-radius: 4px;
@@ -27,10 +27,8 @@ const Code = ({ nestedRichTextItem }: Props) => {
       {(() => {
         if ("richText" in nestedRichTextItem) {
           return nestedRichTextItem.richText.map((item, index) => {
-            if ("groupType" in item) {
-              if (item.groupType === "link") {
-                return <Anchor key={index} nestedRichTextItem={item} />;
-              }
+            if ("groupType" in item && item.groupType === "link") {
+              return <Anchor key={index} nestedRichTextItem={item} />;
             }
 
             if ("plain_text" in item) {
@@ -39,6 +37,10 @@ const Code = ({ nestedRichTextItem }: Props) => {
 
             return null;
           });
+        }
+
+        if ("href" in nestedRichTextItem && nestedRichTextItem.href) {
+          return <Anchor nestedRichTextItem={nestedRichTextItem} />;
         }
 
         return nestedRichTextItem.plain_text;
