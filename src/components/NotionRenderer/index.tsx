@@ -33,12 +33,12 @@ const NotionRenderer = ({ blocks }: Props) => {
               return <HeadingLevel3 key={block.id} block={block} />;
             case "code":
               return <Code key={block.id} block={block} />;
+            case "image":
+              return "<<image>>";
             case "bulleted_list_item":
               return "<<bulleted_list_item>>";
             case "numbered_list_item":
               return "<<numbered_list_item>>";
-            case "image":
-              return "<<image>>";
             case "link_preview":
               return "<<link_preview>>";
             case "bookmark":
