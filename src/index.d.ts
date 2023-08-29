@@ -10,6 +10,7 @@ declare module "@emotion/react" {
     postDate: string;
     code: string;
     codeBg: string;
+    caption: string;
     link: string;
     linkHover: string;
     notionRichText: {

@@ -8,6 +8,7 @@ export default {
     postDate: "#afafaf",
     code: "#eb5757",
     codeBg: "#eeeeec",
+    caption: "rgba(55, 53, 47, 0.65)",
     link: "#adaa9f",
     linkHover: "#6e6b5e",
     notionRichText: {
@@ -40,6 +41,7 @@ export default {
     postDate: "#fff",
     code: "#fff",
     codeBg: "#000",
+    caption: "rgba(55, 53, 47, 0.65)",
     link: "#adaa9f",
     linkHover: "#6e6b5e",
     notionRichText: {
