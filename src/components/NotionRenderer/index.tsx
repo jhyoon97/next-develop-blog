@@ -4,20 +4,29 @@ import { css } from "@emotion/react";
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import Paragraph from "./Paragraph";
-import HeadingLevel1 from "./Heading/HeadingLevel1";
-import HeadingLevel2 from "./Heading/HeadingLevel2";
-import HeadingLevel3 from "./Heading/HeadingLevel3";
+import HeadingLevel1 from "./HeadingLevel1";
+import HeadingLevel2 from "./HeadingLevel2";
+import HeadingLevel3 from "./HeadingLevel3";
 import Code from "./Code";
+import Image from "./Image";
+
+export interface OnResourceErrorFunction {
+  (): void;
+}
 
 interface Props {
   blocks: BlockObjectResponse[];
+  onResourceError: OnResourceErrorFunction;
 }
 
 const box = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
 `;
 
-const NotionRenderer = ({ blocks }: Props) => {
+const NotionRenderer = ({ blocks, onResourceError }: Props) => {
   return (
     <div css={box}>
       {blocks.map((block) =>
@@ -33,12 +42,18 @@ const NotionRenderer = ({ blocks }: Props) => {
               return <HeadingLevel3 key={block.id} block={block} />;
             case "code":
               return <Code key={block.id} block={block} />;
+            case "image":
+              return (
+                <Image
+                  key={block.id}
+                  block={block}
+                  onResourceError={onResourceError}
+                />
+              );
             case "bulleted_list_item":
               return "<<bulleted_list_item>>";
             case "numbered_list_item":
               return "<<numbered_list_item>>";
-            case "image":
-              return "<<image>>";
             case "link_preview":
               return "<<link_preview>>";
             case "bookmark":

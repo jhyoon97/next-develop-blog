@@ -1,15 +1,26 @@
 import { useEffect } from "react";
+import { css } from "@emotion/react";
 import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.min.css";
 
 // types
 import type { CodeBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-import Caption from "../Caption";
+import Caption from "./Caption";
 
 interface Props {
   block: CodeBlockObjectResponse;
 }
+
+const box = css`
+  width: 100%;
+`;
+
+const codeBox = css`
+  && {
+    margin: 0.5rem 0;
+  }
+`;
 
 const Code = ({ block }: Props) => {
   useEffect(() => {
@@ -17,8 +28,8 @@ const Code = ({ block }: Props) => {
   }, []);
 
   return (
-    <figure>
-      <pre>
+    <figure css={box}>
+      <pre css={codeBox}>
         <code className={`language-${block.code.language}`}>
           {block.code.rich_text[0].plain_text}
         </code>

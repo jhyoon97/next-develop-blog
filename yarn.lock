@@ -2589,6 +2589,7 @@ __metadata:
     prismjs: ^1.29.0
     react: 18.2.0
     react-dom: 18.2.0
+    react-image-size: ^2.0.2
     react-loading-skeleton: ^3.3.0
     react-query: ^3.39.3
     typescript: 5.0.4
@@ -2968,6 +2969,16 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-image-size@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-image-size@npm:2.0.2"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: ab2a2c27f123c4421be1ead9287777f1af1b09e8d010eea23ffa1823a5711449749baa592467e5bdb0381849511f332bf17118c9113eec96fdf5449ab8bc68f8
   languageName: node
   linkType: hard
 

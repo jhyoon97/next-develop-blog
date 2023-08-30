@@ -9,7 +9,6 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import type { APIPostResponse } from "@types";
 
 // components
-import ImageListValidate from "components/ImageListValidate";
 import NotionRenderer from "components/NotionRenderer";
 
 // services
@@ -34,17 +33,8 @@ const PostDetail = ({ pageData }: Props) => {
       enabled: false,
     }
   );
-  const expiredImageFlag = useRef(false);
-  const [imagesForValidate, setImagesForValidate] = useState<string[]>([]);
+  const resourceErrorFlag = useRef(false);
 
-  /* useEffect(() => {
-    // 노션 공식 API로 변경하고 다시 구현 필요
-    if (pageQuery.data) {
-      setImagesForValidate(
-        getPageImageUrls(pageQuery.data, { mapImageUrl: (url: string) => url })
-      );
-    }
-  }, [pageQuery.data]); */
   if (!pageQuery.data) {
     return null;
   }
@@ -58,17 +48,16 @@ const PostDetail = ({ pageData }: Props) => {
       </Head>
 
       <div>
-        <ImageListValidate
-          onError={() => {
-            if (!expiredImageFlag.current) {
+        <NotionRenderer
+          blocks={pageQuery.data.blocks}
+          onResourceError={() => {
+            if (!resourceErrorFlag.current) {
+              // 이미지 로드 오류 발생 시 1회에 한하여 페이지데이터 재호출
               pageQuery.refetch();
-              expiredImageFlag.current = true;
+              resourceErrorFlag.current = true;
             }
           }}
-          images={imagesForValidate}
         />
-
-        <NotionRenderer blocks={pageQuery.data.blocks} />
       </div>
     </>
   );

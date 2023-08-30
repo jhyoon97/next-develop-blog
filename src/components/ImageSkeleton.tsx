@@ -5,7 +5,7 @@ const ImageSkeleton = () => {
     <Skeleton
       style={{
         display: "block",
-        width: 300,
+        width: "100%",
         height: 100,
       }}
     />

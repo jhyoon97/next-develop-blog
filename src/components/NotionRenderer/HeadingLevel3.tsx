@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import type { Heading3BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Theme } from "@emotion/react";
 
-import RichText from "../RichText";
+import RichText from "./RichText";
 
 interface Props {
   block: Heading3BlockObjectResponse;
