@@ -56,7 +56,7 @@
     "react/jsx-props-no-spreading": "off",
     // 비활성화: Typescript any 허용
     "@typescript-eslint/no-explicit-any": "off",
-    // Fragment 허용
-    "allowExpressions": true
+    // 비활성화: Fragment 허용
+    "react/jsx-no-useless-fragment": "off"
   }
 }

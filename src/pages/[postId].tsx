@@ -15,6 +15,10 @@ interface Props {
 }
 
 const PostDetail = ({ pageData }: Props) => {
+  if (!pageData) {
+    return null;
+  }
+
   return (
     <>
       <Head>
@@ -41,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (params && params.postId) {
+  if (params?.postId) {
     const pageData = await notionServices.getPage(params.postId as string);
 
     return {
@@ -51,7 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   return {
-    props: { error: true },
+    props: { isError: true },
   };
 };
 
