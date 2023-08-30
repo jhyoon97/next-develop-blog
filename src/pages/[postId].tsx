@@ -1,8 +1,4 @@
-import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useQuery } from "react-query";
 
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
@@ -19,25 +15,6 @@ interface Props {
 }
 
 const PostDetail = ({ pageData }: Props) => {
-  const router = useRouter();
-  const { postId } = router.query;
-  const pageQuery = useQuery(
-    ["post", postId],
-    async () => {
-      const { data } = await axios.get(`/api/post/${postId}`);
-
-      return data;
-    },
-    {
-      initialData: pageData,
-      enabled: false,
-    }
-  );
-  const resourceErrorFlag = useRef(false);
-
-  if (!pageQuery.data) {
-    return null;
-  }
   return (
     <>
       <Head>
@@ -47,18 +24,7 @@ const PostDetail = ({ pageData }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        <NotionRenderer
-          blocks={pageQuery.data.blocks}
-          onResourceError={() => {
-            if (!resourceErrorFlag.current) {
-              // 이미지 로드 오류 발생 시 1회에 한하여 페이지데이터 재호출
-              pageQuery.refetch();
-              resourceErrorFlag.current = true;
-            }
-          }}
-        />
-      </div>
+      <NotionRenderer blocks={pageData.blocks} />
     </>
   );
 };

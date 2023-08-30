@@ -1,5 +1,4 @@
 import "react-loading-skeleton/dist/skeleton.css";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { Global, ThemeProvider } from "@emotion/react";
 
 // types
@@ -22,18 +21,14 @@ dayjs.tz.setDefault("Asia/Seoul"); // 타임존 설정
 
 initAxios();
 
-const client = new QueryClient();
-
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <QueryClientProvider client={client}>
-      <ThemeProvider theme={colorTheme.primary}>
-        <Global styles={(theme) => resetCss(theme)} />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <ThemeProvider theme={colorTheme.primary}>
+      <Global styles={(theme) => resetCss(theme)} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ThemeProvider>
   );
 };
 

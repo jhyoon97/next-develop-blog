@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
+import { useState, useEffect } from "react";
 import { useImageSize } from "react-image-size";
+import axios from "axios";
 
 // components
 import ImageSkeleton from "components/ImageSkeleton";
@@ -7,13 +9,11 @@ import ImageSkeleton from "components/ImageSkeleton";
 // types
 import type { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Dimensions } from "react-image-size";
-import type { OnResourceErrorFunction } from ".";
 
 import Caption from "./Caption";
 
 interface Props {
   block: ImageBlockObjectResponse;
-  onResourceError: OnResourceErrorFunction;
 }
 
 const box = (imageDimensions: Dimensions | null) => css`
@@ -27,24 +27,54 @@ const image = css`
   margin: 0.5rem 0;
 `;
 
-const Code = ({ block, onResourceError }: Props) => {
-  const url = (() => {
-    if ("file" in block.image) {
-      return block.image.file.url;
+const getImageURL = (block: ImageBlockObjectResponse) => {
+  if ("file" in block.image) {
+    return block.image.file.url;
+  }
+
+  return block.image.external.url;
+};
+
+const Code = ({ block }: Props) => {
+  const [imageURL, setImageURL] = useState(getImageURL(block));
+  const [blockReloading, setBlockReloading] = useState(false);
+  const [dimensions, { loading, error }] = useImageSize(imageURL);
+
+  const refetchBlock = async () => {
+    setBlockReloading(true);
+
+    try {
+      const { data: newBlock } = await axios.get<ImageBlockObjectResponse>(
+        `/api/block/${block.id}`
+      );
+
+      if ("type" in newBlock && newBlock.type === "image") {
+        setImageURL(getImageURL(newBlock));
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setBlockReloading(false);
     }
+  };
 
-    return block.image.external.url;
-  })();
-  const [dimensions, { loading, error }] = useImageSize(url);
+  useEffect(() => {
+    if (error) {
+      refetchBlock();
+    }
+  }, [error]);
 
-  if (error) {
-    onResourceError();
-    return null;
+  if (error && !blockReloading) {
+    return <p>IMAGE CRASHED XD</p>;
   }
 
   return (
     <figure css={box(dimensions)}>
-      {loading ? <ImageSkeleton /> : <img css={image} src={url} alt="" />}
+      {loading || blockReloading ? (
+        <ImageSkeleton />
+      ) : (
+        <img css={image} src={imageURL} alt="" />
+      )}
       {block.image.caption.length > 0 && (
         <Caption richText={block.image.caption} />
       )}

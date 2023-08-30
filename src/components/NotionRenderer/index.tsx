@@ -10,13 +10,8 @@ import HeadingLevel3 from "./HeadingLevel3";
 import Code from "./Code";
 import Image from "./Image";
 
-export interface OnResourceErrorFunction {
-  (): void;
-}
-
 interface Props {
   blocks: BlockObjectResponse[];
-  onResourceError: OnResourceErrorFunction;
 }
 
 const box = css`
@@ -26,7 +21,7 @@ const box = css`
   width: 100%;
 `;
 
-const NotionRenderer = ({ blocks, onResourceError }: Props) => {
+const NotionRenderer = ({ blocks }: Props) => {
   return (
     <div css={box}>
       {blocks.map((block) =>
@@ -43,13 +38,7 @@ const NotionRenderer = ({ blocks, onResourceError }: Props) => {
             case "code":
               return <Code key={block.id} block={block} />;
             case "image":
-              return (
-                <Image
-                  key={block.id}
-                  block={block}
-                  onResourceError={onResourceError}
-                />
-              );
+              return <Image key={block.id} block={block} />;
             case "bulleted_list_item":
               return "<<bulleted_list_item>>";
             case "numbered_list_item":
