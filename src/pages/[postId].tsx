@@ -22,7 +22,7 @@ const PostDetail = ({ pageData }: Props) => {
   return (
     <>
       <Head>
-        <title>title</title>
+        <title>{pageData.title}</title>
         <meta name="description" content="jhdev 개발 블로그" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
