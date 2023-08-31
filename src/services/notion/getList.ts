@@ -13,7 +13,7 @@ export default async (): Promise<APIPostListResponse> => {
     database_id: config.notion.databaseId,
     sorts: [
       {
-        property: "날짜",
+        timestamp: "created_time",
         direction: "descending",
       },
     ],

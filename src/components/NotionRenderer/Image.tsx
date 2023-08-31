@@ -35,13 +35,15 @@ const getImageURL = (block: ImageBlockObjectResponse) => {
   return block.image.external.url;
 };
 
-const Code = ({ block }: Props) => {
+const Image = ({ block }: Props) => {
   const [imageURL, setImageURL] = useState(getImageURL(block));
-  const [blockReloading, setBlockReloading] = useState(false);
+  const [blockReloadState, setBlockReloadState] = useState<
+    null | "loading" | "error" | "success"
+  >(null);
   const [dimensions, { loading, error }] = useImageSize(imageURL);
 
   const refetchBlock = async () => {
-    setBlockReloading(true);
+    setBlockReloadState("loading");
 
     try {
       const { data: newBlock } = await axios.get<ImageBlockObjectResponse>(
@@ -50,11 +52,11 @@ const Code = ({ block }: Props) => {
 
       if ("type" in newBlock && newBlock.type === "image") {
         setImageURL(getImageURL(newBlock));
+        setBlockReloadState("success");
       }
     } catch (err) {
       console.log(err);
-    } finally {
-      setBlockReloading(false);
+      setBlockReloadState("error");
     }
   };
 
@@ -64,13 +66,13 @@ const Code = ({ block }: Props) => {
     }
   }, [error]);
 
-  if (error && !blockReloading) {
+  if (error && blockReloadState === "error") {
     return <p>IMAGE CRASHED XD</p>;
   }
 
   return (
     <figure css={box(dimensions)}>
-      {loading || blockReloading ? (
+      {loading || blockReloadState === "loading" ? (
         <ImageSkeleton />
       ) : (
         <img css={image} src={imageURL} alt="" />
@@ -82,4 +84,4 @@ const Code = ({ block }: Props) => {
   );
 };
 
-export default Code;
+export default Image;
