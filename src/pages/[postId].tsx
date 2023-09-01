@@ -45,18 +45,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (params?.postId) {
-    const pageData = await notionServices.getPage(params.postId as string);
+  try {
+    if (params?.postId) {
+      const pageData = await notionServices.getPage(params.postId as string);
+
+      return {
+        props: { pageData },
+        revalidate: 3500,
+      };
+    }
 
     return {
-      props: { pageData },
-      revalidate: 3500,
+      props: {},
+    };
+  } catch (err) {
+    return {
+      props: {},
     };
   }
-
-  return {
-    props: { isError: true },
-  };
 };
 
 export default PostDetail;

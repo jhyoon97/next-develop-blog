@@ -42,11 +42,15 @@ const postDate = (theme: Theme) => css`
 `;
 
 interface Props {
-  initialData: APIPostListResponse;
+  postList: APIPostListResponse;
 }
 
-const PostDetail = ({ initialData }: Props) => {
+const PostDetail = ({ postList }: Props) => {
   const theme = useTheme();
+
+  if (!postList) {
+    return null;
+  }
 
   return (
     <>
@@ -59,7 +63,7 @@ const PostDetail = ({ initialData }: Props) => {
 
       <div>
         <ul css={postListBox}>
-          {initialData.map((item) => (
+          {postList.map((item) => (
             <Link key={item.id} css={postItemBox} href={`/${item.id}`}>
               <span css={postTitle(theme)}>{item.title}</span>
               <span css={postDate(theme)}>
@@ -74,14 +78,21 @@ const PostDetail = ({ initialData }: Props) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const data = await notionServices.getList();
+  try {
+    const data = await notionServices.getList();
 
-  return {
-    props: {
-      initialData: data,
-    },
-    revalidate: 600,
-  };
+    return {
+      props: {
+        postList: data,
+      },
+      revalidate: 600,
+    };
+  } catch (err) {
+    return {
+      props: {},
+      revalidate: 600,
+    };
+  }
 };
 
 export default PostDetail;
