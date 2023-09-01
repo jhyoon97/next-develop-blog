@@ -3,14 +3,17 @@ import dayjs from "dayjs";
 // config
 import config from "config";
 
+// utils
+import notionUtils from "utils/notion";
+
 // types
-import type { NotionDatabasesQueryResponse, APIPostListResponse } from "@types";
+import type { APIPostListResponse } from "@types";
 
 import client from "./client";
 
 export default async (): Promise<APIPostListResponse> => {
   try {
-    const response = (await client.databases.query({
+    const response = await client.databases.query({
       database_id: config.notion.databaseId,
       sorts: [
         {
@@ -18,18 +21,20 @@ export default async (): Promise<APIPostListResponse> => {
           direction: "descending",
         },
       ],
-    })) as NotionDatabasesQueryResponse;
+    });
 
     const data = [];
 
     for (let i = 0; i < response.results.length; i += 1) {
       const item = response.results[i];
 
-      data.push({
-        id: item.id,
-        title: (item.properties["이름"] as any).title[0].plain_text,
-        createdAt: dayjs(item.created_time).format("YYYY-MM-DD HH:mm:ss"),
-      });
+      if ("properties" in item) {
+        data.push({
+          id: item.id,
+          title: notionUtils.getPageTitle(item),
+          createdAt: dayjs(item.created_time).format("YYYY-MM-DD HH:mm:ss"),
+        });
+      }
     }
 
     return data;

@@ -1,17 +1,22 @@
 import Head from "next/head";
 
-// types
-import type { GetStaticPaths, GetStaticProps } from "next";
-import type { APIPostResponse } from "@types";
-
 // components
 import NotionRenderer from "components/NotionRenderer";
 
 // services
 import notionServices from "services/notion";
 
+// types
+import type { GetStaticPaths, GetStaticProps } from "next";
+import type { APIPostResponse } from "@types";
+
 interface Props {
   pageData: APIPostResponse;
+}
+
+interface Params {
+  [key: string]: string;
+  postId: string;
 }
 
 const PostDetail = ({ pageData }: Props) => {
@@ -33,7 +38,7 @@ const PostDetail = ({ pageData }: Props) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths<Params> = async () => {
   const response = await notionServices.getList();
 
   return {
@@ -44,10 +49,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps<
+  { pageData?: APIPostResponse },
+  Params
+> = async ({ params }) => {
   try {
     if (params?.postId) {
-      const pageData = await notionServices.getPage(params.postId as string);
+      const pageData = await notionServices.getPage(params.postId);
 
       return {
         props: { pageData },
