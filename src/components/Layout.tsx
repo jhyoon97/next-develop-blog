@@ -39,7 +39,7 @@ const header = {
 const body = {
   box: css`
     z-index: 1;
-    margin-top: calc(24px + 1.5rem + 32px);
+    padding: calc(1.5rem + 1.5rem + 2rem) 0 2rem;
     width: 100%;
   `,
   contentBox: css`
