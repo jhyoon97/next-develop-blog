@@ -2,12 +2,13 @@ import { css, useTheme } from "@emotion/react";
 
 // types
 import type { ParagraphBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { HasChildrenParagraph } from "@types";
 import type { Theme } from "@emotion/react";
 
 import RichText from "./RichText";
 
 interface Props {
-  block: ParagraphBlockObjectResponse;
+  block: ParagraphBlockObjectResponse | HasChildrenParagraph;
 }
 
 const box = (theme: Theme) => css`

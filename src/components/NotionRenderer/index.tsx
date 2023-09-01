@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 
 // types
-import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { HasChildrenBlockObject } from "@types";
 
 import Paragraph from "./Paragraph";
 import HeadingLevel1 from "./HeadingLevel1";
@@ -11,7 +11,7 @@ import Code from "./Code";
 import Image from "./Image";
 
 interface Props {
-  blocks: BlockObjectResponse[];
+  blocks: HasChildrenBlockObject[];
 }
 
 const box = css`

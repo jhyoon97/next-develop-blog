@@ -3,6 +3,9 @@ import dayjs from "dayjs";
 // utils
 import notionUtils from "utils/notion";
 
+// services
+import notionServices from "services/notion";
+
 // types
 import type { APIPostResponse } from "@types";
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -14,21 +17,24 @@ export default async (pageId: string): Promise<APIPostResponse> => {
     const pageResponse = await client.pages.retrieve({
       page_id: pageId,
     });
-    const contentResponse = await client.blocks.children.list({
-      block_id: pageId,
-    });
+    const contentResponse = await notionServices.getBlockChildren(pageId);
 
     if ("properties" in pageResponse) {
-      return {
+      const pageData = {
         title: notionUtils.getPageTitle(pageResponse),
         createdAt: dayjs(pageResponse.created_time).format("YYYY-MM-DD"),
-        hasTableOfContents: !!contentResponse.results.find(
-          (item) => "type" in item && item.type === "table_of_contents"
+        hasTableOfContents: !!contentResponse.find(
+          (item) => item.type === "table_of_contents"
         ),
-        blocks: contentResponse.results.filter(
-          (item) => "type" in item && item.type !== "table_of_contents"
-        ) as BlockObjectResponse[],
+        blocks: await notionUtils.deepFetchAllChildren(
+          contentResponse.filter(
+            (item): item is BlockObjectResponse =>
+              item.type !== "table_of_contents"
+          )
+        ),
       };
+
+      return pageData;
     }
 
     throw new Error("getPage: no PartialPageResponse");
