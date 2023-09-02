@@ -1,5 +1,6 @@
 // services
 import notionServices from "services/notion";
+import { isFullPage } from "@notionhq/client";
 
 // types
 import type {
@@ -8,8 +9,10 @@ import type {
   BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
-const getPageTitle = (page: PageObjectResponse | PartialPageObjectResponse) => {
-  if ("properties" in page) {
+const getPageTitle = (
+  page: PageObjectResponse | PartialPageObjectResponse
+): string => {
+  if (isFullPage(page)) {
     const titleKey = Object.keys(page.properties).find(
       (key) => page.properties[key].type === "title"
     );
@@ -27,7 +30,7 @@ const deepFetchAllChildren = async (blocks: BlockObjectResponse[]) => {
   const hasChildrenMap = newBlocks
     .filter((item) => item.has_children)
     .map((item) => ({
-      promise: notionServices.getBlockChildren(item.id),
+      promise: notionServices.getChildren(item.id),
       parentRef: item,
     }));
   const responses = await Promise.all(

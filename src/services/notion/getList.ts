@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { isFullPage } from "@notionhq/client";
 
 // config
 import config from "config";
@@ -28,7 +29,7 @@ export default async (): Promise<APIPostListResponse> => {
     for (let i = 0; i < response.results.length; i += 1) {
       const item = response.results[i];
 
-      if ("properties" in item) {
+      if (isFullPage(item)) {
         data.push({
           id: item.id,
           title: notionUtils.getPageTitle(item),
