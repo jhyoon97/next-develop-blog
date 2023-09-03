@@ -61,6 +61,8 @@
     // 비활성화: 반복분 내에서 await 허용
     "no-await-in-loop": "off",
     // 비활성화: 객체 또는 배열 직접 할당 허용
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    // 비활성화: defaultProps 사용 안함
+    "react/require-default-props": "off"
   }
 }

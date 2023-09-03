@@ -49,7 +49,7 @@ export interface HasChildrenParagraph
   paragraph: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: HasChildrenBlockObject;
+    children: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -58,7 +58,7 @@ export interface HasChildrenBulletedList
   bulleted_list_item: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: HasChildrenBlockObject;
+    children: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -67,7 +67,7 @@ export interface HasChildrenNumberedList
   numbered_list_item: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: HasChildrenBlockObject;
+    children: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -76,7 +76,7 @@ export interface HasChildrenToggle
   toggle: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: HasChildrenBlockObject;
+    children: Array<HasChildrenBlockObject>;
   };
 }
 
