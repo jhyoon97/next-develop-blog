@@ -27,8 +27,6 @@ const NotionRenderer = ({ blocks }: Props) => {
       {blocks.map((block) =>
         (() => {
           switch (block.type) {
-            case "paragraph":
-              return <Paragraph key={block.id} block={block} />;
             case "heading_1":
               return <HeadingLevel1 key={block.id} block={block} />;
             case "heading_2":
@@ -39,6 +37,8 @@ const NotionRenderer = ({ blocks }: Props) => {
               return <Code key={block.id} block={block} />;
             case "image":
               return <Image key={block.id} block={block} />;
+            case "paragraph":
+              return <Paragraph key={block.id} block={block} depth={depth} />;
             case "bulleted_list_item":
               return "<<bulleted_list_item>>";
             case "numbered_list_item":
