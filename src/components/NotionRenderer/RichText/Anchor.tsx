@@ -1,14 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import { css, useTheme } from "@emotion/react";
 
+// utils
+import typeGuards from "utils/typeGuards";
+
 // types
 import type { Theme } from "@emotion/react";
-import type { NestedRichTextItem } from ".";
+import type { ProcessedRichTextItem } from "@types";
 
 import Span from "./Span";
 
 interface Props {
-  nestedRichTextItem: NestedRichTextItem;
+  processedRichTextItem: ProcessedRichTextItem;
 }
 
 const anchorText = (theme: Theme) => css`
@@ -21,23 +24,28 @@ const anchorText = (theme: Theme) => css`
   }
 `;
 
-const Anchor = ({ nestedRichTextItem }: Props) => {
+const Anchor = ({ processedRichTextItem }: Props) => {
   const theme = useTheme();
 
   return (
     <a
       css={() => anchorText(theme)}
       href={(() => {
-        if ("href" in nestedRichTextItem && nestedRichTextItem.href) {
-          return nestedRichTextItem.href;
+        if (
+          typeGuards.isRichTextItemResponse(processedRichTextItem) &&
+          processedRichTextItem.href
+        ) {
+          return processedRichTextItem.href;
         }
 
         if (
-          "groupType" in nestedRichTextItem &&
-          "href" in nestedRichTextItem.richText[0] &&
-          nestedRichTextItem.richText[0].href
+          typeGuards.isRichTextGroup(processedRichTextItem) &&
+          typeGuards.isRichTextItemResponse(
+            processedRichTextItem.richText[0]
+          ) &&
+          processedRichTextItem.richText[0].href
         ) {
-          return nestedRichTextItem.richText[0].href;
+          return processedRichTextItem.richText[0].href;
         }
 
         return "#";
@@ -46,9 +54,9 @@ const Anchor = ({ nestedRichTextItem }: Props) => {
       rel="noreferrer"
     >
       {(() => {
-        if ("richText" in nestedRichTextItem) {
-          return nestedRichTextItem.richText.map((item, index) => {
-            if ("plain_text" in item) {
+        if (typeGuards.isRichTextGroup(processedRichTextItem)) {
+          return processedRichTextItem.richText.map((item, index) => {
+            if (typeGuards.isRichTextItemResponse(item)) {
               return <Span key={index} richTextItem={item} />;
             }
 
@@ -56,7 +64,7 @@ const Anchor = ({ nestedRichTextItem }: Props) => {
           });
         }
 
-        return nestedRichTextItem.plain_text;
+        return processedRichTextItem.plain_text;
       })()}
     </a>
   );

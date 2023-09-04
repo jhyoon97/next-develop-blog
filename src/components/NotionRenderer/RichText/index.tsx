@@ -12,7 +12,12 @@ RichText
 */
 import { useMemo } from "react";
 
+// utils
+import utils from "utils";
+import typeGuards from "utils/typeGuards";
+
 // types
+import type { ProcessedRichTextArray } from "@types";
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import Span from "./Span";
@@ -23,81 +28,68 @@ interface Props {
   richText: Array<RichTextItemResponse>;
 }
 
-interface LinkRichTextGroupInCode {
-  groupType: "link";
-  richText: Array<RichTextItemResponse>;
-}
+const groupingLink = (array: ProcessedRichTextArray) => {
+  return array.reduce<ProcessedRichTextArray>((acc, item, index, arr) => {
+    const nextItem = arr[index + 1];
+    const prevItem = arr[index - 1];
 
-type RichTextGroupItem = RichTextItemResponse | LinkRichTextGroupInCode;
+    if (
+      typeGuards.isRichTextItemResponse(item) &&
+      item.href !== null &&
+      ((typeGuards.isRichTextItemResponse(nextItem) &&
+        item.annotations.code === nextItem.annotations.code) || // 다음 블록과 href 값이 같거나
+        index + 1 === arr.length) // 마지막 블록이라서 다음 아이템과 비교할 수 없는 경우 통과
+    ) {
+      const lastAccItem = utils.getLastItem(acc);
 
-interface RichTextGroup {
-  groupType: "code" | "link";
-  richText: Array<RichTextGroupItem>;
-}
-
-export type NestedRichTextItem = RichTextItemResponse | RichTextGroup;
-
-type NestedRichText = Array<NestedRichTextItem>;
-
-const groupingLink = (array: Array<NestedRichTextItem | RichTextGroupItem>) => {
-  // href 값이 같은 블록들을 그룹핑하는 함수
-  return array.reduce<Array<NestedRichTextItem | RichTextGroupItem>>(
-    (acc, item, index, arr) => {
       if (
-        "href" in item &&
-        item.href &&
-        (item.annotations.code ===
-          (arr[index + 1] as RichTextItemResponse)?.annotations?.code ||
-          index + 1 === arr.length)
+        lastAccItem &&
+        typeGuards.isRichTextGroup(lastAccItem) &&
+        typeGuards.isRichTextItemResponse(prevItem) &&
+        item.href === prevItem.href
       ) {
-        const lastAccItem = acc[acc.length - 1];
+        // 누산중인 배열 마지막 아이템이 그룹상태이고, 이전 아이템과 href 값이 같다면 현재 블록을 그룹에 포함
+        lastAccItem.richText.push(item);
 
-        if (
-          lastAccItem &&
-          "groupType" in lastAccItem &&
-          item.href === (arr[index - 1] as RichTextItemResponse)?.href
-        ) {
-          // 그룹과 href값이 같은 경우에만 포함
-          const newAcc = [...acc];
+        return acc;
+      }
 
-          (newAcc[newAcc.length - 1] as RichTextGroup).richText.push(item);
-
-          return newAcc;
-        }
-
-        if (
-          "href" in item &&
-          item.href === (arr[index + 1] as RichTextItemResponse)?.href
-        ) {
-          // 다음 아이템의 href값과 일치하면 그룹 생성
-          return acc.concat({ groupType: "link", richText: [item] });
-        }
-
-        return acc.concat(item);
+      if (
+        typeGuards.isRichTextItemResponse(item) &&
+        typeGuards.isRichTextItemResponse(nextItem) &&
+        item.href === nextItem.href
+      ) {
+        // 누산중인 배열 마지막 아이템이 그룹상태가 아니고
+        // 다음 블록과 href 값이 같은 경우 현재 블록으로 그룹 생성
+        return acc.concat({ groupType: "link", richText: [item] });
       }
 
       return acc.concat(item);
-    },
-    []
-  );
+    }
+
+    return acc.concat(item);
+  }, []);
 };
 
 const RichText = ({ richText }: Props) => {
-  const nestedRichText = useMemo<NestedRichText>(() => {
-    const groupByCode = richText.reduce<NestedRichText>(
+  const processedRichTextArray = useMemo<ProcessedRichTextArray>(() => {
+    // 코드, 링크, 코드 내의 링크 순으로 그룹핑
+    const groupByCode = richText.reduce<ProcessedRichTextArray>(
       (acc, item, index, arr) => {
         if (item.annotations.code) {
-          const lastAccItem = acc[acc.length - 1];
+          // 현재 블록이 코드인 경우
+          const lastAccItem = utils.getLastItem(acc);
 
-          if (lastAccItem && "groupType" in lastAccItem) {
-            const newAcc = [...acc];
+          if (lastAccItem && typeGuards.isRichTextGroup(lastAccItem)) {
+            // 누산중인 배열 마지막 아이템이 그룹상태라면 현재 블록을 그룹에 포함
+            lastAccItem.richText.push(item);
 
-            (newAcc[newAcc.length - 1] as RichTextGroup).richText.push(item);
-
-            return newAcc;
+            return acc;
           }
 
           if (arr[index + 1]?.annotations.code) {
+            // 누산중인 배열 마지막 아이템이 그룹상태가 아니고
+            // 다음 블록도 코드인 경우 현재 블록으로 그룹 생성
             return acc.concat({ groupType: "code", richText: [item] });
           }
         }
@@ -110,11 +102,12 @@ const RichText = ({ richText }: Props) => {
     const groupByLink = groupingLink(groupByCode);
 
     const groupByLinkInCode = groupByLink.map((item) => {
-      if ("groupType" in item && item.groupType === "code") {
+      if (typeGuards.isRichTextGroup(item) && item.groupType === "code") {
+        // 그룹핑 타입이 코드인 경우 링크 그룹핑 함수 호출
         return {
           groupType: item.groupType,
           richText: groupingLink(item.richText),
-        } as RichTextGroup;
+        };
       }
 
       return item;
@@ -125,23 +118,24 @@ const RichText = ({ richText }: Props) => {
 
   return (
     <>
-      {nestedRichText.map((item, index) => {
+      {processedRichTextArray.map((item, index) => {
         return (() => {
           if (
-            ("annotations" in item && item.annotations.code) ||
-            ("groupType" in item && item.groupType === "code")
+            (typeGuards.isRichTextItemResponse(item) &&
+              item.annotations.code) ||
+            (typeGuards.isRichTextGroup(item) && item.groupType === "code")
           ) {
-            return <Code key={index} nestedRichTextItem={item} />;
+            return <Code key={index} processedRichTextItem={item} />;
           }
 
           if (
-            ("href" in item && item.href) ||
-            ("groupType" in item && item.groupType === "link")
+            (typeGuards.isRichTextItemResponse(item) && item.href) ||
+            (typeGuards.isRichTextGroup(item) && item.groupType === "link")
           ) {
-            return <Anchor key={index} nestedRichTextItem={item} />;
+            return <Anchor key={index} processedRichTextItem={item} />;
           }
 
-          if ("annotations" in item) {
+          if (typeGuards.isRichTextItemResponse(item)) {
             return <Span key={index} richTextItem={item} />;
           }
 

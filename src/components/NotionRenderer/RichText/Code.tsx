@@ -1,15 +1,18 @@
 /* eslint-disable react/no-array-index-key */
 import { css, useTheme } from "@emotion/react";
 
+// utils
+import typeGuards from "utils/typeGuards";
+
 // types
 import type { Theme } from "@emotion/react";
-import type { NestedRichTextItem } from ".";
+import type { ProcessedRichTextItem } from "@types";
 
 import Anchor from "./Anchor";
 import Span from "./Span";
 
 interface Props {
-  nestedRichTextItem: NestedRichTextItem;
+  processedRichTextItem: ProcessedRichTextItem;
 }
 
 const codeText = (theme: Theme) => css`
@@ -19,19 +22,19 @@ const codeText = (theme: Theme) => css`
   border-radius: 4px;
 `;
 
-const Code = ({ nestedRichTextItem }: Props) => {
+const Code = ({ processedRichTextItem }: Props) => {
   const theme = useTheme();
 
   return (
     <code css={() => codeText(theme)}>
       {(() => {
-        if ("richText" in nestedRichTextItem) {
-          return nestedRichTextItem.richText.map((item, index) => {
-            if ("groupType" in item && item.groupType === "link") {
-              return <Anchor key={index} nestedRichTextItem={item} />;
+        if (typeGuards.isRichTextGroup(processedRichTextItem)) {
+          return processedRichTextItem.richText.map((item, index) => {
+            if (typeGuards.isRichTextGroup(item) && item.groupType === "link") {
+              return <Anchor key={index} processedRichTextItem={item} />;
             }
 
-            if ("plain_text" in item) {
+            if (typeGuards.isRichTextItemResponse(item)) {
               return <Span key={index} richTextItem={item} />;
             }
 
@@ -39,11 +42,14 @@ const Code = ({ nestedRichTextItem }: Props) => {
           });
         }
 
-        if ("href" in nestedRichTextItem && nestedRichTextItem.href) {
-          return <Anchor nestedRichTextItem={nestedRichTextItem} />;
+        if (
+          typeGuards.isRichTextItemResponse(processedRichTextItem) &&
+          processedRichTextItem.href
+        ) {
+          return <Anchor processedRichTextItem={processedRichTextItem} />;
         }
 
-        return nestedRichTextItem.plain_text;
+        return processedRichTextItem.plain_text;
       })()}
     </code>
   );

@@ -93,3 +93,13 @@ export type APIPostResponse = {
   hasTableOfContents: boolean;
   blocks: HasChildrenBlockObject[];
 };
+
+// NotionRenderer/RichText
+export interface RichTextGroup {
+  groupType: "code" | "link";
+  richText: Array<RichTextItemResponse | RichTextGroup>;
+}
+
+export type ProcessedRichTextItem = RichTextItemResponse | RichTextGroup;
+
+export type ProcessedRichTextArray = Array<ProcessedRichTextItem>;
