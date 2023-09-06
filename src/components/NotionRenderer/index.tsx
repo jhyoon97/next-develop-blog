@@ -47,6 +47,7 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
   const processedBlockArray = useMemo<ProcessedBlockArray>(() => {
     return blocks.reduce<ProcessedBlockArray>((acc, item) => {
       if (typeGuards.contains(needGroupingTypes, item.type)) {
+        // 그룹핑이 필요한 블록인 경우 (ol, ul 등)
         const lastAccItem = utils.getLastItem(acc);
 
         if (
@@ -54,11 +55,13 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
           typeGuards.isBlockGroup(lastAccItem) &&
           lastAccItem.groupType === item.type
         ) {
+          // 누산 중인 배열 마지막 아이템이 그룹상태이고, 현재 아이템과 타입이 같다면 그룹에 포함
           lastAccItem.blocks.push(item);
 
           return acc;
         }
 
+        // 누산 중인 배열 마지막 아이템이 그룹상태가 아닌 경우 새로운 그룹 생성
         return acc.concat({
           groupType: item.type,
           blocks: [item],

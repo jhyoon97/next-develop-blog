@@ -48,7 +48,7 @@ const groupingLink = (array: ProcessedRichTextArray) => {
         typeGuards.isRichTextItemResponse(prevItem) &&
         item.href === prevItem.href
       ) {
-        // 누산중인 배열 마지막 아이템이 그룹상태이고, 이전 아이템과 href 값이 같다면 현재 블록을 그룹에 포함
+        // 누산 중인 배열 마지막 아이템이 그룹상태이고, 이전 아이템과 href 값이 같다면 현재 블록을 그룹에 포함
         lastAccItem.richText.push(item);
 
         return acc;
@@ -59,7 +59,7 @@ const groupingLink = (array: ProcessedRichTextArray) => {
         typeGuards.isRichTextItemResponse(nextItem) &&
         item.href === nextItem.href
       ) {
-        // 누산중인 배열 마지막 아이템이 그룹상태가 아니고
+        // 누산 중인 배열 마지막 아이템이 그룹상태가 아니고
         // 다음 블록과 href 값이 같은 경우 현재 블록으로 그룹 생성
         return acc.concat({ groupType: "link", richText: [item] });
       }
@@ -81,14 +81,14 @@ const RichText = ({ richText }: Props) => {
           const lastAccItem = utils.getLastItem(acc);
 
           if (lastAccItem && typeGuards.isRichTextGroup(lastAccItem)) {
-            // 누산중인 배열 마지막 아이템이 그룹상태라면 현재 블록을 그룹에 포함
+            // 누산 중인 배열 마지막 아이템이 그룹상태라면 현재 블록을 그룹에 포함
             lastAccItem.richText.push(item);
 
             return acc;
           }
 
           if (arr[index + 1]?.annotations.code) {
-            // 누산중인 배열 마지막 아이템이 그룹상태가 아니고
+            // 누산 중인 배열 마지막 아이템이 그룹상태가 아니고
             // 다음 블록도 코드인 경우 현재 블록으로 그룹 생성
             return acc.concat({ groupType: "code", richText: [item] });
           }
