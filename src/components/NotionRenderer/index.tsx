@@ -1,8 +1,25 @@
 import { css } from "@emotion/react";
+import { useMemo } from "react";
+
+// utils
+import utils from "utils";
+import typeGuards from "utils/typeGuards";
 
 // types
-import type { HasChildrenBlockObject } from "@types";
+import type {
+  BlockGroup,
+  HasChildrenBlockObject,
+  ProcessedBlockArray,
+  HasChildrenBulletedList,
+  HasChildrenNumberedList,
+} from "@types";
+import {
+  BulletedListItemBlockObjectResponse,
+  NumberedListItemBlockObjectResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
+import BulletedList from "./BulletedList";
+import NumberedList from "./NumberedList";
 import HeadingLevel1 from "./HeadingLevel1";
 import HeadingLevel2 from "./HeadingLevel2";
 import HeadingLevel3 from "./HeadingLevel3";
@@ -19,38 +36,95 @@ const box = (depth: number) => css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-left: ${depth * 1}rem;
+  padding-left: ${depth > 1 ? 1.5 : 0}rem;
   width: 100%;
 `;
 
+// 그룹핑이 필요한 블록 타입
+const needGroupingTypes = ["bulleted_list_item", "numbered_list_item"];
+
 const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
+  const processedBlockArray = useMemo<ProcessedBlockArray>(() => {
+    return blocks.reduce<ProcessedBlockArray>((acc, item) => {
+      if (typeGuards.contains(needGroupingTypes, item.type)) {
+        const lastAccItem = utils.getLastItem(acc);
+
+        if (
+          lastAccItem &&
+          typeGuards.isBlockGroup(lastAccItem) &&
+          lastAccItem.groupType === item.type
+        ) {
+          lastAccItem.blocks.push(item);
+
+          return acc;
+        }
+
+        return acc.concat({
+          groupType: item.type,
+          blocks: [item],
+        } as BlockGroup);
+      }
+
+      return acc.concat(item);
+    }, []);
+  }, [blocks]);
+
   return (
     <div css={box(depth)}>
-      {blocks.map((block) =>
+      {processedBlockArray.map((item) =>
         (() => {
-          switch (block.type) {
-            case "heading_1":
-              return <HeadingLevel1 key={block.id} block={block} />;
-            case "heading_2":
-              return <HeadingLevel2 key={block.id} block={block} />;
-            case "heading_3":
-              return <HeadingLevel3 key={block.id} block={block} />;
-            case "code":
-              return <Code key={block.id} block={block} />;
-            case "image":
-              return <Image key={block.id} block={block} />;
-            case "paragraph":
-              return <Paragraph key={block.id} block={block} depth={depth} />;
-            case "bulleted_list_item":
-              return "<<bulleted_list_item>>";
-            case "numbered_list_item":
-              return "<<numbered_list_item>>";
-            case "link_preview":
-              return "<<link_preview>>";
-            case "bookmark":
-              return "<<bookmark>>";
-            default:
-              return null;
+          if (typeGuards.isBlockGroup(item)) {
+            switch (item.groupType) {
+              case "bulleted_list_item":
+                return (
+                  <BulletedList
+                    key={item.blocks[0].id}
+                    blocks={
+                      item.blocks as Array<
+                        | BulletedListItemBlockObjectResponse
+                        | HasChildrenBulletedList
+                      >
+                    }
+                    depth={depth}
+                  />
+                );
+              case "numbered_list_item":
+                return (
+                  <NumberedList
+                    key={item.blocks[0].id}
+                    blocks={
+                      item.blocks as Array<
+                        | NumberedListItemBlockObjectResponse
+                        | HasChildrenNumberedList
+                      >
+                    }
+                    depth={depth}
+                  />
+                );
+              default:
+                return null;
+            }
+          } else {
+            switch (item.type) {
+              case "heading_1":
+                return <HeadingLevel1 key={item.id} block={item} />;
+              case "heading_2":
+                return <HeadingLevel2 key={item.id} block={item} />;
+              case "heading_3":
+                return <HeadingLevel3 key={item.id} block={item} />;
+              case "code":
+                return <Code key={item.id} block={item} />;
+              case "image":
+                return <Image key={item.id} block={item} />;
+              case "paragraph":
+                return <Paragraph key={item.id} block={item} depth={depth} />;
+              case "link_preview":
+                return "<<link_preview>>";
+              case "bookmark":
+                return "<<bookmark>>";
+              default:
+                return null;
+            }
           }
         })()
       )}

@@ -1,7 +1,5 @@
 // types
 import type {
-  QueryDatabaseResponse,
-  PageObjectResponse,
   BlockObjectResponse,
   RichTextItemResponse,
   ParagraphBlockObjectResponse,
@@ -10,6 +8,7 @@ import type {
   ToggleBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
+// "@notionhq/client/build/src/api-endpoints"에서 export하고 있지 않아서 정의함
 type ApiColor =
   | "default"
   | "gray"
@@ -31,19 +30,22 @@ type ApiColor =
   | "pink_background"
   | "red_background";
 
-export type NotionDatabasesQueryResponse = Omit<
-  QueryDatabaseResponse,
-  "results"
-> & {
-  results: Array<PageObjectResponse>;
-};
-
+// api/getList
 export type APIPostListResponse = {
   id: string;
   title: string;
   createdAt: string;
 }[];
 
+// api/getPage
+export type APIPostResponse = {
+  title: string;
+  createdAt: string;
+  hasTableOfContents: boolean;
+  blocks: HasChildrenBlockObject[];
+};
+
+// children 추가
 export interface HasChildrenParagraph
   extends Omit<ParagraphBlockObjectResponse, "paragraph"> {
   paragraph: {
@@ -87,12 +89,15 @@ export type HasChildrenBlockObject =
   | HasChildrenNumberedList
   | HasChildrenToggle;
 
-export type APIPostResponse = {
-  title: string;
-  createdAt: string;
-  hasTableOfContents: boolean;
-  blocks: HasChildrenBlockObject[];
-};
+// NotionRenderer
+export interface BlockGroup {
+  groupType: "bulleted_list_item" | "numbered_list_item";
+  blocks: Array<HasChildrenBlockObject>;
+}
+
+export type ProcessedBlock = HasChildrenBlockObject | BlockGroup;
+
+export type ProcessedBlockArray = Array<ProcessedBlock>;
 
 // NotionRenderer/RichText
 export interface RichTextGroup {

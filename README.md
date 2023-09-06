@@ -13,4 +13,3 @@ yarn berry
 - emotion
 - axios
 - dayjs
-- react-notion-x

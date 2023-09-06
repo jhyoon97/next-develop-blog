@@ -25,14 +25,14 @@ const Paragraph = ({ block, depth }: Props) => {
   const theme = useTheme();
 
   return (
-    <div>
+    <>
       <p css={paragraph(theme)}>
         <RichText richText={block.paragraph.rich_text} />
       </p>
       {"children" in block.paragraph && (
-        <NotionRenderer blocks={block.paragraph.children} />
+        <NotionRenderer blocks={block.paragraph.children} depth={depth + 1} />
       )}
-    </div>
+    </>
   );
 };
 

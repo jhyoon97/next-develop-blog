@@ -59,4 +59,8 @@ export default (theme: Theme) => css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  ul,
+  ol {
+    list-style-position: inside;
+  }
 `;
