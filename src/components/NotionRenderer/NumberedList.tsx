@@ -15,8 +15,13 @@ interface Props {
   depth: number;
 }
 
+const listBox = css`
+  width: 100%;
+`;
+
 const listItem = (theme: Theme) => css`
   margin-bottom: 0.25rem;
+  width: 100%;
   color: ${theme.text};
   font-size: 1rem;
 `;
@@ -26,6 +31,7 @@ const BulletedList = ({ blocks, depth }: Props) => {
 
   return (
     <ol
+      css={listBox}
       type={(() => {
         switch (depth % 3) {
           case 1:

@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
   images: {
-    domains: ["s3.us-west-2.amazonaws.com"],
+    domains: ["prod-files-secure.s3.us-west-2.amazonaws.com"],
   },
+  reactStrictMode: false,
 };
 
 module.exports = nextConfig;

@@ -16,6 +16,7 @@ interface Props {
 }
 
 const listBox = (depth: number) => css`
+  width: 100%;
   list-style-type: ${(() => {
     switch (depth % 3) {
       case 1:
@@ -32,6 +33,7 @@ const listBox = (depth: number) => css`
 
 const listItem = (theme: Theme) => css`
   margin-bottom: 0.25rem;
+  width: 100%;
   color: ${theme.text};
   font-size: 1rem;
 `;
