@@ -1,3 +1,4 @@
+import React from "react";
 import { css, useTheme } from "@emotion/react";
 
 // components
@@ -46,7 +47,7 @@ const BulletedList = ({ blocks, depth }: Props) => {
       })()}
     >
       {blocks.map((item) => (
-        <>
+        <React.Fragment key={item.id}>
           <li css={listItem(theme)}>
             <RichText richText={item.numbered_list_item.rich_text} />
           </li>
@@ -56,7 +57,7 @@ const BulletedList = ({ blocks, depth }: Props) => {
               depth={depth + 1}
             />
           )}
-        </>
+        </React.Fragment>
       ))}
     </ol>
   );

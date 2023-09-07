@@ -26,6 +26,7 @@ import HeadingLevel3 from "./HeadingLevel3";
 import Code from "./Code";
 import Image from "./Image";
 import Paragraph from "./Paragraph";
+import Bookmark from "./Bookmark";
 
 interface Props {
   blocks: HasChildrenBlockObject[];
@@ -121,10 +122,8 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
                 return <Image key={item.id} block={item} />;
               case "paragraph":
                 return <Paragraph key={item.id} block={item} depth={depth} />;
-              case "link_preview":
-                return "<<link_preview>>";
               case "bookmark":
-                return "<<bookmark>>";
+                return <Bookmark key={item.id} block={item} />;
               default:
                 return null;
             }

@@ -4,6 +4,7 @@ declare module "@emotion/react" {
   export interface Theme {
     bg: string;
     text: string;
+    subText: string;
     headerText: string;
     headerBg: string;
     postTitle: string;
@@ -13,6 +14,8 @@ declare module "@emotion/react" {
     caption: string;
     link: string;
     linkHover: string;
+    bookmarkBorder: string;
+    bookmarkHoverBackground: string;
     notionRichText: {
       gray: string;
       brown: string;

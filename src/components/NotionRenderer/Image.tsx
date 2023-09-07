@@ -2,7 +2,9 @@ import { css } from "@emotion/react";
 import { useState } from "react";
 import axios from "axios";
 import NextImage from "next/image";
-import { Oval } from "react-loader-spinner";
+
+// components
+import LoadingIndicator from "components/LoadingIndicator";
 
 // types
 import type { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -70,18 +72,7 @@ const Image = ({ block }: Props) => {
   return (
     <div css={box}>
       {blockReloadState === "LOADING" ? (
-        <Oval
-          height={80}
-          width={80}
-          color="#4fa94d"
-          secondaryColor="#4fa94d"
-          wrapperStyle={{ margin: "1rem" }}
-          wrapperClass=""
-          visible
-          ariaLabel="oval-loading"
-          strokeWidth={2}
-          strokeWidthSecondary={2}
-        />
+        <LoadingIndicator />
       ) : (
         <figure css={figure}>
           {blockReloadState === "FAILURE" ? (

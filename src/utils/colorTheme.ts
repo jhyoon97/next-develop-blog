@@ -2,6 +2,7 @@ export default {
   primary: {
     bg: "#fff",
     text: "#000",
+    subText: "#999",
     headerText: "#fff",
     headerBg: "#1f2328",
     postTitle: "#333",
@@ -11,6 +12,8 @@ export default {
     caption: "rgba(55, 53, 47, 0.65)",
     link: "#adaa9f",
     linkHover: "#6e6b5e",
+    bookmarkBorder: "#cdcdcd",
+    bookmarkHoverBackground: "#f0f0f0",
     notionRichText: {
       gray: "#787774",
       brown: "#9f6b53",
@@ -35,6 +38,7 @@ export default {
   dark: {
     bg: "#000",
     text: "#fff",
+    subText: "rgba(55, 53, 47, 0.65)",
     headerText: "#fff",
     headerBg: "#1f2328",
     postTitle: "#fff",
@@ -44,6 +48,8 @@ export default {
     caption: "rgba(55, 53, 47, 0.65)",
     link: "#adaa9f",
     linkHover: "#6e6b5e",
+    bookmarkBorder: "#ccdcdcd",
+    bookmarkHoverBackground: "rgba(55, 53, 47, 0.65)",
     notionRichText: {
       gray: "#787774",
       brown: "#9f6b53",
