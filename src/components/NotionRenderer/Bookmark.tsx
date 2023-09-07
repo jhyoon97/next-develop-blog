@@ -42,6 +42,7 @@ const bookmarkStyles = {
     justify-content: space-between;
     align-items: flex-start;
     padding: 1rem;
+    overflow: hidden;
   `,
   textBoxHeader: css`
     display: flex;
@@ -68,7 +69,12 @@ const bookmarkStyles = {
     height: 16px;
   `,
   url: css`
+    flex: 1;
     font-size: 0.8rem;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   `,
   thumbnailBox: css`
     flex: 1;
@@ -160,7 +166,11 @@ const Bookmark = ({ block }: Props) => {
         <div css={bookmarkStyles.textBox}>
           <div css={bookmarkStyles.textBoxHeader}>
             <span css={bookmarkStyles.title}>{metadata.title}</span>
-            <span css={bookmarkStyles.description}>{metadata.description}</span>
+            {metadata.description && (
+              <span css={bookmarkStyles.description}>
+                {metadata.description}
+              </span>
+            )}
           </div>
           <div css={bookmarkStyles.urlRow}>
             {metadata.icon && !thumbnailError && (
