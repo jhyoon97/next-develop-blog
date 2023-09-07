@@ -41,17 +41,24 @@ const bookmarkStyles = {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 0.9rem;
     overflow: hidden;
   `,
   textBoxHeader: css`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+    overflow: hidden;
   `,
   title: css`
-    margin-bottom: 2px;
+    width: 100%;
+    margin-bottom: 0.3rem;
     font-size: 1rem;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   `,
   description: (theme: Theme) => css`
     font-size: 0.9rem;
@@ -70,7 +77,7 @@ const bookmarkStyles = {
   `,
   url: css`
     flex: 1;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     line-height: 1;
     overflow: hidden;
     text-overflow: ellipsis;
