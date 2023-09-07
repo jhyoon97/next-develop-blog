@@ -61,7 +61,7 @@ const bookmarkStyles = {
     white-space: nowrap;
   `,
   description: (theme: Theme) => css`
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: ${theme.subText};
   `,
   urlRow: css`
