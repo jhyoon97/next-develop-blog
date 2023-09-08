@@ -13,10 +13,6 @@ import type {
   HasChildrenBulletedList,
   HasChildrenNumberedList,
 } from "@types";
-import {
-  BulletedListItemBlockObjectResponse,
-  NumberedListItemBlockObjectResponse,
-} from "@notionhq/client/build/src/api-endpoints";
 
 import BulletedList from "./BulletedList";
 import NumberedList from "./NumberedList";
