@@ -20,6 +20,12 @@ export default async (pageId: string): Promise<APIPostResponse> => {
     const contentBlocks = await notionServices.getChildren(pageId);
 
     if (isFullPage(pageResponse)) {
+      if (pageResponse.properties.isPublic.type === "checkbox") {
+        if (!pageResponse.properties.isPublic.checkbox) {
+          throw new Error("getPage: 공개되지 않은 페이지입니다.");
+        }
+      }
+
       const pageData = {
         title: notionUtils.getPageTitle(pageResponse),
         createdAt: dayjs(pageResponse.created_time).format("YYYY-MM-DD"),

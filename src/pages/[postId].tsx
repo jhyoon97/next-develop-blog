@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
@@ -11,7 +12,8 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import type { APIPostResponse } from "@types";
 
 interface Props {
-  pageData: APIPostResponse;
+  pageData?: APIPostResponse;
+  isError?: boolean;
 }
 
 interface Params {
@@ -19,7 +21,13 @@ interface Params {
   postId: string;
 }
 
-const PostDetail = ({ pageData }: Props) => {
+const PostDetail = ({ pageData, isError }: Props) => {
+  useEffect(() => {
+    if (isError) {
+      alert("페이지가 존재하지 않습니다.");
+    }
+  }, [isError]);
+
   if (!pageData) {
     return null;
   }
@@ -49,10 +57,9 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<
-  { pageData?: APIPostResponse },
-  Params
-> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<Props, Params> = async ({
+  params,
+}) => {
   try {
     if (params?.postId) {
       const pageData = await notionServices.getPage(params.postId);
@@ -64,11 +71,13 @@ export const getStaticProps: GetStaticProps<
     }
 
     return {
-      props: {},
+      props: {
+        isError: true,
+      },
     };
   } catch (err) {
     return {
-      props: {},
+      props: { isError: true },
     };
   }
 };

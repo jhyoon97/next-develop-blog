@@ -22,6 +22,10 @@ export default async (): Promise<APIPostListResponse> => {
           direction: "descending",
         },
       ],
+      filter: {
+        property: "isPublic",
+        checkbox: { equals: true },
+      },
     });
 
     const data = [];

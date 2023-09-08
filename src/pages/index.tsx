@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { css, useTheme } from "@emotion/react";
+import { useEffect } from "react";
 
 // types
 import type { GetStaticProps } from "next";
@@ -10,6 +11,11 @@ import type { Theme } from "@emotion/react";
 
 // services
 import notionServices from "services/notion";
+
+interface Props {
+  postList?: APIPostListResponse;
+  isError?: boolean;
+}
 
 const postListBox = css`
   display: flex;
@@ -41,12 +47,14 @@ const postDate = (theme: Theme) => css`
   font-size: 0.8rem;
 `;
 
-interface Props {
-  postList: APIPostListResponse;
-}
-
-const PostDetail = ({ postList }: Props) => {
+const PostDetail = ({ postList, isError }: Props) => {
   const theme = useTheme();
+
+  useEffect(() => {
+    if (isError) {
+      alert("에러가 발생했습니다.");
+    }
+  }, [isError]);
 
   if (!postList) {
     return null;
@@ -77,7 +85,7 @@ const PostDetail = ({ postList }: Props) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   try {
     const data = await notionServices.getList();
 
@@ -89,7 +97,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   } catch (err) {
     return {
-      props: {},
+      props: { isError: true },
       revalidate: 600,
     };
   }
