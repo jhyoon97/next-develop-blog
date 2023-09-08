@@ -13,7 +13,7 @@ export default {
     link: "#adaa9f",
     linkHover: "#6e6b5e",
     bookmarkBorder: "#cdcdcd",
-    bookmarkHoverBackground: "#f0f0f0",
+    hoverBackground: "#f0f0f0",
     notionRichText: {
       gray: "#787774",
       brown: "#9f6b53",
@@ -49,7 +49,7 @@ export default {
     link: "#adaa9f",
     linkHover: "#6e6b5e",
     bookmarkBorder: "#ccdcdcd",
-    bookmarkHoverBackground: "rgba(55, 53, 47, 0.65)",
+    hoverBackground: "rgba(55, 53, 47, 0.65)",
     notionRichText: {
       gray: "#787774",
       brown: "#9f6b53",

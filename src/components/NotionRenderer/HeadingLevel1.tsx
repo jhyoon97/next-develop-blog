@@ -1,29 +1,37 @@
 import { css } from "@emotion/react";
 
 // types
-import type { Heading1BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Theme } from "@emotion/react";
+import type { ToggleableHeading1 } from "@types";
 
 import RichText from "./RichText";
+import ToggleWrapper from "./ToggleWrapper";
 
 interface Props {
-  block: Heading1BlockObjectResponse;
+  block: ToggleableHeading1;
+  depth: number;
 }
 
-const box = (theme: Theme) => css`
-  margin-bottom: 1rem;
-  width: 100%;
+const heading = (theme: Theme) => css`
+  flex: 1;
   color: ${theme.text};
   font-size: 1.3rem;
   font-weight: bold;
 `;
 
-const HeadingLevel1 = ({ block }: Props) => {
-  // 헤더에서 h1태그 사용중이므로 h2태그 사용
+const HeadingLevel1 = ({ block, depth }: Props) => {
+  // 헤더에서 h1태그, 타이틀에서 h2 태그 사용중이므로 h3태그 사용
+
   return (
-    <h2 css={box}>
-      <RichText richText={block.heading_1.rich_text} />
-    </h2>
+    <ToggleWrapper
+      childrenBlocks={block.heading_1.children}
+      isToggleable={block.heading_1.is_toggleable}
+      depth={depth}
+    >
+      <h3 css={heading}>
+        <RichText richText={block.heading_1.rich_text} />
+      </h3>
+    </ToggleWrapper>
   );
 };
 

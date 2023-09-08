@@ -6,6 +6,9 @@ import type {
   BulletedListItemBlockObjectResponse,
   NumberedListItemBlockObjectResponse,
   ToggleBlockObjectResponse,
+  Heading1BlockObjectResponse,
+  Heading2BlockObjectResponse,
+  Heading3BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 // "@notionhq/client/build/src/api-endpoints"에서 export하고 있지 않아서 정의함
@@ -51,7 +54,7 @@ export interface HasChildrenParagraph
   paragraph: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: Array<HasChildrenBlockObject>;
+    children?: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -60,7 +63,7 @@ export interface HasChildrenBulletedList
   bulleted_list_item: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: Array<HasChildrenBlockObject>;
+    children?: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -69,7 +72,7 @@ export interface HasChildrenNumberedList
   numbered_list_item: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: Array<HasChildrenBlockObject>;
+    children?: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -78,7 +81,7 @@ export interface HasChildrenToggle
   toggle: {
     rich_text: Array<RichTextItemResponse>;
     color: ApiColor;
-    children: Array<HasChildrenBlockObject>;
+    children?: Array<HasChildrenBlockObject>;
   };
 }
 
@@ -108,3 +111,34 @@ export interface RichTextGroup {
 export type ProcessedRichTextItem = RichTextItemResponse | RichTextGroup;
 
 export type ProcessedRichTextArray = Array<ProcessedRichTextItem>;
+
+// NotionRenderer/HeadingLevel<n>
+export interface ToggleableHeading1
+  extends Omit<Heading1BlockObjectResponse, "heading_1"> {
+  heading_1: {
+    rich_text: Array<RichTextItemResponse>;
+    color?: ApiColor;
+    is_toggleable?: boolean;
+    children?: Array<HasChildrenBlockObject>;
+  };
+}
+
+export interface ToggleableHeading2
+  extends Omit<Heading2BlockObjectResponse, "heading_2"> {
+  heading_2: {
+    rich_text: Array<RichTextItemResponse>;
+    color?: ApiColor;
+    is_toggleable?: boolean;
+    children?: Array<HasChildrenBlockObject>;
+  };
+}
+
+export interface ToggleableHeading3
+  extends Omit<Heading3BlockObjectResponse, "heading_3"> {
+  heading_3: {
+    rich_text: Array<RichTextItemResponse>;
+    color?: ApiColor;
+    is_toggleable?: boolean;
+    children?: Array<HasChildrenBlockObject>;
+  };
+}

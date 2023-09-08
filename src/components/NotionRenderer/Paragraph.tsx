@@ -4,14 +4,13 @@ import { css, useTheme } from "@emotion/react";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
-import type { ParagraphBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { HasChildrenParagraph } from "@types";
 import type { Theme } from "@emotion/react";
 
 import RichText from "./RichText";
 
 interface Props {
-  block: ParagraphBlockObjectResponse | HasChildrenParagraph;
+  block: HasChildrenParagraph;
   depth: number;
 }
 
@@ -30,7 +29,7 @@ const Paragraph = ({ block, depth }: Props) => {
       <p css={paragraph(theme)}>
         <RichText richText={block.paragraph.rich_text} />
       </p>
-      {"children" in block.paragraph && (
+      {block.paragraph.children && (
         <NotionRenderer blocks={block.paragraph.children} depth={depth + 1} />
       )}
     </>

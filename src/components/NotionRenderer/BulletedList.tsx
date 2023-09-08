@@ -5,14 +5,13 @@ import { css, useTheme } from "@emotion/react";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
-import type { BulletedListItemBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { HasChildrenBulletedList } from "@types";
 import type { Theme } from "@emotion/react";
 
 import RichText from "./RichText";
 
 interface Props {
-  blocks: Array<BulletedListItemBlockObjectResponse | HasChildrenBulletedList>;
+  blocks: Array<HasChildrenBulletedList>;
   depth: number;
 }
 
@@ -49,7 +48,7 @@ const BulletedList = ({ blocks, depth }: Props) => {
           <li css={listItem(theme)}>
             <RichText richText={item.bulleted_list_item.rich_text} />
           </li>
-          {"children" in item.bulleted_list_item && (
+          {item.bulleted_list_item.children && (
             <NotionRenderer
               blocks={item.bulleted_list_item.children}
               depth={depth + 1}

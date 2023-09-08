@@ -32,7 +32,7 @@ const bookmarkStyles = {
     border: 1px solid ${theme.bookmarkBorder};
 
     &:hover {
-      background: ${theme.bookmarkHoverBackground};
+      background: ${theme.hoverBackground};
     }
   `,
   textBox: css`

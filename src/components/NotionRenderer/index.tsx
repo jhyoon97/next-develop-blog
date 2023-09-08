@@ -27,6 +27,7 @@ import Code from "./Code";
 import Image from "./Image";
 import Paragraph from "./Paragraph";
 import Bookmark from "./Bookmark";
+import Toggle from "./Toggle";
 
 interface Props {
   blocks: HasChildrenBlockObject[];
@@ -111,11 +112,17 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
           } else {
             switch (item.type) {
               case "heading_1":
-                return <HeadingLevel1 key={item.id} block={item} />;
+                return (
+                  <HeadingLevel1 key={item.id} block={item} depth={depth} />
+                );
               case "heading_2":
-                return <HeadingLevel2 key={item.id} block={item} />;
+                return (
+                  <HeadingLevel2 key={item.id} block={item} depth={depth} />
+                );
               case "heading_3":
-                return <HeadingLevel3 key={item.id} block={item} />;
+                return (
+                  <HeadingLevel3 key={item.id} block={item} depth={depth} />
+                );
               case "code":
                 return <Code key={item.id} block={item} />;
               case "image":
@@ -124,6 +131,8 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
                 return <Paragraph key={item.id} block={item} depth={depth} />;
               case "bookmark":
                 return <Bookmark key={item.id} block={item} />;
+              case "toggle":
+                return <Toggle key={item.id} block={item} depth={depth} />;
               default:
                 return null;
             }
