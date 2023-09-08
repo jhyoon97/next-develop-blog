@@ -84,12 +84,7 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
                 return (
                   <BulletedList
                     key={item.blocks[0].id}
-                    blocks={
-                      item.blocks as Array<
-                        | BulletedListItemBlockObjectResponse
-                        | HasChildrenBulletedList
-                      >
-                    }
+                    blocks={item.blocks as Array<HasChildrenBulletedList>}
                     depth={depth}
                   />
                 );
@@ -97,12 +92,7 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
                 return (
                   <NumberedList
                     key={item.blocks[0].id}
-                    blocks={
-                      item.blocks as Array<
-                        | NumberedListItemBlockObjectResponse
-                        | HasChildrenNumberedList
-                      >
-                    }
+                    blocks={item.blocks as Array<HasChildrenNumberedList>}
                     depth={depth}
                   />
                 );
