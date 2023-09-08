@@ -20,7 +20,10 @@ export default async (pageId: string): Promise<APIPostResponse> => {
     const contentBlocks = await notionServices.getChildren(pageId);
 
     if (isFullPage(pageResponse)) {
-      if (pageResponse.properties.isPublic.type === "checkbox") {
+      if (
+        process.env.NODE_ENV === "production" &&
+        pageResponse.properties.isPublic.type === "checkbox"
+      ) {
         if (!pageResponse.properties.isPublic.checkbox) {
           throw new Error("getPage: 공개되지 않은 페이지입니다.");
         }

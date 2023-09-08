@@ -22,10 +22,13 @@ export default async (): Promise<APIPostListResponse> => {
           direction: "descending",
         },
       ],
-      filter: {
-        property: "isPublic",
-        checkbox: { equals: true },
-      },
+      filter:
+        process.env.NODE_ENV === "production"
+          ? {
+              property: "isPublic",
+              checkbox: { equals: true },
+            }
+          : undefined,
     });
 
     const data = [];
