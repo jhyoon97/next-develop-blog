@@ -1,5 +1,5 @@
 {
-  "name": "next-develop-jh",
+  "name": "next-notion-blog",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.6",
+    "@next/eslint-plugin-next": "^13.4.19",
     "@types/node": "18.15.11",
     "@types/prismjs": "^1.26.0",
     "@types/react": "18.0.33",

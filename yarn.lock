@@ -507,6 +507,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/eslint-plugin-next@npm:^13.4.19":
+  version: 13.4.19
+  resolution: "@next/eslint-plugin-next@npm:13.4.19"
+  dependencies:
+    glob: 7.1.7
+  checksum: d60c136e4a8d156b50d4b248eef9918bbf4bd7da293487cdf1f7bc172b07beeae4a2822798942d2f87999af86c53d871ebea592f3d6099ae23a0746d2abf7c73
+  languageName: node
+  linkType: hard
+
 "@next/swc-darwin-arm64@npm:13.3.0":
   version: 13.3.0
   resolution: "@next/swc-darwin-arm64@npm:13.3.0"
@@ -3006,12 +3015,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-develop-jh@workspace:.":
+"next-notion-blog@workspace:.":
   version: 0.0.0-use.local
-  resolution: "next-develop-jh@workspace:."
+  resolution: "next-notion-blog@workspace:."
   dependencies:
     "@emotion/babel-plugin": ^11.10.6
     "@emotion/react": ^11.10.6
+    "@next/eslint-plugin-next": ^13.4.19
     "@notionhq/client": ^2.2.4
     "@types/node": 18.15.11
     "@types/prismjs": ^1.26.0

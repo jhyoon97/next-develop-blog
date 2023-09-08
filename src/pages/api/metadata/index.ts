@@ -10,15 +10,11 @@ type Request = Omit<NextApiRequest, "query"> & {
 };
 
 export default async (req: Request, res: NextApiResponse) => {
-  try {
-    if (req.method === "GET") {
-      const { url } = req.query;
+  if (req.method === "GET") {
+    const { url } = req.query;
 
-      const response = await getMetaData(url);
+    const response = await getMetaData(url);
 
-      res.status(200).json(response);
-    }
-  } catch (err) {
-    throw err;
+    res.status(200).json(response);
   }
 };

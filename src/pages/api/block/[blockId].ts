@@ -10,15 +10,11 @@ type Request = Omit<NextApiRequest, "query"> & {
 };
 
 export default async (req: Request, res: NextApiResponse) => {
-  try {
-    if (req.method === "GET") {
-      const { blockId } = req.query;
+  if (req.method === "GET") {
+    const { blockId } = req.query;
 
-      const response = await notionServices.getBlock(blockId);
+    const response = await notionServices.getBlock(blockId);
 
-      res.status(200).json(response);
-    }
-  } catch (err) {
-    throw err;
+    res.status(200).json(response);
   }
 };
