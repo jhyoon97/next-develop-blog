@@ -93,12 +93,12 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
       props: {
         postList: data,
       },
-      revalidate: 600,
+      revalidate: 60,
     };
   } catch (err) {
     return {
       props: { isError: true },
-      revalidate: 600,
+      revalidate: 60,
     };
   }
 };
