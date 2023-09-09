@@ -16,7 +16,7 @@ interface Props {
 }
 
 const codeText = (theme: Theme) => css`
-  padding: 2px 4px;
+  padding: 0px 4px;
   background: ${theme.codeBg};
   color: ${theme.code};
   border-radius: 4px;
