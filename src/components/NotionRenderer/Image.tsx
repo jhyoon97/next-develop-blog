@@ -83,6 +83,7 @@ const Image = ({ block }: Props) => {
               src={imageURL}
               alt=""
               onError={() => refetchBlock()}
+              unoptimized
             />
           )}
 
