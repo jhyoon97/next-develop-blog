@@ -6,6 +6,7 @@ import utils from "utils";
 import typeGuards from "utils/typeGuards";
 
 // types
+import type { CSSProperties } from "react";
 import type {
   BlockGroup,
   HasChildrenBlockObject,
@@ -24,10 +25,12 @@ import Image from "./Image";
 import Paragraph from "./Paragraph";
 import Bookmark from "./Bookmark";
 import Toggle from "./Toggle";
+import Quote from "./Quote";
 
 interface Props {
   blocks: HasChildrenBlockObject[];
   depth?: number;
+  style?: CSSProperties;
 }
 
 const box = (depth: number) => css`
@@ -41,7 +44,7 @@ const box = (depth: number) => css`
 // 그룹핑이 필요한 블록 타입
 const needGroupingTypes = ["bulleted_list_item", "numbered_list_item"];
 
-const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
+const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
   const processedBlockArray = useMemo<ProcessedBlockArray>(() => {
     return blocks.reduce<ProcessedBlockArray>((acc, item) => {
       if (typeGuards.contains(needGroupingTypes, item.type)) {
@@ -71,7 +74,7 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
   }, [blocks]);
 
   return (
-    <div css={box(depth)}>
+    <div css={box(depth)} style={style}>
       {processedBlockArray.map((item) =>
         (() => {
           if (typeGuards.isBlockGroup(item)) {
@@ -119,6 +122,8 @@ const NotionRenderer = ({ blocks, depth = 1 }: Props) => {
                 return <Bookmark key={item.id} block={item} />;
               case "toggle":
                 return <Toggle key={item.id} block={item} depth={depth} />;
+              case "quote":
+                return <Quote key={item.id} block={item} depth={depth} />;
               default:
                 return null;
             }

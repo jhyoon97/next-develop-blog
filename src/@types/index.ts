@@ -6,6 +6,7 @@ import type {
   BulletedListItemBlockObjectResponse,
   NumberedListItemBlockObjectResponse,
   ToggleBlockObjectResponse,
+  QuoteBlockObjectResponse,
   Heading1BlockObjectResponse,
   Heading2BlockObjectResponse,
   Heading3BlockObjectResponse,
@@ -85,12 +86,22 @@ export interface HasChildrenToggle
   };
 }
 
+export interface HasChildrenQuote
+  extends Omit<QuoteBlockObjectResponse, "quote"> {
+  quote: {
+    rich_text: Array<RichTextItemResponse>;
+    color: ApiColor;
+    children?: Array<HasChildrenBlockObject>;
+  };
+}
+
 export type HasChildrenBlockObject =
   | BlockObjectResponse
   | HasChildrenParagraph
   | HasChildrenBulletedList
   | HasChildrenNumberedList
-  | HasChildrenToggle;
+  | HasChildrenToggle
+  | HasChildrenQuote;
 
 // NotionRenderer
 export interface BlockGroup {
