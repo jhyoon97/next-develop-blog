@@ -4,7 +4,6 @@ import axios from "axios";
 
 // components
 import LoadingIndicator from "components/LoadingIndicator";
-import Spacer from "components/Spacer";
 
 // types
 import type { BookmarkBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -128,7 +127,11 @@ const Bookmark = ({ block }: Props) => {
   if (loading === "FAILURE") {
     return (
       <>
-        <Spacer>
+        <div
+          css={css`
+            margin-bottom: 0.5rem;
+          `}
+        >
           <RichText
             richText={[
               {
@@ -152,7 +155,7 @@ const Bookmark = ({ block }: Props) => {
               },
             ]}
           />
-        </Spacer>
+        </div>
         {block.bookmark.caption.length > 0 && (
           <Caption richText={block.bookmark.caption} />
         )}

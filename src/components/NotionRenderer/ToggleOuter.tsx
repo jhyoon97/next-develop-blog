@@ -1,10 +1,9 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
+import { BiCaretRight } from "react-icons/bi";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
-import Spacer from "components/Spacer";
-import { BiCaretRight } from "react-icons/bi";
 
 // types
 import type { HasChildrenBlockObject } from "@types";
@@ -95,8 +94,11 @@ const ToggleOuter = ({
 
       {childrenBlocks && isToggleable && isOpen && (
         <div css={childrenBox}>
-          <Spacer />
-          <NotionRenderer blocks={childrenBlocks} depth={depth} />
+          <NotionRenderer
+            blocks={childrenBlocks}
+            depth={depth}
+            style={{ marginTop: "0.5rem" }}
+          />
         </div>
       )}
     </div>
