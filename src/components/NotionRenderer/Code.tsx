@@ -6,15 +6,12 @@ import "prismjs/themes/prism-okaidia.min.css";
 // types
 import type { CodeBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
+import { blockBox } from "./commonStyles";
 import Caption from "./Caption";
 
 interface Props {
   block: CodeBlockObjectResponse;
 }
-
-const box = css`
-  width: 100%;
-`;
 
 const codeBox = css`
   && {
@@ -28,7 +25,7 @@ const Code = ({ block }: Props) => {
   }, []);
 
   return (
-    <figure css={box}>
+    <figure css={blockBox}>
       <pre css={codeBox}>
         <code className={`language-${block.code.language}`}>
           {block.code.rich_text[0].plain_text}

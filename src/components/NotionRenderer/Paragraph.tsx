@@ -1,4 +1,4 @@
-import { css, useTheme } from "@emotion/react";
+import { css } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
@@ -7,6 +7,7 @@ import NotionRenderer from "components/NotionRenderer";
 import type { HasChildrenParagraph } from "@types";
 import type { Theme } from "@emotion/react";
 
+import { blockBox } from "./commonStyles";
 import RichText from "./RichText";
 
 interface Props {
@@ -16,18 +17,14 @@ interface Props {
 
 const box = (theme: Theme) => css`
   margin-bottom: 0.25rem;
-  width: 100%;
   color: ${theme.text};
   font-size: 1rem;
-  white-space: pre-wrap;
 `;
 
 const Paragraph = ({ block, depth }: Props) => {
-  const theme = useTheme();
-
   return (
     <>
-      <p css={box(theme)}>
+      <p css={[blockBox, box]}>
         <RichText richText={block.paragraph.rich_text} />
       </p>
       {block.paragraph.children && (

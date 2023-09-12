@@ -4,8 +4,9 @@ import { css } from "@emotion/react";
 import type { Theme } from "@emotion/react";
 import type { ToggleableHeading3 } from "@types";
 
+import { blockBox } from "./commonStyles";
 import RichText from "./RichText";
-import ToggleBlockBox from "./ToggleBlockBox";
+import ToggleOuter from "./ToggleOuter";
 
 interface Props {
   block: ToggleableHeading3;
@@ -21,14 +22,13 @@ const heading = (theme: Theme) => css`
   flex: 1;
   color: ${theme.text};
   font-weight: bold;
-  white-space: pre-wrap;
 `;
 
 const HeadingLevel3 = ({ block, depth }: Props) => {
   // 헤더에서 h1태그, 타이틀에서 h2 태그 사용중이므로 h5태그 사용
   return (
-    <div css={box}>
-      <ToggleBlockBox
+    <div css={[blockBox, box]}>
+      <ToggleOuter
         childrenBlocks={block.heading_3.children}
         isToggleable={block.heading_3.is_toggleable}
         depth={depth}
@@ -36,7 +36,7 @@ const HeadingLevel3 = ({ block, depth }: Props) => {
         <h5 css={heading}>
           <RichText richText={block.heading_3.rich_text} />
         </h5>
-      </ToggleBlockBox>
+      </ToggleOuter>
     </div>
   );
 };

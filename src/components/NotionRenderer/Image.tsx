@@ -9,6 +9,7 @@ import LoadingIndicator from "components/LoadingIndicator";
 // types
 import type { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
+import { blockBox } from "./commonStyles";
 import Caption from "./Caption";
 
 interface Props {
@@ -19,7 +20,6 @@ const box = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 `;
 
 const figure = css`
@@ -70,7 +70,7 @@ const Image = ({ block }: Props) => {
   };
 
   return (
-    <div css={box}>
+    <div css={[blockBox, box]}>
       {blockReloadState === "LOADING" ? (
         <LoadingIndicator />
       ) : (

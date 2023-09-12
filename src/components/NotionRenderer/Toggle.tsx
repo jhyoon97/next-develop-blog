@@ -3,8 +3,9 @@ import { css } from "@emotion/react";
 // types
 import type { HasChildrenToggle } from "@types";
 
+import { blockBox } from "./commonStyles";
 import RichText from "./RichText";
-import ToggleBlockBox from "./ToggleBlockBox";
+import ToggleOuter from "./ToggleOuter";
 
 interface Props {
   block: HasChildrenToggle;
@@ -13,26 +14,21 @@ interface Props {
 
 const box = css`
   margin-bottom: 1rem;
-  width: 100%;
   font-size: 1rem;
-`;
-
-const paragraph = css`
-  white-space: pre-wrap;
 `;
 
 const Toggle = ({ block, depth }: Props) => {
   return (
-    <div css={box}>
-      <ToggleBlockBox
+    <div css={[blockBox, box]}>
+      <ToggleOuter
         childrenBlocks={block.toggle.children}
         isToggleable
         depth={depth}
       >
-        <p css={paragraph}>
+        <p>
           <RichText richText={block.toggle.rich_text} />
         </p>
-      </ToggleBlockBox>
+      </ToggleOuter>
     </div>
   );
 };

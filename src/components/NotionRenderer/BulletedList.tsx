@@ -8,6 +8,7 @@ import NotionRenderer from "components/NotionRenderer";
 import type { HasChildrenBulletedList } from "@types";
 import type { Theme } from "@emotion/react";
 
+import { blockBox } from "./commonStyles";
 import RichText from "./RichText";
 
 interface Props {
@@ -16,9 +17,7 @@ interface Props {
 }
 
 const listBox = css`
-  width: 100%;
   list-style: none;
-  white-space: pre-wrap;
 `;
 
 const listItem = (theme: Theme) =>
@@ -70,7 +69,7 @@ const bulletCircle = css`
 
 const BulletedList = ({ blocks, depth }: Props) => {
   return (
-    <ul css={listBox}>
+    <ul css={[blockBox, listBox]}>
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
           <li css={listItem}>

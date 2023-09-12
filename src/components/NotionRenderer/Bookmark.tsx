@@ -11,16 +11,13 @@ import type { BookmarkBlockObjectResponse } from "@notionhq/client/build/src/api
 import type { MetaData } from "metadata-scraper";
 import type { Theme } from "@emotion/react";
 
+import { blockBox } from "./commonStyles";
 import RichText from "./RichText";
 import Caption from "./Caption";
 
 interface Props {
   block: BookmarkBlockObjectResponse;
 }
-
-const box = css`
-  width: 100%;
-`;
 
 const bookmarkStyles = {
   box: (theme: Theme) => css`
@@ -163,7 +160,7 @@ const Bookmark = ({ block }: Props) => {
     );
   }
   return (
-    <div css={box}>
+    <div css={blockBox}>
       <a
         css={bookmarkStyles.box}
         href={block.bookmark.url}

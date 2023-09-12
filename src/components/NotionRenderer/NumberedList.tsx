@@ -1,5 +1,5 @@
 import React from "react";
-import { css, useTheme } from "@emotion/react";
+import { css } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
@@ -8,6 +8,7 @@ import NotionRenderer from "components/NotionRenderer";
 import type { HasChildrenNumberedList } from "@types";
 import type { Theme } from "@emotion/react";
 
+import { blockBox } from "./commonStyles";
 import RichText from "./RichText";
 
 interface Props {
@@ -18,8 +19,6 @@ interface Props {
 const listBox = css`
   list-style: none;
   counter-reset: li;
-  width: 100%;
-  white-space: pre-wrap;
 `;
 
 const listItem = (theme: Theme, depth: number) => {
@@ -56,13 +55,14 @@ const listItem = (theme: Theme, depth: number) => {
 };
 
 const NumberedList = ({ blocks, depth }: Props) => {
-  const theme = useTheme();
-
   return (
-    <ol css={listBox} style={{ paddingLeft: depth === 1 ? "1.5rem" : 0 }}>
+    <ol
+      css={[blockBox, listBox]}
+      style={{ paddingLeft: depth === 1 ? "1.5rem" : 0 }}
+    >
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
-          <li css={listItem(theme, depth)}>
+          <li css={(theme) => listItem(theme, depth)}>
             <RichText richText={item.numbered_list_item.rich_text} />
           </li>
           {item.numbered_list_item.children && (

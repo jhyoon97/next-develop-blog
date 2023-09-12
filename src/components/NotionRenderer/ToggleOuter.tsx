@@ -10,6 +10,8 @@ import { BiCaretRight } from "react-icons/bi";
 import type { HasChildrenBlockObject } from "@types";
 import type { Theme } from "@emotion/react";
 
+import { BLOCK_LINE_HEIGHT } from "./commonStyles";
+
 interface Props {
   childrenBlocks?: Array<HasChildrenBlockObject>;
   isToggleable?: boolean;
@@ -34,7 +36,7 @@ const toggleButtonBox = css`
   justify-content: center;
   align-items: center;
   width: 1.5rem;
-  height: 1.5em;
+  height: ${BLOCK_LINE_HEIGHT}em;
 `;
 
 const toggleButton = (theme: Theme) => css`
@@ -60,7 +62,7 @@ const childrenBox = css`
   margin-left: 1.5rem;
 `;
 
-const ToggleBlockBox = ({
+const ToggleOuter = ({
   childrenBlocks,
   isToggleable,
   depth,
@@ -101,4 +103,4 @@ const ToggleBlockBox = ({
   );
 };
 
-export default ToggleBlockBox;
+export default ToggleOuter;
