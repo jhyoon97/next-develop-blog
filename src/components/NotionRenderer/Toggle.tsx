@@ -13,6 +13,7 @@ interface Props {
 
 const box = css`
   margin-bottom: 1rem;
+  width: 100%;
   font-size: 1rem;
 `;
 

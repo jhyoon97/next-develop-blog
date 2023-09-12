@@ -57,7 +57,7 @@ const toggleButton = (theme: Theme) => css`
 `;
 
 const childrenBox = css`
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 `;
 
 const ToggleBlockBox = ({

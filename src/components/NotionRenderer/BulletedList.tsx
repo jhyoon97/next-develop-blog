@@ -1,5 +1,5 @@
 import React from "react";
-import { css, useTheme } from "@emotion/react";
+import { css } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
@@ -69,13 +69,11 @@ const bulletCircle = css`
 `;
 
 const BulletedList = ({ blocks, depth }: Props) => {
-  const theme = useTheme();
-
   return (
     <ul css={listBox}>
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
-          <li css={listItem(theme)}>
+          <li css={listItem}>
             <div css={bulletBox}>
               <i
                 css={[
