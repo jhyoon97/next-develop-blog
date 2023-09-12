@@ -13,7 +13,6 @@ declare module "@emotion/react" {
     codeBg: string;
     caption: string;
     link: string;
-    linkHover: string;
     bookmarkBorder: string;
     hoverBackground: string;
     notionRichText: {

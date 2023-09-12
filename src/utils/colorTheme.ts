@@ -10,8 +10,7 @@ export default {
     code: "#eb5757",
     codeBg: "#eeeeec",
     caption: "rgba(55, 53, 47, 0.65)",
-    link: "#adaa9f",
-    linkHover: "#6e6b5e",
+    link: "#6e6b5e",
     bookmarkBorder: "#cdcdcd",
     hoverBackground: "#f0f0f0",
     notionRichText: {
@@ -46,8 +45,7 @@ export default {
     code: "#fff",
     codeBg: "#000",
     caption: "rgba(55, 53, 47, 0.65)",
-    link: "#adaa9f",
-    linkHover: "#6e6b5e",
+    link: "#6e6b5e",
     bookmarkBorder: "#ccdcdcd",
     hoverBackground: "rgba(55, 53, 47, 0.65)",
     notionRichText: {

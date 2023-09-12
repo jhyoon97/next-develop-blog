@@ -17,10 +17,10 @@ interface Props {
 const anchorText = (theme: Theme) => css`
   color: ${theme.link};
   border-bottom: 1px solid ${theme.link};
+  opacity: 0.6;
 
   &:hover {
-    color: ${theme.linkHover};
-    border-bottom-color: ${theme.linkHover};
+    opacity: 1;
   }
 `;
 
