@@ -3,10 +3,12 @@ import { css } from "@emotion/react";
 import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.min.css";
 
+// components
+import { blockBox } from "components/NotionRenderer/commonStyles";
+
 // types
 import type { CodeBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-import { blockBox } from "./commonStyles";
 import Caption from "./Caption";
 
 interface Props {

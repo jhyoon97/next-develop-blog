@@ -15,17 +15,8 @@ import type {
   HasChildrenNumberedList,
 } from "@types";
 
-import BulletedList from "./BulletedList";
-import NumberedList from "./NumberedList";
-import HeadingLevel1 from "./HeadingLevel1";
-import HeadingLevel2 from "./HeadingLevel2";
-import HeadingLevel3 from "./HeadingLevel3";
-import Code from "./Code";
-import Image from "./Image";
-import Paragraph from "./Paragraph";
-import Bookmark from "./Bookmark";
-import Toggle from "./Toggle";
-import Quote from "./Quote";
+import BlockGroups from "./BlockGroups";
+import Blocks from "./Blocks";
 
 interface Props {
   blocks: HasChildrenBlockObject[];
@@ -81,7 +72,7 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
             switch (item.groupType) {
               case "bulleted_list_item":
                 return (
-                  <BulletedList
+                  <BlockGroups.BulletedList
                     key={item.blocks[0].id}
                     blocks={item.blocks as Array<HasChildrenBulletedList>}
                     depth={depth}
@@ -89,7 +80,7 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
                 );
               case "numbered_list_item":
                 return (
-                  <NumberedList
+                  <BlockGroups.NumberedList
                     key={item.blocks[0].id}
                     blocks={item.blocks as Array<HasChildrenNumberedList>}
                     depth={depth}
@@ -102,28 +93,46 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
             switch (item.type) {
               case "heading_1":
                 return (
-                  <HeadingLevel1 key={item.id} block={item} depth={depth} />
+                  <Blocks.HeadingLevel1
+                    key={item.id}
+                    block={item}
+                    depth={depth}
+                  />
                 );
               case "heading_2":
                 return (
-                  <HeadingLevel2 key={item.id} block={item} depth={depth} />
+                  <Blocks.HeadingLevel2
+                    key={item.id}
+                    block={item}
+                    depth={depth}
+                  />
                 );
               case "heading_3":
                 return (
-                  <HeadingLevel3 key={item.id} block={item} depth={depth} />
+                  <Blocks.HeadingLevel3
+                    key={item.id}
+                    block={item}
+                    depth={depth}
+                  />
                 );
               case "code":
-                return <Code key={item.id} block={item} />;
+                return <Blocks.Code key={item.id} block={item} />;
               case "image":
-                return <Image key={item.id} block={item} />;
+                return <Blocks.Image key={item.id} block={item} />;
               case "paragraph":
-                return <Paragraph key={item.id} block={item} depth={depth} />;
+                return (
+                  <Blocks.Paragraph key={item.id} block={item} depth={depth} />
+                );
               case "bookmark":
-                return <Bookmark key={item.id} block={item} />;
+                return <Blocks.Bookmark key={item.id} block={item} />;
               case "toggle":
-                return <Toggle key={item.id} block={item} depth={depth} />;
+                return (
+                  <Blocks.Toggle key={item.id} block={item} depth={depth} />
+                );
               case "quote":
-                return <Quote key={item.id} block={item} depth={depth} />;
+                return (
+                  <Blocks.Quote key={item.id} block={item} depth={depth} />
+                );
               default:
                 return null;
             }

@@ -2,13 +2,12 @@ import { css } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
+import RichText from "components/NotionRenderer/RichText";
+import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { HasChildrenParagraph } from "@types";
 import type { Theme } from "@emotion/react";
-
-import { blockBox } from "./commonStyles";
-import RichText from "./RichText";
 
 interface Props {
   block: HasChildrenParagraph;

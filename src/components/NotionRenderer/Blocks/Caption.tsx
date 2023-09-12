@@ -1,11 +1,12 @@
 import { css } from "@emotion/react";
 
+// components
+import { blockBox } from "components/NotionRenderer/commonStyles";
+import RichText from "components/NotionRenderer/RichText";
+
 // types
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Theme } from "@emotion/react";
-
-import { blockBox } from "./commonStyles";
-import RichText from "./RichText";
 
 interface Props {
   richText: Array<RichTextItemResponse>;

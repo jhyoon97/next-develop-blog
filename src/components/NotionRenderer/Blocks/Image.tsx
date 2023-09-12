@@ -5,11 +5,11 @@ import NextImage from "next/image";
 
 // components
 import LoadingIndicator from "components/LoadingIndicator";
+import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-import { blockBox } from "./commonStyles";
 import Caption from "./Caption";
 
 interface Props {

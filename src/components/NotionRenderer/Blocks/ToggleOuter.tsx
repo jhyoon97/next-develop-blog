@@ -4,12 +4,11 @@ import { BiCaretRight } from "react-icons/bi";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
+import { BLOCK_LINE_HEIGHT } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { HasChildrenBlockObject } from "@types";
 import type { Theme } from "@emotion/react";
-
-import { BLOCK_LINE_HEIGHT } from "./commonStyles";
 
 interface Props {
   childrenBlocks?: Array<HasChildrenBlockObject>;

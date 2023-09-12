@@ -4,14 +4,14 @@ import axios from "axios";
 
 // components
 import LoadingIndicator from "components/LoadingIndicator";
+import RichText from "components/NotionRenderer/RichText";
+import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { BookmarkBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { MetaData } from "metadata-scraper";
 import type { Theme } from "@emotion/react";
 
-import { blockBox } from "./commonStyles";
-import RichText from "./RichText";
 import Caption from "./Caption";
 
 interface Props {

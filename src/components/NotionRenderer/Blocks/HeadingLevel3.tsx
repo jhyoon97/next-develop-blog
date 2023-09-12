@@ -1,11 +1,13 @@
 import { css } from "@emotion/react";
 
+// components
+import { blockBox } from "components/NotionRenderer/commonStyles";
+import RichText from "components/NotionRenderer/RichText";
+
 // types
 import type { Theme } from "@emotion/react";
 import type { ToggleableHeading3 } from "@types";
 
-import { blockBox } from "./commonStyles";
-import RichText from "./RichText";
 import ToggleOuter from "./ToggleOuter";
 
 interface Props {
