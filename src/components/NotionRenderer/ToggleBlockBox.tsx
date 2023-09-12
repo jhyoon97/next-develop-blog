@@ -20,14 +20,21 @@ interface Props {
 const box = css`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
   width: 100%;
 `;
 
 const titleRow = css`
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
+`;
+
+const toggleButtonBox = css`
+  display: flex;
+  justify-content: center;
   align-items: center;
+  width: 1.5rem;
+  height: 1.5em;
 `;
 
 const toggleButton = (theme: Theme) => css`
@@ -36,7 +43,7 @@ const toggleButton = (theme: Theme) => css`
   justify-content: center;
   align-items: center;
   margin-right: 0.5rem;
-  width: 1.5rem;
+  width: 100%;
   height: 1.5rem;
   border-radius: 3px;
 
@@ -53,7 +60,7 @@ const childrenBox = css`
   margin-left: 2rem;
 `;
 
-const ToggleBlock = ({
+const ToggleBlockBox = ({
   childrenBlocks,
   isToggleable,
   depth,
@@ -65,18 +72,20 @@ const ToggleBlock = ({
     <div css={box}>
       <div css={titleRow}>
         {isToggleable && (
-          <button
-            type="button"
-            css={toggleButton}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <BiCaretRight
-              size="20"
-              style={{
-                transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
-              }}
-            />
-          </button>
+          <div css={toggleButtonBox}>
+            <button
+              type="button"
+              css={toggleButton}
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <BiCaretRight
+                size="20"
+                style={{
+                  transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
+                }}
+              />
+            </button>
+          </div>
         )}
 
         {children}
@@ -92,4 +101,4 @@ const ToggleBlock = ({
   );
 };
 
-export default ToggleBlock;
+export default ToggleBlockBox;

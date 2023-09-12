@@ -14,6 +14,7 @@ const box = (theme: Theme) => css`
   margin-bottom: 0.25rem;
   color: ${theme.caption};
   font-size: 0.9rem;
+  white-space: pre-wrap;
 `;
 
 const Caption = ({ richText }: Props) => {

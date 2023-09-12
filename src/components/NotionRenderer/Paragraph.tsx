@@ -14,11 +14,12 @@ interface Props {
   depth: number;
 }
 
-const paragraph = (theme: Theme) => css`
+const box = (theme: Theme) => css`
   margin-bottom: 0.25rem;
   width: 100%;
   color: ${theme.text};
   font-size: 1rem;
+  white-space: pre-wrap;
 `;
 
 const Paragraph = ({ block, depth }: Props) => {
@@ -26,7 +27,7 @@ const Paragraph = ({ block, depth }: Props) => {
 
   return (
     <>
-      <p css={paragraph(theme)}>
+      <p css={box(theme)}>
         <RichText richText={block.paragraph.rich_text} />
       </p>
       {block.paragraph.children && (
