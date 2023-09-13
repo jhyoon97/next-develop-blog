@@ -10,6 +10,8 @@ import type {
   Heading1BlockObjectResponse,
   Heading2BlockObjectResponse,
   Heading3BlockObjectResponse,
+  ColumnListBlockObjectResponse,
+  ColumnBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 // "@notionhq/client/build/src/api-endpoints"에서 export하고 있지 않아서 정의함
@@ -95,13 +97,28 @@ export interface HasChildrenQuote
   };
 }
 
+export interface HasChildColumnList
+  extends Omit<ColumnListBlockObjectResponse, "column_list"> {
+  column_list: {
+    children?: Array<HasChildColumn>;
+  };
+}
+
+export interface HasChildColumn
+  extends Omit<ColumnBlockObjectResponse, "column"> {
+  column: {
+    children?: Array<HasChildrenBlockObject>;
+  };
+}
+
 export type HasChildrenBlockObject =
   | BlockObjectResponse
   | HasChildrenParagraph
   | HasChildrenBulletedList
   | HasChildrenNumberedList
   | HasChildrenToggle
-  | HasChildrenQuote;
+  | HasChildrenQuote
+  | HasChildColumnList;
 
 // NotionRenderer
 export interface BlockGroup {

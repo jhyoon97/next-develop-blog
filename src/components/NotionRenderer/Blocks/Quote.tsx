@@ -11,7 +11,6 @@ import type { HasChildrenQuote } from "@types";
 
 interface Props {
   block: HasChildrenQuote;
-  depth: number;
 }
 
 const box = (theme: Theme) => css`
@@ -21,7 +20,7 @@ const box = (theme: Theme) => css`
   border-left: 3px solid ${theme.text};
 `;
 
-const Quote = ({ block, depth }: Props) => {
+const Quote = ({ block }: Props) => {
   return (
     <div css={[blockBox, box]}>
       <RichText richText={block.quote.rich_text} />
@@ -29,7 +28,6 @@ const Quote = ({ block, depth }: Props) => {
       {block.quote.children && (
         <NotionRenderer
           blocks={block.quote.children}
-          depth={1}
           style={{ marginTop: "0.5rem" }}
         />
       )}

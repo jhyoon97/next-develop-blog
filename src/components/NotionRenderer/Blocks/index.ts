@@ -7,6 +7,7 @@ import Paragraph from "./Paragraph";
 import Bookmark from "./Bookmark";
 import Toggle from "./Toggle";
 import Quote from "./Quote";
+import ColumnList from "./ColumnList";
 
 export default {
   HeadingLevel1,
@@ -18,4 +19,5 @@ export default {
   Bookmark,
   Toggle,
   Quote,
+  ColumnList,
 };

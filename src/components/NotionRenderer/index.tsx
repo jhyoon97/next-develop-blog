@@ -130,9 +130,17 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
                   <Blocks.Toggle key={item.id} block={item} depth={depth} />
                 );
               case "quote":
-                return (
-                  <Blocks.Quote key={item.id} block={item} depth={depth} />
-                );
+                return <Blocks.Quote key={item.id} block={item} />;
+              case "column_list":
+                return <Blocks.ColumnList key={item.id} block={item} />;
+              case "callout":
+                return null;
+              case "divider":
+                return null;
+              case "table":
+                return null;
+              case "to_do":
+                return null;
               default:
                 return null;
             }
