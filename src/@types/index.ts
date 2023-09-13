@@ -13,6 +13,8 @@ import type {
   ColumnListBlockObjectResponse,
   ColumnBlockObjectResponse,
   CalloutBlockObjectResponse,
+  TableBlockObjectResponse,
+  TableRowBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 // "@notionhq/client/build/src/api-endpoints"에서 export하고 있지 않아서 정의함
@@ -141,6 +143,16 @@ export interface HasChildCallout
         }
       | null;
     children?: Array<HasChildrenBlockObject>;
+  };
+}
+
+export interface HasChildrenTable
+  extends Omit<TableBlockObjectResponse, "table"> {
+  table: {
+    has_column_header: boolean;
+    has_row_header: boolean;
+    table_width: number;
+    children?: Array<TableRowBlockObjectResponse>;
   };
 }
 

@@ -138,7 +138,7 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
               case "callout":
                 return <Blocks.Callout key={item.id} block={item} />;
               case "table":
-                return null;
+                return <Blocks.Table key={item.id} block={item} />;
               case "to_do":
                 return null;
               default:

@@ -10,6 +10,7 @@ import Quote from "./Quote";
 import ColumnList from "./ColumnList";
 import Divider from "./Divider";
 import Callout from "./Callout";
+import Table from "./Table";
 
 export default {
   HeadingLevel1,
@@ -24,4 +25,5 @@ export default {
   ColumnList,
   Divider,
   Callout,
+  Table,
 };
