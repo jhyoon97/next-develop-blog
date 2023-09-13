@@ -15,6 +15,7 @@ import type {
   CalloutBlockObjectResponse,
   TableBlockObjectResponse,
   TableRowBlockObjectResponse,
+  ToDoBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 // "@notionhq/client/build/src/api-endpoints"에서 export하고 있지 않아서 정의함
@@ -156,6 +157,16 @@ export interface HasChildrenTable
   };
 }
 
+export interface HasChildrenToDo
+  extends Omit<ToDoBlockObjectResponse, "to_do"> {
+  to_do: {
+    rich_text: Array<RichTextItemResponse>;
+    color: ApiColor;
+    checked: boolean;
+    children?: Array<HasChildrenBlockObject>;
+  };
+}
+
 export type HasChildrenBlockObject =
   | BlockObjectResponse
   | HasChildrenParagraph
@@ -164,11 +175,13 @@ export type HasChildrenBlockObject =
   | HasChildrenToggle
   | HasChildrenQuote
   | HasChildColumnList
-  | HasChildCallout;
+  | HasChildCallout
+  | HasChildrenTable
+  | HasChildrenToDo;
 
 // NotionRenderer
 export interface BlockGroup {
-  groupType: "bulleted_list_item" | "numbered_list_item";
+  groupType: "bulleted_list_item" | "numbered_list_item" | "to_do";
   blocks: Array<HasChildrenBlockObject>;
 }
 

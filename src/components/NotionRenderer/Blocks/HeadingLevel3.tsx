@@ -16,8 +16,8 @@ interface Props {
 }
 
 const box = css`
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  margin: 2rem 0 1rem;
+  font-size: 1.2rem;
 `;
 
 const heading = (theme: Theme) => css`

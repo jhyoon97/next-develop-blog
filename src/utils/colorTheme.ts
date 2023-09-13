@@ -13,6 +13,8 @@ export default {
     link: "#6e6b5e",
     boxBorder: "#cdcdcd",
     hoverBackground: "#f0f0f0",
+    white: "#fff",
+    blue: "#2383e2",
     notion: {
       gray: "#787774",
       brown: "#9f6b53",
@@ -48,6 +50,8 @@ export default {
     link: "#6e6b5e",
     boxBorder: "#ccdcdcd",
     hoverBackground: "rgba(55, 53, 47, 0.65)",
+    white: "#fff",
+    blue: "#2383e2",
     notion: {
       gray: "#787774",
       brown: "#9f6b53",

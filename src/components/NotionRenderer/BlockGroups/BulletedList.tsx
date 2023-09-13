@@ -29,14 +29,6 @@ const listItem = (theme: Theme) =>
     width: 100%;
     color: ${theme.text};
     font-size: 1rem;
-
-    &:before {
-      position: absolute;
-      left: 0;
-      top: 0;
-      transform: translateX(-100%);
-      padding-right: 0.2rem;
-    }
   `;
 
 const bulletBox = css`

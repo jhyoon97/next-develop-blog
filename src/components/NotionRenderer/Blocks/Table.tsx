@@ -17,7 +17,7 @@ interface Props {
 }
 
 const box = css`
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 `;
 
 const table = (theme: Theme) => css`

@@ -13,6 +13,7 @@ import type {
   ProcessedBlockArray,
   HasChildrenBulletedList,
   HasChildrenNumberedList,
+  HasChildrenToDo,
 } from "@types";
 
 import BlockGroups from "./BlockGroups";
@@ -33,7 +34,7 @@ const box = (depth: number) => css`
 `;
 
 // 그룹핑이 필요한 블록 타입
-const needGroupingTypes = ["bulleted_list_item", "numbered_list_item"];
+const needGroupingTypes = ["bulleted_list_item", "numbered_list_item", "to_do"];
 
 const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
   const processedBlockArray = useMemo<ProcessedBlockArray>(() => {
@@ -83,6 +84,14 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
                   <BlockGroups.NumberedList
                     key={item.blocks[0].id}
                     blocks={item.blocks as Array<HasChildrenNumberedList>}
+                    depth={depth}
+                  />
+                );
+              case "to_do":
+                return (
+                  <BlockGroups.ToDoList
+                    key={item.blocks[0].id}
+                    blocks={item.blocks as Array<HasChildrenToDo>}
                     depth={depth}
                   />
                 );
@@ -139,8 +148,6 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
                 return <Blocks.Callout key={item.id} block={item} />;
               case "table":
                 return <Blocks.Table key={item.id} block={item} />;
-              case "to_do":
-                return null;
               default:
                 return null;
             }
