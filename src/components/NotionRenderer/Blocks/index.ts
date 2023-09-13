@@ -8,6 +8,7 @@ import Bookmark from "./Bookmark";
 import Toggle from "./Toggle";
 import Quote from "./Quote";
 import ColumnList from "./ColumnList";
+import Divider from "./Divider";
 
 export default {
   HeadingLevel1,
@@ -20,4 +21,5 @@ export default {
   Toggle,
   Quote,
   ColumnList,
+  Divider,
 };

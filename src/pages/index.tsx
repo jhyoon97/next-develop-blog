@@ -23,14 +23,14 @@ const postListBox = css`
   width: 100%;
 `;
 
-const postItemBox = css`
+const postItemBox = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 0.5rem 1rem;
   width: 100%;
-  border: 1px solid #aaa;
+  border: 1px solid ${theme.boxBorder};
   border-radius: 5px;
 
   &:not(:last-of-type) {

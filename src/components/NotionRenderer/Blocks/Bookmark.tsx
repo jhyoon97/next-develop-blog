@@ -25,7 +25,7 @@ const bookmarkStyles = {
     margin: 0.5rem 0;
     width: 100%;
     border-radius: 3px;
-    border: 1px solid ${theme.bookmarkBorder};
+    border: 1px solid ${theme.boxBorder};
 
     &:hover {
       background: ${theme.hoverBackground};

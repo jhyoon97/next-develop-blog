@@ -11,7 +11,7 @@ export default {
     codeBg: "#eeeeec",
     caption: "rgba(55, 53, 47, 0.65)",
     link: "#6e6b5e",
-    bookmarkBorder: "#cdcdcd",
+    boxBorder: "#cdcdcd",
     hoverBackground: "#f0f0f0",
     notionRichText: {
       gray: "#787774",
@@ -46,7 +46,7 @@ export default {
     codeBg: "#000",
     caption: "rgba(55, 53, 47, 0.65)",
     link: "#6e6b5e",
-    bookmarkBorder: "#ccdcdcd",
+    boxBorder: "#ccdcdcd",
     hoverBackground: "rgba(55, 53, 47, 0.65)",
     notionRichText: {
       gray: "#787774",

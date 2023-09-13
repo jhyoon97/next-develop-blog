@@ -5,7 +5,7 @@ import { blockBox } from "components/NotionRenderer/commonStyles";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
-import { HasChildColumnList } from "@types";
+import type { HasChildColumnList } from "@types";
 
 interface Props {
   block: HasChildColumnList;
