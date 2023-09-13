@@ -89,7 +89,9 @@ const BulletedList = ({ blocks, depth }: Props) => {
                 ]}
               />
             </div>
-            <RichText richText={item.bulleted_list_item.rich_text} />
+            <p>
+              <RichText richText={item.bulleted_list_item.rich_text} />
+            </p>
           </li>
           {item.bulleted_list_item.children && (
             <NotionRenderer

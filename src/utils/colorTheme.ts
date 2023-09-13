@@ -13,7 +13,7 @@ export default {
     link: "#6e6b5e",
     boxBorder: "#cdcdcd",
     hoverBackground: "#f0f0f0",
-    notionRichText: {
+    notion: {
       gray: "#787774",
       brown: "#9f6b53",
       orange: "#d9730d",
@@ -22,7 +22,7 @@ export default {
       blue: "#337ea9",
       purple: "#9065b0",
       pink: "#c14c8a",
-      red: "#c14c8a",
+      red: "#d44c47",
       gray_background: "#f1f1ef",
       brown_background: "#f4eeee",
       orange_background: "#fbecdd",
@@ -48,7 +48,7 @@ export default {
     link: "#6e6b5e",
     boxBorder: "#ccdcdcd",
     hoverBackground: "rgba(55, 53, 47, 0.65)",
-    notionRichText: {
+    notion: {
       gray: "#787774",
       brown: "#9f6b53",
       orange: "#d9730d",
@@ -57,7 +57,7 @@ export default {
       blue: "#337ea9",
       purple: "#9065b0",
       pink: "#c14c8a",
-      red: "#c14c8a",
+      red: "#d44c47",
       gray_background: "#f1f1ef",
       brown_background: "#f4eeee",
       orange_background: "#fbecdd",

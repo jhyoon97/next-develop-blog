@@ -15,7 +15,7 @@ declare module "@emotion/react" {
     link: string;
     boxBorder: string;
     hoverBackground: string;
-    notionRichText: {
+    notion: {
       gray: string;
       brown: string;
       orange: string;

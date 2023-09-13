@@ -28,7 +28,7 @@ const spanText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
     }
 
     if (!richTextItem.annotations.color.endsWith("background")) {
-      return theme.notionRichText[richTextItem.annotations.color];
+      return theme.notion[richTextItem.annotations.color];
     }
 
     return "inherit";
@@ -39,7 +39,7 @@ const spanText = (theme: Theme, richTextItem: RichTextItemResponse) => css`
     }
 
     if (richTextItem.annotations.color.endsWith("background")) {
-      return theme.notionRichText[richTextItem.annotations.color];
+      return theme.notion[richTextItem.annotations.color];
     }
 
     return "unset";

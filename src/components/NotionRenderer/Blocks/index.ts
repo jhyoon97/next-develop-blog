@@ -9,6 +9,7 @@ import Toggle from "./Toggle";
 import Quote from "./Quote";
 import ColumnList from "./ColumnList";
 import Divider from "./Divider";
+import Callout from "./Callout";
 
 export default {
   HeadingLevel1,
@@ -22,4 +23,5 @@ export default {
   Quote,
   ColumnList,
   Divider,
+  Callout,
 };
