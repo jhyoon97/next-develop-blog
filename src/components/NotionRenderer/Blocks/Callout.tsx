@@ -9,10 +9,10 @@ import {
 import RichText from "components/NotionRenderer/RichText";
 
 // types
-import type { HasChildCallout } from "@types";
+import type { HasChildrenCallout } from "@types";
 
 interface Props {
-  block: HasChildCallout;
+  block: HasChildrenCallout;
 }
 
 const box = css`

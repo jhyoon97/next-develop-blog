@@ -5,10 +5,10 @@ import { blockBox } from "components/NotionRenderer/commonStyles";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
-import type { HasChildColumnList } from "@types";
+import type { HasChildrenColumnList } from "@types";
 
 interface Props {
-  block: HasChildColumnList;
+  block: HasChildrenColumnList;
 }
 
 const box = css`

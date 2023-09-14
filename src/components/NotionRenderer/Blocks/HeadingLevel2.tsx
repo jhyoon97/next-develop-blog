@@ -6,12 +6,12 @@ import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
-import type { ToggleableHeading2 } from "@types";
+import type { HasChildrenToggleableHeading2 } from "@types";
 
 import ToggleOuter from "./ToggleOuter";
 
 interface Props {
-  block: ToggleableHeading2;
+  block: HasChildrenToggleableHeading2;
   depth: number;
 }
 
