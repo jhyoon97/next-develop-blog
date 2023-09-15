@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
-import type { HasChildrenColumnList } from "@types";
+import type { HasChildrenColumnList } from "types/notion";
 
 import { commonBox } from "../common/styles";
 

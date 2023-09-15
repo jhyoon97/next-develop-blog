@@ -5,7 +5,7 @@ import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
-import type { HasChildrenToggleableHeading2 } from "@types";
+import type { HasChildrenToggleableHeading2 } from "types/notion";
 
 import ToggleOuter from "../common/components/ToggleOuter";
 import { commonBox } from "../common/styles";

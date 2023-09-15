@@ -6,7 +6,7 @@ import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
-import type { HasChildrenQuote } from "@types";
+import type { HasChildrenQuote } from "types/notion";
 
 import { commonBox } from "../common/styles";
 

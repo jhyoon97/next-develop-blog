@@ -18,21 +18,6 @@ import type {
   ToDoBlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
-// api/getList
-export type APIPostListResponse = {
-  id: string;
-  title: string;
-  createdAt: string;
-}[];
-
-// api/getPage
-export type APIPostResponse = {
-  title: string;
-  createdAt: string;
-  hasTableOfContents: boolean;
-  blocks: Array<HasChildrenBlockObject>;
-};
-
 // children 추가
 interface HasChildrenParagraphBlockObject
   extends Pick<

@@ -14,7 +14,7 @@ import type {
   HasChildrenBulletedList,
   HasChildrenNumberedList,
   HasChildrenToDo,
-} from "@types";
+} from "types/notion";
 
 import BlockGroups from "./BlockGroups";
 import Blocks from "./Blocks";

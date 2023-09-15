@@ -6,7 +6,7 @@ import typeGuards from "utils/typeGuards";
 
 // types
 import type { Theme } from "@emotion/react";
-import type { ProcessedRichTextItem } from "@types";
+import type { ProcessedRichTextItem } from "types/notion";
 
 import Span from "./Span";
 

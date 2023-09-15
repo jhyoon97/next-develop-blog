@@ -8,7 +8,7 @@ import config from "config";
 import notionUtils from "utils/notion";
 
 // types
-import type { APIPostListResponse } from "@types";
+import type { APIPostListResponse } from "types/api-route";
 
 import client from "./client";
 

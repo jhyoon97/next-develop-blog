@@ -17,7 +17,7 @@ import utils from "utils";
 import typeGuards from "utils/typeGuards";
 
 // types
-import type { ProcessedRichTextArray } from "@types";
+import type { ProcessedRichTextArray } from "types/notion";
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import Span from "./Span";

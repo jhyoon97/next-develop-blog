@@ -6,7 +6,7 @@ import { BiCaretRight } from "react-icons/bi";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
-import type { HasChildrenBlockObject } from "@types";
+import type { HasChildrenBlockObject } from "types/notion";
 import type { Theme } from "@emotion/react";
 
 import { LINE_HEIGHT } from "../constants";

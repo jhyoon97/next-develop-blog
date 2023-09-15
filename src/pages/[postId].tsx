@@ -9,7 +9,7 @@ import notionServices from "services/notion";
 
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
-import type { APIPostResponse } from "@types";
+import type { APIPostResponse } from "types/api-route";
 
 interface Props {
   pageData?: APIPostResponse;

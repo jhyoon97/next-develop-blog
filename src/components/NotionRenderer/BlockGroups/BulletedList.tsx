@@ -6,7 +6,7 @@ import NotionRenderer from "components/NotionRenderer";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
-import type { HasChildrenBulletedList } from "@types";
+import type { HasChildrenBulletedList } from "types/notion";
 import type { Theme } from "@emotion/react";
 
 import { commonBox } from "../common/styles";

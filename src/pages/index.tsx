@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 // types
 import type { GetStaticProps } from "next";
-import type { APIPostListResponse } from "@types";
+import type { APIPostListResponse } from "types/api-route";
 import type { Theme } from "@emotion/react";
 
 // services

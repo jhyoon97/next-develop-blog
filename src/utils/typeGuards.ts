@@ -4,7 +4,7 @@ import type {
   BlockGroup,
   ProcessedRichTextItem,
   RichTextGroup,
-} from "@types";
+} from "types/notion";
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 const contains = <T extends string>(
