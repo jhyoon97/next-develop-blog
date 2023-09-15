@@ -1,12 +1,10 @@
 import { css } from "@emotion/react";
 
-// components
-import RichText from "components/NotionRenderer/RichText";
-
 // types
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Theme } from "@emotion/react";
 
+import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
 
 interface Props {

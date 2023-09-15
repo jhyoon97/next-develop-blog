@@ -1,13 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import { css } from "@emotion/react";
 
-// components
-import RichText from "components/NotionRenderer/RichText";
-
 // types
 import type { Theme } from "@emotion/react";
 import type { HasChildrenTable } from "types/notion";
 
+import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
 import { LINE_HEIGHT } from "../common/constants";
 

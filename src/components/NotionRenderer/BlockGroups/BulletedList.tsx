@@ -3,12 +3,12 @@ import { css } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
-import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { HasChildrenBulletedList } from "types/notion";
 import type { Theme } from "@emotion/react";
 
+import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
 
 interface Props {

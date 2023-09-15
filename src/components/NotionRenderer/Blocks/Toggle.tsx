@@ -1,12 +1,10 @@
 import { css } from "@emotion/react";
 
-// components
-import RichText from "components/NotionRenderer/RichText";
-
 // types
 import type { HasChildrenToggle } from "types/notion";
 
 import ToggleOuter from "../common/components/ToggleOuter";
+import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
 
 interface Props {

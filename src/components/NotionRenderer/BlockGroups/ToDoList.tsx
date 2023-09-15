@@ -4,12 +4,12 @@ import { BsCheck } from "react-icons/bs";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
-import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
 import type { HasChildrenToDo } from "types/notion";
 
+import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
 import { LINE_HEIGHT } from "../common/constants";
 

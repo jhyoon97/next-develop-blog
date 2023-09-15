@@ -2,11 +2,11 @@ import { css, useTheme } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
-import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { HasChildrenCallout } from "types/notion";
 
+import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
 import { LINE_HEIGHT } from "../common/constants";
 
