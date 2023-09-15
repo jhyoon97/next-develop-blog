@@ -1,11 +1,12 @@
 import { css } from "@emotion/react";
 
 // components
-import { blockBox } from "components/NotionRenderer/commonStyles";
 import NotionRenderer from "components/NotionRenderer";
 
 // types
 import type { HasChildrenColumnList } from "@types";
+
+import { commonBox } from "../common/styles";
 
 interface Props {
   block: HasChildrenColumnList;
@@ -25,7 +26,7 @@ const columnBox = css`
 
 const ColumnList = ({ block }: Props) => {
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       {block.column_list.children &&
         block.column_list.children.map((column, _, array) => (
           <div

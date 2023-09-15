@@ -1,13 +1,13 @@
 import { css } from "@emotion/react";
 
 // components
-import { blockBox } from "components/NotionRenderer/commonStyles";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { HasChildrenToggle } from "@types";
 
-import ToggleOuter from "./ToggleOuter";
+import ToggleOuter from "../common/components/ToggleOuter";
+import { commonBox } from "../common/styles";
 
 interface Props {
   block: HasChildrenToggle;
@@ -21,7 +21,7 @@ const box = css`
 
 const Toggle = ({ block, depth }: Props) => {
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       <ToggleOuter
         childrenBlocks={block.toggle.children}
         isToggleable

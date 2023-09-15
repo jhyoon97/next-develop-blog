@@ -3,13 +3,11 @@ import { css } from "@emotion/react";
 import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.min.css";
 
-// components
-import { blockBox } from "components/NotionRenderer/commonStyles";
-
 // types
 import type { CodeBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import Caption from "./Caption";
+import { commonBox } from "../common/styles";
 
 interface Props {
   block: CodeBlockObjectResponse;
@@ -27,7 +25,7 @@ const Code = ({ block }: Props) => {
   }, []);
 
   return (
-    <figure css={blockBox}>
+    <figure css={commonBox}>
       <pre css={codeBox}>
         <code className={`language-${block.code.language}`}>
           {block.code.rich_text[0].plain_text}

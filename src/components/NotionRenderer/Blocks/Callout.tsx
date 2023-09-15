@@ -2,14 +2,13 @@ import { css, useTheme } from "@emotion/react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
-import {
-  blockBox,
-  BLOCK_LINE_HEIGHT,
-} from "components/NotionRenderer/commonStyles";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { HasChildrenCallout } from "@types";
+
+import { commonBox } from "../common/styles";
+import { LINE_HEIGHT } from "../common/constants";
 
 interface Props {
   block: HasChildrenCallout;
@@ -30,8 +29,8 @@ const iconBox = css`
   justify-content: center;
   align-items: center;
   margin-right: 0.5rem;
-  width: ${BLOCK_LINE_HEIGHT}em;
-  height: ${BLOCK_LINE_HEIGHT}em;
+  width: ${LINE_HEIGHT}em;
+  height: ${LINE_HEIGHT}em;
 `;
 
 const iconImage = css`
@@ -43,7 +42,7 @@ const Callout = ({ block }: Props) => {
 
   return (
     <div
-      css={[blockBox, box]}
+      css={[commonBox, box]}
       style={{
         color:
           block.callout.color.endsWith("background") ||

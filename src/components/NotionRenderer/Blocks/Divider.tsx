@@ -1,10 +1,9 @@
 import { css } from "@emotion/react";
 
-// compoennts
-import { blockBox } from "components/NotionRenderer/commonStyles";
-
 // types
 import type { Theme } from "@emotion/react";
+
+import { commonBox } from "../common/styles";
 
 const box = css`
   margin: 1rem 0;
@@ -18,7 +17,7 @@ const divider = (theme: Theme) => css`
 
 const Divider = () => {
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       <div css={divider} />
     </div>
   );

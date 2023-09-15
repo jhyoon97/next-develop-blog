@@ -3,11 +3,12 @@ import { css } from "@emotion/react";
 // components
 import NotionRenderer from "components/NotionRenderer";
 import RichText from "components/NotionRenderer/RichText";
-import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { Theme } from "@emotion/react";
 import type { HasChildrenQuote } from "@types";
+
+import { commonBox } from "../common/styles";
 
 interface Props {
   block: HasChildrenQuote;
@@ -22,7 +23,7 @@ const box = (theme: Theme) => css`
 
 const Quote = ({ block }: Props) => {
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       <RichText richText={block.quote.rich_text} />
 
       {block.quote.children && (

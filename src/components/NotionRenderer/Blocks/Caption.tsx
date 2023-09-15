@@ -1,12 +1,13 @@
 import { css } from "@emotion/react";
 
 // components
-import { blockBox } from "components/NotionRenderer/commonStyles";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { Theme } from "@emotion/react";
+
+import { commonBox } from "../common/styles";
 
 interface Props {
   richText: Array<RichTextItemResponse>;
@@ -20,7 +21,7 @@ const box = (theme: Theme) => css`
 
 const Caption = ({ richText }: Props) => {
   return (
-    <figcaption css={[blockBox, box]}>
+    <figcaption css={[commonBox, box]}>
       <RichText richText={richText} />
     </figcaption>
   );

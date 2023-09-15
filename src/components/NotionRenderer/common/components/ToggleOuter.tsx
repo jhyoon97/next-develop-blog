@@ -4,11 +4,12 @@ import { BiCaretRight } from "react-icons/bi";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
-import { BLOCK_LINE_HEIGHT } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { HasChildrenBlockObject } from "@types";
 import type { Theme } from "@emotion/react";
+
+import { LINE_HEIGHT } from "../constants";
 
 interface Props {
   childrenBlocks?: Array<HasChildrenBlockObject>;
@@ -34,7 +35,7 @@ const toggleButtonBox = css`
   justify-content: center;
   align-items: center;
   width: 1.5rem;
-  height: ${BLOCK_LINE_HEIGHT}em;
+  height: ${LINE_HEIGHT}em;
 `;
 
 const toggleButton = (theme: Theme) => css`

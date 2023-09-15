@@ -5,12 +5,13 @@ import axios from "axios";
 // components
 import LoadingIndicator from "components/LoadingIndicator";
 import RichText from "components/NotionRenderer/RichText";
-import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { BookmarkBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import type { MetaData } from "metadata-scraper";
 import type { Theme } from "@emotion/react";
+
+import { commonBox } from "../common/styles";
 
 import Caption from "./Caption";
 
@@ -163,7 +164,7 @@ const Bookmark = ({ block }: Props) => {
     );
   }
   return (
-    <div css={blockBox}>
+    <div css={commonBox}>
       <a
         css={bookmarkStyles.box}
         href={block.bookmark.url}

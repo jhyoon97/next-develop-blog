@@ -2,15 +2,14 @@
 import { css } from "@emotion/react";
 
 // components
-import {
-  blockBox,
-  BLOCK_LINE_HEIGHT,
-} from "components/NotionRenderer/commonStyles";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
 import type { HasChildrenTable } from "@types";
+
+import { commonBox } from "../common/styles";
+import { LINE_HEIGHT } from "../common/constants";
 
 interface Props {
   block: HasChildrenTable;
@@ -27,7 +26,7 @@ const table = (theme: Theme) => css`
 `;
 
 const tableRow = css`
-  height: ${BLOCK_LINE_HEIGHT + 1}em;
+  height: ${LINE_HEIGHT + 1}em;
 `;
 
 const tableCell = (theme: Theme) => css`
@@ -43,7 +42,7 @@ const titleCell = (theme: Theme) => css`
 
 const Table = ({ block }: Props) => {
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       <table css={table}>
         <tbody>
           {block.table.children &&

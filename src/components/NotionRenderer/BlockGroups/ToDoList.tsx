@@ -3,16 +3,15 @@ import { css, useTheme } from "@emotion/react";
 import { BsCheck } from "react-icons/bs";
 
 // components
-import {
-  blockBox,
-  BLOCK_LINE_HEIGHT,
-} from "components/NotionRenderer/commonStyles";
 import NotionRenderer from "components/NotionRenderer";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
 import type { HasChildrenToDo } from "@types";
+
+import { commonBox } from "../common/styles";
+import { LINE_HEIGHT } from "../common/constants";
 
 interface Props {
   blocks: Array<HasChildrenToDo>;
@@ -35,7 +34,7 @@ const checkboxBox = css`
   align-items: center;
   margin-right: 0.5rem;
   width: 1rem;
-  height: ${BLOCK_LINE_HEIGHT}em;
+  height: ${LINE_HEIGHT}em;
 `;
 
 const checkbox = (theme: Theme, checked: boolean) => css`
@@ -53,7 +52,7 @@ const ToDoList = ({ blocks, depth }: Props) => {
   const theme = useTheme();
 
   return (
-    <ul css={[blockBox, listBox]}>
+    <ul css={[commonBox, listBox]}>
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
           <li css={listItem}>

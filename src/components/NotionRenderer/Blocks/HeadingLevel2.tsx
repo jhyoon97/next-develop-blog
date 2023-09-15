@@ -1,14 +1,14 @@
 import { css } from "@emotion/react";
 
 // components
-import { blockBox } from "components/NotionRenderer/commonStyles";
 import RichText from "components/NotionRenderer/RichText";
 
 // types
 import type { Theme } from "@emotion/react";
 import type { HasChildrenToggleableHeading2 } from "@types";
 
-import ToggleOuter from "./ToggleOuter";
+import ToggleOuter from "../common/components/ToggleOuter";
+import { commonBox } from "../common/styles";
 
 interface Props {
   block: HasChildrenToggleableHeading2;
@@ -30,7 +30,7 @@ const HeadingLevel2 = ({ block, depth }: Props) => {
   // 헤더에서 h1태그, 타이틀에서 h2 태그 사용중이므로 h4태그 사용
 
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       <ToggleOuter
         childrenBlocks={block.heading_2.children}
         isToggleable={block.heading_2.is_toggleable}

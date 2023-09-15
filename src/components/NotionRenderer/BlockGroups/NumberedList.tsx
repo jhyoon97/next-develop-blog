@@ -4,11 +4,12 @@ import { css } from "@emotion/react";
 // components
 import NotionRenderer from "components/NotionRenderer";
 import RichText from "components/NotionRenderer/RichText";
-import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { HasChildrenNumberedList } from "@types";
 import type { Theme } from "@emotion/react";
+
+import { commonBox } from "../common/styles";
 
 interface Props {
   blocks: Array<HasChildrenNumberedList>;
@@ -56,7 +57,7 @@ const listItem = (theme: Theme, depth: number) => {
 const NumberedList = ({ blocks, depth }: Props) => {
   return (
     <ol
-      css={[blockBox, listBox]}
+      css={[commonBox, listBox]}
       style={{ paddingLeft: depth === 1 ? "1.5rem" : 0 }}
     >
       {blocks.map((item) => (

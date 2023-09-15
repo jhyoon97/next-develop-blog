@@ -150,42 +150,6 @@ export interface HasChildrenToDo
   to_do: HasChildrenToDoBlockObject;
 }
 
-export type HasChildrenBlockObject =
-  | BlockObjectResponse
-  | HasChildrenToggleableHeading1
-  | HasChildrenToggleableHeading2
-  | HasChildrenToggleableHeading3
-  | HasChildrenParagraph
-  | HasChildrenBulletedList
-  | HasChildrenNumberedList
-  | HasChildrenToggle
-  | HasChildrenQuote
-  | HasChildrenColumnList
-  | HasChildrenCallout
-  | HasChildrenTable
-  | HasChildrenToDo;
-
-// NotionRenderer
-export interface BlockGroup {
-  groupType: "bulleted_list_item" | "numbered_list_item" | "to_do";
-  blocks: Array<HasChildrenBlockObject>;
-}
-
-export type ProcessedBlock = HasChildrenBlockObject | BlockGroup;
-
-export type ProcessedBlockArray = Array<ProcessedBlock>;
-
-// NotionRenderer/RichText
-export interface RichTextGroup {
-  groupType: "code" | "link";
-  richText: Array<RichTextItemResponse | RichTextGroup>;
-}
-
-export type ProcessedRichTextItem = RichTextItemResponse | RichTextGroup;
-
-export type ProcessedRichTextArray = Array<ProcessedRichTextItem>;
-
-// NotionRenderer/HeadingLevel<n>
 interface HasChildrenToggleableHeading1BlockObject
   extends Pick<
     Heading1BlockObjectResponse["heading_1"],
@@ -227,3 +191,38 @@ export interface HasChildrenToggleableHeading3
   extends Omit<Heading3BlockObjectResponse, "heading_3"> {
   heading_3: HasChildrenToggleableHeading3BlockObject;
 }
+
+export type HasChildrenBlockObject =
+  | BlockObjectResponse
+  | HasChildrenParagraph
+  | HasChildrenBulletedList
+  | HasChildrenNumberedList
+  | HasChildrenToggle
+  | HasChildrenQuote
+  | HasChildrenColumnList
+  | HasChildrenCallout
+  | HasChildrenTable
+  | HasChildrenToDo
+  | HasChildrenToggleableHeading1
+  | HasChildrenToggleableHeading2
+  | HasChildrenToggleableHeading3;
+
+// NotionRenderer
+export interface BlockGroup {
+  groupType: "bulleted_list_item" | "numbered_list_item" | "to_do";
+  blocks: Array<HasChildrenBlockObject>;
+}
+
+export type ProcessedBlock = HasChildrenBlockObject | BlockGroup;
+
+export type ProcessedBlockArray = Array<ProcessedBlock>;
+
+// NotionRenderer/RichText
+export interface RichTextGroup {
+  groupType: "code" | "link";
+  richText: Array<RichTextItemResponse | RichTextGroup>;
+}
+
+export type ProcessedRichTextItem = RichTextItemResponse | RichTextGroup;
+
+export type ProcessedRichTextArray = Array<ProcessedRichTextItem>;

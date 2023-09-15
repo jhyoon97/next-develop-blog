@@ -5,12 +5,12 @@ import NextImage from "next/image";
 
 // components
 import LoadingIndicator from "components/LoadingIndicator";
-import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import Caption from "./Caption";
+import { commonBox } from "../common/styles";
 
 interface Props {
   block: ImageBlockObjectResponse;
@@ -70,7 +70,7 @@ const Image = ({ block }: Props) => {
   };
 
   return (
-    <div css={[blockBox, box]}>
+    <div css={[commonBox, box]}>
       {blockReloadState === "LOADING" ? (
         <LoadingIndicator />
       ) : (

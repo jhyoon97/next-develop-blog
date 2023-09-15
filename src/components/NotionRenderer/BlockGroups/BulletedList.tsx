@@ -4,11 +4,12 @@ import { css } from "@emotion/react";
 // components
 import NotionRenderer from "components/NotionRenderer";
 import RichText from "components/NotionRenderer/RichText";
-import { blockBox } from "components/NotionRenderer/commonStyles";
 
 // types
 import type { HasChildrenBulletedList } from "@types";
 import type { Theme } from "@emotion/react";
+
+import { commonBox } from "../common/styles";
 
 interface Props {
   blocks: Array<HasChildrenBulletedList>;
@@ -60,7 +61,7 @@ const bulletCircle = css`
 
 const BulletedList = ({ blocks, depth }: Props) => {
   return (
-    <ul css={[blockBox, listBox]}>
+    <ul css={[commonBox, listBox]}>
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
           <li css={listItem}>
