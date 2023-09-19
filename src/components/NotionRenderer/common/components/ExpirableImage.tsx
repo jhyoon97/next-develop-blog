@@ -21,13 +21,13 @@ interface Props extends Omit<ImageProps, "src"> {
   expiryTime: string;
 }
 
-const SKELETON_HEIGHT = 150;
-
 const box = css`
   & .skeleton-container {
     width: 100%;
   }
 `;
+
+const SKELETON_HEIGHT = 150;
 
 const ExpirableImage = ({
   wrapperStyle,
