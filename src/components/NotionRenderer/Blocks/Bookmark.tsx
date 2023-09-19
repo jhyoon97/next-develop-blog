@@ -11,9 +11,8 @@ import type { MetaData } from "metadata-scraper";
 import type { Theme } from "@emotion/react";
 
 import RichText from "../common/components/RichText";
+import Caption from "../common/components/Caption";
 import { commonBox } from "../common/styles";
-
-import Caption from "./Caption";
 
 interface Props {
   block: BookmarkBlockObjectResponse;

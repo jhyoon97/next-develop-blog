@@ -6,7 +6,7 @@ import "prismjs/themes/prism-okaidia.min.css";
 // types
 import type { CodeBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-import Caption from "./Caption";
+import Caption from "../common/components/Caption";
 import { commonBox } from "../common/styles";
 
 interface Props {

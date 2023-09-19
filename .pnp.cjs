@@ -57,6 +57,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:18.2.0"],\
             ["react-icons", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:4.11.0"],\
             ["react-loader-spinner", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:5.4.5"],\
+            ["react-loading-skeleton", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:3.3.1"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"]\
           ],\
           "linkType": "SOFT"\
@@ -3896,6 +3897,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:18.2.0"],\
             ["react-icons", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:4.11.0"],\
             ["react-loader-spinner", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:5.4.5"],\
+            ["react-loading-skeleton", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:3.3.1"],\
             ["typescript", "patch:typescript@npm%3A5.0.4#~builtin<compat/typescript>::version=5.0.4&hash=85af82"]\
           ],\
           "linkType": "SOFT"\
@@ -4386,6 +4388,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/react-dom",\
             "@types/react",\
             "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-loading-skeleton", [\
+        ["npm:3.3.1", {\
+          "packageLocation": "./.yarn/cache/react-loading-skeleton-npm-3.3.1-b364092891-0de3437a5d.zip/node_modules/react-loading-skeleton/",\
+          "packageDependencies": [\
+            ["react-loading-skeleton", "npm:3.3.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:3.3.1", {\
+          "packageLocation": "./.yarn/__virtual__/react-loading-skeleton-virtual-7120c21589/0/cache/react-loading-skeleton-npm-3.3.1-b364092891-0de3437a5d.zip/node_modules/react-loading-skeleton/",\
+          "packageDependencies": [\
+            ["react-loading-skeleton", "virtual:a0b8d9866baff5bd5091d974a5371cb49786844da5a75fa72d99a81c272af4ab78ff1d8f66548ed183ae306d470e657c5a3bec40e959cc5382e0aaa77c7027f0#npm:3.3.1"],\
+            ["@types/react", "npm:18.0.33"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
             "react"\
           ],\
           "linkType": "HARD"\

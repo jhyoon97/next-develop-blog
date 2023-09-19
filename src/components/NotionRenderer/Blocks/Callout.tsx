@@ -3,10 +3,14 @@ import { css, useTheme } from "@emotion/react";
 // components
 import NotionRenderer from "components/NotionRenderer";
 
+// utils
+import constants from "utils/constants";
+
 // types
 import type { HasChildrenCallout } from "types/notion";
 
 import RichText from "../common/components/RichText";
+import ExpirableImage from "../common/components/ExpirableImage";
 import { commonBox } from "../common/styles";
 import { LINE_HEIGHT } from "../common/constants";
 
@@ -31,10 +35,6 @@ const iconBox = css`
   margin-right: 0.5rem;
   width: ${LINE_HEIGHT}em;
   height: ${LINE_HEIGHT}em;
-`;
-
-const iconImage = css`
-  border-radius: 3px;
 `;
 
 const Callout = ({ block }: Props) => {
@@ -71,10 +71,14 @@ const Callout = ({ block }: Props) => {
                 return <img src={block.callout.icon.external.url} alt="" />;
               case "file":
                 return (
-                  <img
-                    css={iconImage}
+                  <ExpirableImage
+                    blockId={block.id}
                     src={block.callout.icon.file.url}
+                    expiryTime={block.callout.icon.file.expiry_time}
                     alt=""
+                    width={constants.rootFontSize * 1.6}
+                    height={constants.rootFontSize * 1.6}
+                    wrapperStyle={{ borderRadius: 3, overflow: "hidden" }}
                   />
                 );
               default:
