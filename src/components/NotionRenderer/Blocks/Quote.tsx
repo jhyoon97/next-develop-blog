@@ -18,7 +18,7 @@ const box = (theme: Theme) => css`
   margin-bottom: 1rem;
   padding-left: 1rem;
   font-size: 1rem;
-  border-left: 3px solid ${theme.text};
+  border-left: 3px solid currentcolor;
 `;
 
 const Quote = ({ block }: Props) => {

@@ -20,7 +20,6 @@ const box = css`
 
 const heading = (theme: Theme) => css`
   flex: 1;
-  color: ${theme.text};
   font-weight: bold;
 `;
 

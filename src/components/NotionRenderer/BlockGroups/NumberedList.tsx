@@ -39,7 +39,6 @@ const listItem = (theme: Theme, depth: number) => {
     position: relative;
     margin-bottom: 0.25rem;
     width: 100%;
-    color: ${theme.text};
     font-size: 1rem;
 
     &:before {

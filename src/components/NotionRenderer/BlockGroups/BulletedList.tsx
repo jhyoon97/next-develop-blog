@@ -28,7 +28,6 @@ const listItem = (theme: Theme) =>
     position: relative;
     margin-bottom: 0.25rem;
     width: 100%;
-    color: ${theme.text};
     font-size: 1rem;
   `;
 
@@ -44,8 +43,8 @@ const bulletBox = css`
 const bullet = (theme: Theme) => css`
   width: 100%;
   height: 6px;
-  background: ${theme.text};
-  border-color: ${theme.text};
+  background: currentcolor;
+  border-color: currentcolor;
 `;
 
 const bulletDisc = css`
