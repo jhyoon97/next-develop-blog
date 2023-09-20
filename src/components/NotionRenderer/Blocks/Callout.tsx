@@ -37,6 +37,10 @@ const iconBox = css`
   height: ${LINE_HEIGHT}em;
 `;
 
+const contentBox = css`
+  flex: 1;
+`;
+
 const Callout = ({ block }: Props) => {
   const theme = useTheme();
 
@@ -53,7 +57,7 @@ const Callout = ({ block }: Props) => {
           block.callout.color.endsWith("background") &&
           block.callout.color !== "default"
             ? theme.notion[block.callout.color]
-            : theme.bg,
+            : "transparent",
         border: `1px solid ${
           block.callout.color.endsWith("background")
             ? "transparent"
@@ -87,7 +91,7 @@ const Callout = ({ block }: Props) => {
           })()}
         </div>
       )}
-      <div>
+      <div css={contentBox}>
         <RichText richText={block.callout.rich_text} />
 
         {block.callout.children && (
