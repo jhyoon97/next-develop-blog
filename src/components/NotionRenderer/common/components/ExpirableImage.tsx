@@ -38,7 +38,7 @@ const ExpirableImage = ({
 }: Props) => {
   const [imageURL, setImageURL] = useState(src);
   const [blockReloadState, setBlockReloadState] = useState<
-    null | "LOADING" | "SUCCESS" | "FAILURE"
+    null | "LOADING" | "SUCCESS" | "FAILURE" | "NOT_REQUIRED"
   >(null);
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -74,13 +74,10 @@ const ExpirableImage = ({
   };
 
   useEffect(() => {
-    console.log(
-      `${dayjs(expiryTime).format("YYYY-MM-DD HH:mm:ss")}, ${dayjs().format(
-        "YYYY-MM-DD HH:mm:ss"
-      )}, ${dayjs(expiryTime).isAfter(dayjs(), "seconds")}`
-    );
-    if (dayjs(expiryTime).isAfter(dayjs(), "seconds")) {
+    if (dayjs().isAfter(dayjs(expiryTime), "seconds")) {
       refetchBlock();
+    } else {
+      setBlockReloadState("NOT_REQUIRED");
     }
   }, []);
 
@@ -110,6 +107,7 @@ const ExpirableImage = ({
                 height={imageProps.height || SKELETON_HEIGHT}
               />
             );
+          case "NOT_REQUIRED":
           case "SUCCESS":
             return (
               <>
