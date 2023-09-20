@@ -74,6 +74,11 @@ const ExpirableImage = ({
   };
 
   useEffect(() => {
+    console.log(
+      `${dayjs(expiryTime).format("YYYY-MM-DD HH:mm:ss")}, ${dayjs().format(
+        "YYYY-MM-DD HH:mm:ss"
+      )}, ${dayjs(expiryTime).isAfter(dayjs(), "seconds")}`
+    );
     if (dayjs(expiryTime).isAfter(dayjs(), "seconds")) {
       refetchBlock();
     }
@@ -89,7 +94,7 @@ const ExpirableImage = ({
         justifyContent: "center",
         alignItems: "center",
         width: imageProps.width || "100%",
-        height: imageProps.height || imageLoading ? SKELETON_HEIGHT : "100%",
+        height: imageProps.height || (imageLoading ? SKELETON_HEIGHT : "100%"),
         lineHeight: 1,
         ...wrapperStyle,
       }}

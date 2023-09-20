@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { css } from "@emotion/react";
 import { useEffect } from "react";
 
 // components
@@ -10,6 +11,7 @@ import notionServices from "services/notion";
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
 import type { APIPostResponse } from "types/api-route";
+import type { Theme } from "@emotion/react";
 
 interface Props {
   pageData?: APIPostResponse;
@@ -20,6 +22,19 @@ interface Params {
   [key: string]: string;
   postId: string;
 }
+
+const title = css`
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+`;
+
+const createdAt = (theme: Theme) => css`
+  margin-bottom: 2rem;
+  color: ${theme.subText};
+  font-size: 1rem;
+  display: block;
+`;
 
 const PostDetail = ({ pageData, isError }: Props) => {
   useEffect(() => {
@@ -41,6 +56,8 @@ const PostDetail = ({ pageData, isError }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <h2 css={title}>{pageData.title}</h2>
+      <span css={createdAt}>{pageData.createdAt}</span>
       <NotionRenderer blocks={pageData.blocks} />
     </>
   );

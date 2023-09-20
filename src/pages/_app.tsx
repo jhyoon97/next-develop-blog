@@ -6,7 +6,7 @@ import { Global, ThemeProvider } from "@emotion/react";
 import type { AppProps } from "next/app";
 
 // components
-import Layout from "components/Layout";
+import DefaultLayout from "layouts/Default";
 
 // dayjs
 import dayjs from "dayjs";
@@ -26,9 +26,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={colorTheme.primary}>
       <Global styles={(theme) => resetCss(theme)} />
-      <Layout>
+      <DefaultLayout>
         <Component {...pageProps} />
-      </Layout>
+      </DefaultLayout>
     </ThemeProvider>
   );
 };

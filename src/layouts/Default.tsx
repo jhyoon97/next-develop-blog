@@ -27,23 +27,24 @@ const header = {
     justify-content: flex-start;
     align-items: center;
     margin: 0 auto;
-    padding: 16px 32px;
+    padding: 1rem 2rem;
     width: 100%;
     max-width: 1200px;
   `,
   title: (theme: Theme) => css`
     color: ${theme.headerText};
+    font-size: 1rem;
   `,
 };
 
 const body = {
   box: css`
     z-index: 1;
-    padding: calc(1.5rem + 1.5rem + 2rem) 0 2rem;
+    padding-top: calc(1.5rem + 2rem);
     width: 100%;
   `,
   contentBox: css`
-    padding: 0 32px;
+    padding: 2rem;
     margin: 0 auto;
     width: 100%;
     max-width: 1200px;
