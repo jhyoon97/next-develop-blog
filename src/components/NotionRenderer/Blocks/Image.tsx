@@ -47,6 +47,7 @@ const Image = ({ block }: Props) => {
             blockId={block.id}
             src={block.image.file.url}
             expiryTime={block.image.file.expiry_time}
+            loading="lazy"
             alt=""
           />
         )}

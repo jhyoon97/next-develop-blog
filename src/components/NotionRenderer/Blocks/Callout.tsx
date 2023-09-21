@@ -79,10 +79,11 @@ const Callout = ({ block }: Props) => {
                     blockId={block.id}
                     src={block.callout.icon.file.url}
                     expiryTime={block.callout.icon.file.expiry_time}
-                    alt=""
                     width={constants.rootFontSize * 1.6}
                     height={constants.rootFontSize * 1.6}
                     wrapperStyle={{ borderRadius: 3, overflow: "hidden" }}
+                    loading="lazy"
+                    alt=""
                   />
                 );
               default:
