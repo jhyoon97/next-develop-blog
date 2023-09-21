@@ -48,16 +48,27 @@ const Callout = ({ block }: Props) => {
     <div
       css={[commonBox, box]}
       style={{
-        color:
-          block.callout.color.endsWith("background") ||
-          block.callout.color === "default"
-            ? theme.text
-            : theme.notion[block.callout.color],
-        backgroundColor:
-          block.callout.color.endsWith("background") &&
-          block.callout.color !== "default"
-            ? theme.notion[block.callout.color]
-            : "transparent",
+        color: (() => {
+          if (block.callout.color.endsWith("background")) {
+            return "inherit";
+          }
+
+          if (block.callout.color === "default") {
+            return theme.text;
+          }
+
+          return theme.notion[block.callout.color];
+        })(),
+        backgroundColor: (() => {
+          if (
+            block.callout.color !== "default" &&
+            block.callout.color.endsWith("background")
+          ) {
+            return theme.notion[block.callout.color];
+          }
+
+          return "transparent";
+        })(),
         border: `1px solid ${
           block.callout.color.endsWith("background")
             ? "transparent"
