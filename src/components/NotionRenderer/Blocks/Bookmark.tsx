@@ -1,9 +1,7 @@
 import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-// components
-import LoadingIndicator from "components/LoadingIndicator";
+import Skeleton from "react-loading-skeleton";
 
 // types
 import type { BookmarkBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
@@ -30,6 +28,14 @@ const bookmarkStyles = {
     &:hover {
       background: ${theme.hoverBackground};
     }
+
+    & .skeleton-container {
+      width: 100%;
+    }
+
+    & .skeleton-icon-container {
+      line-height: 1;
+    }
   `,
   textBox: css`
     flex: 4;
@@ -49,9 +55,7 @@ const bookmarkStyles = {
   `,
   title: css`
     width: 100%;
-    margin-bottom: 0.3rem;
     font-size: 1rem;
-    line-height: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -70,11 +74,12 @@ const bookmarkStyles = {
     margin-right: 6px;
     width: 16px;
     height: 16px;
+    display: inline-block;
+    vertical-align: top;
   `,
   url: css`
     flex: 1;
     font-size: 0.75rem;
-    line-height: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -121,9 +126,6 @@ const Bookmark = ({ block }: Props) => {
     }
   }, [block]);
 
-  if (loading === "LOADING") {
-    return <LoadingIndicator />;
-  }
   if (loading === "FAILURE") {
     return (
       <>
@@ -172,27 +174,41 @@ const Bookmark = ({ block }: Props) => {
       >
         <div css={bookmarkStyles.textBox}>
           <div css={bookmarkStyles.textBoxHeader}>
-            <span css={bookmarkStyles.title}>{metadata.title}</span>
-            {metadata.description && (
+            {loading === "LOADING" ? (
+              <Skeleton containerClassName="skeleton-container" count={1} />
+            ) : (
+              <span css={bookmarkStyles.title}>{metadata.title}</span>
+            )}
+
+            {loading !== "LOADING" && metadata.description && (
               <span css={bookmarkStyles.description}>
                 {metadata.description}
               </span>
             )}
           </div>
           <div css={bookmarkStyles.urlRow}>
-            {metadata.icon && !thumbnailError && (
-              <img
-                onError={() => setThumbnailError(true)}
+            {loading === "LOADING" ? (
+              <Skeleton
+                containerClassName="skeleton-icon-container"
                 css={bookmarkStyles.icon}
-                src={metadata.icon}
-                loading="lazy"
-                alt=""
+                style={{ lineHeight: 1 }}
               />
+            ) : (
+              metadata.icon &&
+              !thumbnailError && (
+                <img
+                  onError={() => setThumbnailError(true)}
+                  css={bookmarkStyles.icon}
+                  src={metadata.icon}
+                  loading="lazy"
+                  alt=""
+                />
+              )
             )}
             <span css={bookmarkStyles.url}>{block.bookmark.url}</span>
           </div>
         </div>
-        {metadata.image && !iconError && (
+        {loading !== "LOADING" && metadata.image && !iconError && (
           <div css={bookmarkStyles.thumbnailBox}>
             <img
               onError={() => setIconError(true)}

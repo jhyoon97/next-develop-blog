@@ -1,4 +1,5 @@
 import { css, useTheme } from "@emotion/react";
+import Image from "next/image";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
@@ -83,7 +84,15 @@ const Callout = ({ block }: Props) => {
               case "emoji":
                 return <i>{block.callout.icon.emoji}</i>;
               case "external":
-                return <img src={block.callout.icon.external.url} alt="" />;
+                return (
+                  <Image
+                    src={block.callout.icon.external.url}
+                    width={constants.rootFontSize * 1.6}
+                    height={constants.rootFontSize * 1.6}
+                    loading="lazy"
+                    alt=""
+                  />
+                );
               case "file":
                 return (
                   <ExpirableImage

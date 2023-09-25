@@ -40,7 +40,13 @@ const Image = ({ block }: Props) => {
     <div css={[commonBox, box]}>
       <figure css={figure}>
         {block.image.type === "external" ? (
-          <NextImage fill src={block.image.external.url} alt="" unoptimized />
+          <NextImage
+            fill
+            unoptimized
+            src={block.image.external.url}
+            loading="lazy"
+            alt=""
+          />
         ) : (
           <ExpirableImage
             fill
