@@ -37,6 +37,10 @@ const checkboxBox = css`
   height: ${LINE_HEIGHT}em;
 `;
 
+const textBox = css`
+  flex: 1;
+`;
+
 const checkbox = (theme: Theme, checked: boolean) => css`
   position: relative;
   display: flex;
@@ -67,9 +71,9 @@ const ToDoList = ({ blocks, depth }: Props) => {
                 )}
               </i>
             </div>
-            <p>
+            <div css={textBox}>
               <RichText richText={item.to_do.rich_text} />
-            </p>
+            </div>
           </li>
 
           {item.to_do.children && (

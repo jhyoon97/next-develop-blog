@@ -40,6 +40,10 @@ const bulletBox = css`
   height: 1.5em;
 `;
 
+const textBox = css`
+  flex: 1;
+`;
+
 const bullet = (theme: Theme) => css`
   width: 100%;
   height: 6px;
@@ -81,9 +85,9 @@ const BulletedList = ({ blocks, depth }: Props) => {
                 ]}
               />
             </div>
-            <p>
+            <div css={textBox}>
               <RichText richText={item.bulleted_list_item.rich_text} />
-            </p>
+            </div>
           </li>
           {item.bulleted_list_item.children && (
             <NotionRenderer

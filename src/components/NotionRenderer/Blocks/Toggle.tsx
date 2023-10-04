@@ -17,6 +17,10 @@ const box = css`
   font-size: 1rem;
 `;
 
+const textBox = css`
+  flex: 1;
+`;
+
 const Toggle = ({ block, depth }: Props) => {
   return (
     <div css={[commonBox, box]}>
@@ -25,9 +29,9 @@ const Toggle = ({ block, depth }: Props) => {
         isToggleable
         depth={depth}
       >
-        <p>
+        <div css={textBox}>
           <RichText richText={block.toggle.rich_text} />
-        </p>
+        </div>
       </ToggleOuter>
     </div>
   );
