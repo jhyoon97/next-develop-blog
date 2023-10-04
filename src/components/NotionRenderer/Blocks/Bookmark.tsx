@@ -126,44 +126,6 @@ const Bookmark = ({ block }: Props) => {
     }
   }, [block]);
 
-  if (loading === "FAILURE") {
-    return (
-      <>
-        <div
-          css={css`
-            margin-bottom: 0.5rem;
-          `}
-        >
-          <RichText
-            richText={[
-              {
-                type: "text",
-                href: block.bookmark.url,
-                plain_text: block.bookmark.url,
-                text: {
-                  content: block.bookmark.url,
-                  link: {
-                    url: block.bookmark.url,
-                  },
-                },
-                annotations: {
-                  color: "default",
-                  bold: false,
-                  code: false,
-                  italic: false,
-                  strikethrough: false,
-                  underline: false,
-                },
-              },
-            ]}
-          />
-        </div>
-        {block.bookmark.caption.length > 0 && (
-          <Caption richText={block.bookmark.caption} />
-        )}
-      </>
-    );
-  }
   return (
     <div css={commonBox}>
       <a
@@ -174,11 +136,23 @@ const Bookmark = ({ block }: Props) => {
       >
         <div css={bookmarkStyles.textBox}>
           <div css={bookmarkStyles.textBoxHeader}>
-            {loading === "LOADING" ? (
-              <Skeleton containerClassName="skeleton-container" count={1} />
-            ) : (
-              <span css={bookmarkStyles.title}>{metadata.title}</span>
-            )}
+            {(() => {
+              switch (loading) {
+                case "LOADING":
+                  return (
+                    <Skeleton
+                      containerClassName="skeleton-container"
+                      count={1}
+                    />
+                  );
+                case "SUCCESS":
+                  return (
+                    <span css={bookmarkStyles.title}>{metadata.title}</span>
+                  );
+                default:
+                  return /(?:[\w-]+\.)+[\w-]+/.exec(block.bookmark.url);
+              }
+            })()}
 
             {loading !== "LOADING" && metadata.description && (
               <span css={bookmarkStyles.description}>
@@ -195,9 +169,9 @@ const Bookmark = ({ block }: Props) => {
               />
             ) : (
               metadata.icon &&
-              !thumbnailError && (
+              !iconError && (
                 <img
-                  onError={() => setThumbnailError(true)}
+                  onError={() => setIconError(true)}
                   css={bookmarkStyles.icon}
                   src={metadata.icon}
                   loading="lazy"
@@ -208,10 +182,10 @@ const Bookmark = ({ block }: Props) => {
             <span css={bookmarkStyles.url}>{block.bookmark.url}</span>
           </div>
         </div>
-        {loading !== "LOADING" && metadata.image && !iconError && (
+        {loading !== "LOADING" && metadata.image && !thumbnailError && (
           <div css={bookmarkStyles.thumbnailBox}>
             <img
-              onError={() => setIconError(true)}
+              onError={() => setThumbnailError(true)}
               css={bookmarkStyles.thumbnail}
               src={metadata.image}
               loading="lazy"
