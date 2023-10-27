@@ -1,9 +1,10 @@
 import Head from "next/head";
 import { css } from "@emotion/react";
-import { useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
+import TableOfContents from "components/TableOfContents";
 
 // services
 import notionServices from "services/notion";
@@ -23,10 +24,38 @@ interface Params {
   postId: string;
 }
 
+const box = css`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const titleBox = css``;
+
 const title = css`
   margin-bottom: 0.5rem;
   font-size: 2rem;
   font-weight: bold;
+`;
+
+const contentsBox = css`
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 300px);
+`;
+
+const tableOfContentsBox = css`
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 300px;
+`;
+
+const tableOfContentsFixedBox = css`
+  position: fixed;
+  padding-left: 1rem;
+  width: 300px;
 `;
 
 const createdAt = (theme: Theme) => css`
@@ -37,6 +66,15 @@ const createdAt = (theme: Theme) => css`
 `;
 
 const PostDetail = ({ pageData, isError }: Props) => {
+  const contentsBoxRef = useRef<HTMLDivElement>(null);
+  const [tableOfContentsTop, setTableOfContentsTop] = useState<
+    undefined | number
+  >(undefined);
+
+  useLayoutEffect(() => {
+    setTableOfContentsTop(contentsBoxRef.current?.offsetTop);
+  }, []);
+
   useEffect(() => {
     if (isError) {
       alert("페이지가 존재하지 않습니다.");
@@ -56,9 +94,29 @@ const PostDetail = ({ pageData, isError }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h2 css={title}>{pageData.title}</h2>
-      <span css={createdAt}>{pageData.createdAt}</span>
-      <NotionRenderer blocks={pageData.blocks} />
+      <article css={box}>
+        <div css={titleBox}>
+          <h2 css={title}>{pageData.title}</h2>
+          <time css={createdAt}>{pageData.createdAt}</time>
+        </div>
+
+        <div ref={contentsBoxRef} css={contentsBox}>
+          <NotionRenderer blocks={pageData.blocks} />
+        </div>
+
+        {tableOfContentsTop !== undefined && (
+          <div
+            css={tableOfContentsBox}
+            style={{
+              top: tableOfContentsTop,
+            }}
+          >
+            <div css={tableOfContentsFixedBox}>
+              <TableOfContents blocks={pageData.blocks} />
+            </div>
+          </div>
+        )}
+      </article>
     </>
   );
 };
