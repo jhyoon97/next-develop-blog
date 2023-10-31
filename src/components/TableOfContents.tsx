@@ -6,6 +6,7 @@ import useResizeWindow from "hooks/useResizeWindow";
 import useScroll from "hooks/useScroll";
 
 // types
+import type { Theme } from "@emotion/react";
 import type { HasChildrenBlockObject } from "types/notion";
 
 interface Props {
@@ -21,8 +22,16 @@ const box = css`
   width: 100%;
 `;
 
-const contentItem = (depth: number) => css`
+const contentsItem = (theme: Theme, depth: number) => css`
   margin-left: ${depth - 1}rem;
+  color: ${theme.text};
+`;
+
+const focusedContentsItem = (theme: Theme) => css`
+  color: ${theme.blue};
+  transform-origin: 0 50%;
+  transform: scale(1.05);
+  transition: all 0.1s ease-in;
 `;
 
 const TableOfContents = ({ blocks }: Props) => {
@@ -68,8 +77,10 @@ const TableOfContents = ({ blocks }: Props) => {
       {tableOfContents.map((item) => (
         <div
           key={item.id}
-          css={contentItem(Number(item.type.replace("heading_", "")))}
-          style={{ color: item.id === focusHeadingId ? "red" : "black" }}
+          css={(theme) => [
+            contentsItem(theme, Number(item.type.replace("heading_", ""))),
+            focusHeadingId === item.id && focusedContentsItem(theme),
+          ]}
         >
           {item.text}
         </div>
