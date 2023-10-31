@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { css } from "@emotion/react";
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // components
 import NotionRenderer from "components/NotionRenderer";
@@ -71,7 +71,7 @@ const PostDetail = ({ pageData, isError }: Props) => {
     undefined | number
   >(undefined);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setTableOfContentsTop(contentsBoxRef.current?.offsetTop);
   }, []);
 

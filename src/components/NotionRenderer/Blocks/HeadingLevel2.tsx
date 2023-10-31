@@ -27,7 +27,7 @@ const HeadingLevel2 = ({ block, depth }: Props) => {
   // 헤더에서 h1태그, 타이틀에서 h2 태그 사용중이므로 h4태그 사용
 
   return (
-    <div css={[commonBox, box]}>
+    <div css={[commonBox, box]} id={block.id}>
       <ToggleOuter
         childrenBlocks={block.heading_2.children}
         isToggleable={block.heading_2.is_toggleable}
