@@ -12,12 +12,6 @@ interface Props {
   block: ImageBlockObjectResponse;
 }
 
-const box = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const figure = css`
   display: flex;
   flex-direction: column;
@@ -37,7 +31,7 @@ const figure = css`
 
 const Image = ({ block }: Props) => {
   return (
-    <div css={[commonBox, box]}>
+    <div css={commonBox}>
       <figure css={figure}>
         {block.image.type === "external" ? (
           <NextImage
