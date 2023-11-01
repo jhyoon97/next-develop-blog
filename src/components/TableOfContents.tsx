@@ -25,13 +25,13 @@ const box = css`
 const contentsItem = (theme: Theme, depth: number) => css`
   margin-left: ${depth - 1}rem;
   color: ${theme.text};
+  transform-origin: 0 50%;
+  transition: transform 0.1s ease-in;
 `;
 
 const focusedContentsItem = (theme: Theme) => css`
   color: ${theme.blue};
-  transform-origin: 0 50%;
   transform: scale(1.05);
-  transition: all 0.1s ease-in;
 `;
 
 const TableOfContents = ({ blocks }: Props) => {
