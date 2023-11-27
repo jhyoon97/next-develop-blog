@@ -1,5 +1,6 @@
 import React from "react";
 import { css, useTheme } from "@emotion/react";
+import Link from "next/link";
 
 // types
 import type { Theme } from "@emotion/react";
@@ -58,7 +59,9 @@ const Layout = ({ children }: Props) => {
     <div css={box}>
       <header css={header.box(theme)}>
         <div css={header.innerBox}>
-          <h1 css={header.title(theme)}>jhdev</h1>
+          <Link href="/">
+            <h1 css={header.title(theme)}>jhdev</h1>
+          </Link>
         </div>
       </header>
       <div css={body.box}>
