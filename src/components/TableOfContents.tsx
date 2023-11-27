@@ -85,7 +85,7 @@ const TableOfContents = ({ blocks }: Props) => {
   return (
     <div css={box}>
       {headingList.map((item) => (
-        <button
+        <a
           type="button"
           key={item.id}
           css={(theme) => [
@@ -95,12 +95,10 @@ const TableOfContents = ({ blocks }: Props) => {
           style={{
             marginLeft: `${Number(item.type.replace("heading_", ""))}rem`,
           }}
-          onClick={() => {
-            window.scrollTo({ top: item.offsetTop - 90 });
-          }}
+          href={`#${item.id}`}
         >
           {item.text}
-        </button>
+        </a>
       ))}
     </div>
   );
