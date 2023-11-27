@@ -54,7 +54,7 @@ const TableOfContents = ({ blocks }: Props) => {
       const element = document.getElementById(tableOfContents[i].id);
 
       if (
-        window.scrollY + (element?.getBoundingClientRect().y || 0) - 100 <=
+        window.scrollY + (element?.getBoundingClientRect().y || 0) - 10 <=
           window.scrollY ||
         i === 0
       ) {
