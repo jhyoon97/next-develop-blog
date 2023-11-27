@@ -2,7 +2,6 @@ import { useState, useMemo } from "react";
 import { css } from "@emotion/react";
 
 // hooks
-import useResizeWindow from "hooks/useResizeWindow";
 import useScroll from "hooks/useScroll";
 
 // types
@@ -11,13 +10,6 @@ import type { HasChildrenBlockObject } from "types/notion";
 
 interface Props {
   blocks: Array<HasChildrenBlockObject>;
-}
-
-interface HeadingListItem {
-  id: string;
-  type: string;
-  text: string;
-  offsetTop: number;
 }
 
 const box = css`
@@ -43,7 +35,6 @@ const focusedContentsItem = (theme: Theme) => css`
 `;
 
 const TableOfContents = ({ blocks }: Props) => {
-  const [headingList, setHeadingList] = useState<HeadingListItem[]>([]);
   const [focusHeadingId, setFocusHeadingId] = useState("");
 
   const tableOfContents = useMemo(() => {
@@ -58,33 +49,24 @@ const TableOfContents = ({ blocks }: Props) => {
       }));
   }, [blocks]);
 
-  useResizeWindow(() => {
-    setHeadingList(
-      tableOfContents.map((item) => {
-        const element = document.getElementById(item.id);
-
-        return {
-          id: item.id,
-          type: item.type,
-          text: item.text,
-          offsetTop: window.scrollY + (element?.getBoundingClientRect().y || 0),
-        };
-      })
-    );
-  }, [tableOfContents]);
-
   useScroll(() => {
-    for (let i = headingList.length - 1; i >= 0; i -= 1) {
-      if (headingList[i].offsetTop - 100 <= window.scrollY || i === 0) {
-        setFocusHeadingId(headingList[i].id);
+    for (let i = tableOfContents.length - 1; i >= 0; i -= 1) {
+      const element = document.getElementById(tableOfContents[i].id);
+
+      if (
+        window.scrollY + (element?.getBoundingClientRect().y || 0) - 100 <=
+          window.scrollY ||
+        i === 0
+      ) {
+        setFocusHeadingId(tableOfContents[i].id);
         break;
       }
     }
-  }, [headingList]);
+  }, [tableOfContents]);
 
   return (
     <div css={box}>
-      {headingList.map((item) => (
+      {tableOfContents.map((item) => (
         <a
           type="button"
           key={item.id}
