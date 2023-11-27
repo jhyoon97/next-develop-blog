@@ -15,18 +15,26 @@ interface Props {
 
 interface HeadingListItem {
   id: string;
+  type: string;
+  text: string;
   offsetTop: number;
 }
 
 const box = css`
+  display: flex;
+  flex-direction: column;
   width: 100%;
 `;
 
-const contentsItem = (theme: Theme, depth: number) => css`
-  margin-left: ${depth - 1}rem;
+const contentsItem = (theme: Theme) => css`
   color: ${theme.text};
+  text-align: left;
   transform-origin: 0 50%;
   transition: transform 0.1s ease-in;
+
+  &:hover {
+    color: ${theme.blue};
+  }
 `;
 
 const focusedContentsItem = (theme: Theme) => css`
@@ -57,6 +65,8 @@ const TableOfContents = ({ blocks }: Props) => {
 
         return {
           id: item.id,
+          type: item.type,
+          text: item.text,
           offsetTop: window.scrollY + (element?.getBoundingClientRect().y || 0),
         };
       })
@@ -74,16 +84,23 @@ const TableOfContents = ({ blocks }: Props) => {
 
   return (
     <div css={box}>
-      {tableOfContents.map((item) => (
-        <div
+      {headingList.map((item) => (
+        <button
+          type="button"
           key={item.id}
           css={(theme) => [
-            contentsItem(theme, Number(item.type.replace("heading_", ""))),
-            focusHeadingId === item.id && focusedContentsItem(theme),
+            contentsItem,
+            focusHeadingId === item.id && focusedContentsItem,
           ]}
+          style={{
+            marginLeft: `${Number(item.type.replace("heading_", ""))}rem`,
+          }}
+          onClick={() => {
+            window.scrollTo({ top: item.offsetTop - 90 });
+          }}
         >
           {item.text}
-        </div>
+        </button>
       ))}
     </div>
   );
