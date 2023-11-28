@@ -18,11 +18,6 @@ const figure = css`
   align-items: center;
   width: 100%;
 
-  .expirable-image,
-  & > img {
-    margin: 0.5rem 0;
-  }
-
   img {
     position: relative !important;
     width: auto !important;
@@ -39,6 +34,7 @@ const Image = ({ block }: Props) => {
             unoptimized
             src={block.image.external.url}
             loading="lazy"
+            quality={100}
             alt=""
           />
         ) : (
@@ -47,7 +43,9 @@ const Image = ({ block }: Props) => {
             blockId={block.id}
             src={block.image.file.url}
             expiryTime={block.image.file.expiry_time}
+            quality={100}
             loading="lazy"
+            sizes="1200px"
             alt=""
           />
         )}

@@ -22,6 +22,12 @@ interface Props extends Omit<ImageProps, "src"> {
 }
 
 const box = css`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+
   & .skeleton-container {
     width: 100%;
   }
@@ -86,13 +92,8 @@ const ExpirableImage = ({
       className="expirable-image"
       css={box}
       style={{
-        position: "relative",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         width: imageProps.width || "100%",
         height: imageProps.height || (imageLoading ? SKELETON_HEIGHT : "100%"),
-        lineHeight: 1,
         ...wrapperStyle,
       }}
     >
