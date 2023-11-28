@@ -54,8 +54,8 @@ const TableOfContents = ({ blocks }: Props) => {
       const element = document.getElementById(tableOfContents[i].id);
 
       if (
-        window.scrollY + (element?.getBoundingClientRect().y || 0) - 10 <=
-          window.scrollY ||
+        window.scrollY + (element?.getBoundingClientRect().y || 0) <=
+          window.scrollY + 10 ||
         i === 0
       ) {
         setFocusHeadingId(tableOfContents[i].id);

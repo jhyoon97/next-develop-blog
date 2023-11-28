@@ -2,6 +2,9 @@ import React from "react";
 import { css, useTheme } from "@emotion/react";
 import Link from "next/link";
 
+// utils
+import constants from "utils/constants";
+
 // types
 import type { Theme } from "@emotion/react";
 
@@ -31,6 +34,10 @@ const header = {
     padding: 1rem 2rem;
     width: 100%;
     max-width: 1200px;
+
+    ${constants.mediaQuery.isTablet} {
+      padding: 1rem;
+    }
   `,
   title: (theme: Theme) => css`
     color: ${theme.headerText};
@@ -49,6 +56,10 @@ const body = {
     margin: 0 auto;
     width: 100%;
     max-width: 1200px;
+
+    ${constants.mediaQuery.isTablet} {
+      padding: 1rem;
+    }
   `,
 };
 

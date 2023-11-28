@@ -9,6 +9,9 @@ import TableOfContents from "components/TableOfContents";
 // services
 import notionServices from "services/notion";
 
+// utils
+import constants from "utils/constants";
+
 // types
 import type { GetStaticPaths, GetStaticProps } from "next";
 import type { APIPostResponse } from "types/api-route";
@@ -43,6 +46,10 @@ const contentsBox = css`
   display: flex;
   flex-direction: row;
   width: calc(100% - 300px);
+
+  ${constants.mediaQuery.isTablet} {
+    width: 100%;
+  }
 `;
 
 const tableOfContentsBox = css`
@@ -50,6 +57,10 @@ const tableOfContentsBox = css`
   right: 0;
   top: 0;
   width: 300px;
+
+  ${constants.mediaQuery.isTablet} {
+    display: none;
+  }
 `;
 
 const tableOfContentsFixedBox = css`
