@@ -9,6 +9,15 @@ import notionServices from "@/services/notion";
 import client from "./client";
 
 export default async (postId: string): Promise<PostResponse> => {
+  if (Number.isNaN(Number(postId))) {
+    return {
+      title: "",
+      createdAt: "",
+      hasTableOfContents: false,
+      blocks: [],
+    };
+  }
+
   try {
     const {
       results: [{ id: pageId }],

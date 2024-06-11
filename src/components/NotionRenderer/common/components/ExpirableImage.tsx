@@ -121,7 +121,7 @@ const ExpirableImage = ({
                 <Image
                   {...imageProps}
                   src={imageURL}
-                  onLoadingComplete={() => setImageLoading(false)}
+                  onLoad={() => setImageLoading(false)}
                 />
               </>
             );
