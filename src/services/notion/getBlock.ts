@@ -1,4 +1,3 @@
-// types
 import type { GetBlockResponse } from "@notionhq/client/build/src/api-endpoints";
 
 import client from "./client";

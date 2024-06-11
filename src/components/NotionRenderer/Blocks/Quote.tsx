@@ -1,11 +1,7 @@
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
-// components
-import NotionRenderer from "components/NotionRenderer";
-
-// types
-import type { Theme } from "@emotion/react";
-import type { HasChildrenQuote } from "types/notion";
+import type { HasChildrenQuote } from "@/types/notion";
+import NotionRenderer from "@/components/NotionRenderer";
 
 import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
@@ -14,7 +10,8 @@ interface Props {
   block: HasChildrenQuote;
 }
 
-const box = (theme: Theme) => css`
+const Wrapper = styled.div`
+  ${commonBox}
   margin-bottom: 1rem;
   padding-left: 1rem;
   font-size: 1rem;
@@ -23,7 +20,7 @@ const box = (theme: Theme) => css`
 
 const Quote = ({ block }: Props) => {
   return (
-    <div css={[commonBox, box]}>
+    <Wrapper>
       <RichText richText={block.quote.rich_text} />
 
       {block.quote.children && (
@@ -32,7 +29,7 @@ const Quote = ({ block }: Props) => {
           style={{ marginTop: "0.5rem" }}
         />
       )}
-    </div>
+    </Wrapper>
   );
 };
 

@@ -1,11 +1,10 @@
-export type APIPostListResponse = {
+export type PostListResponse = {
   id: string;
   title: string;
   createdAt: string;
 }[];
 
-// api/getPage
-export type APIPostResponse = {
+export type PostResponse = {
   title: string;
   createdAt: string;
   hasTableOfContents: boolean;

@@ -1,18 +1,13 @@
 import dayjs from "dayjs";
 import { isFullPage, isFullBlock } from "@notionhq/client";
 
-// utils
-import notionUtils from "utils/notion";
-
-// services
-import notionServices from "services/notion";
-
-// types
-import type { APIPostResponse } from "types/api-route";
+import type { PostResponse } from "@/types/app";
+import notionUtils from "@/utils/notion";
+import notionServices from "@/services/notion";
 
 import client from "./client";
 
-export default async (pageId: string): Promise<APIPostResponse> => {
+export default async (pageId: string): Promise<PostResponse> => {
   try {
     const pageResponse = await client.pages.retrieve({
       page_id: pageId,

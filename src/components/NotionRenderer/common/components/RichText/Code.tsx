@@ -1,12 +1,8 @@
 /* eslint-disable react/no-array-index-key */
-import { css, useTheme } from "@emotion/react";
+import styled from "styled-components";
 
-// utils
-import typeGuards from "utils/typeGuards";
-
-// types
-import type { Theme } from "@emotion/react";
-import type { ProcessedRichTextItem } from "types/notion";
+import type { ProcessedRichTextItem } from "@/types/notion";
+import typeGuards from "@/utils/typeGuards";
 
 import Anchor from "./Anchor";
 import Span from "./Span";
@@ -15,18 +11,16 @@ interface Props {
   processedRichTextItem: ProcessedRichTextItem;
 }
 
-const codeText = (theme: Theme) => css`
+const CodeText = styled.code`
   padding: 0px 4px;
-  background: ${theme.codeBg};
-  color: ${theme.code};
+  background: ${({ theme }) => theme.codeBg};
+  color: ${({ theme }) => theme.code};
   border-radius: 4px;
 `;
 
 const Code = ({ processedRichTextItem }: Props) => {
-  const theme = useTheme();
-
   return (
-    <code css={() => codeText(theme)}>
+    <CodeText>
       {(() => {
         if (typeGuards.isRichTextGroup(processedRichTextItem)) {
           return processedRichTextItem.richText.map((item, index) => {
@@ -51,7 +45,7 @@ const Code = ({ processedRichTextItem }: Props) => {
 
         return processedRichTextItem.plain_text;
       })()}
-    </code>
+    </CodeText>
   );
 };
 

@@ -1,12 +1,8 @@
 import React from "react";
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
-// components
-import NotionRenderer from "components/NotionRenderer";
-
-// types
-import type { HasChildrenNumberedList } from "types/notion";
-import type { Theme } from "@emotion/react";
+import type { HasChildrenNumberedList } from "@/types/notion";
+import NotionRenderer from "@/components/NotionRenderer";
 
 import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
@@ -16,54 +12,53 @@ interface Props {
   depth: number;
 }
 
-const listBox = css`
+const Wrapper = styled.ol`
+  ${commonBox}
   list-style: none;
   counter-reset: li;
 `;
 
-const listItem = (theme: Theme, depth: number) => {
-  const type = (() => {
-    switch (depth % 3) {
-      case 1:
-        return "decimal";
-      case 2:
-        return "lower-alpha";
-      case 0:
-        return "lower-roman";
-      default:
-        return "decimal";
-    }
-  })();
+const Item = styled.li<{ $depth: number }>`
+  position: relative;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  font-size: 1rem;
 
-  return css`
-    position: relative;
-    margin-bottom: 0.25rem;
-    width: 100%;
-    font-size: 1rem;
-
-    &:before {
-      counter-increment: li;
-      content: counter(li, ${type}) ".";
-      position: absolute;
-      left: 0;
-      top: 0;
-      transform: translateX(-100%);
-      padding-right: 0.6rem;
-    }
-  `;
-};
+  &:before {
+    counter-increment: li;
+    content: counter(
+        li,
+        ${({ $depth }) =>
+          (() => {
+            switch ($depth % 3) {
+              case 1:
+                return "decimal";
+              case 2:
+                return "lower-alpha";
+              case 0:
+                return "lower-roman";
+              default:
+                return "decimal";
+            }
+          })()}
+      )
+      ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    padding-right: 0.6rem;
+  }
+`;
 
 const NumberedList = ({ blocks, depth }: Props) => {
   return (
-    <ol
-      css={[commonBox, listBox]}
-      style={{ paddingLeft: depth === 1 ? "1.5rem" : 0 }}
-    >
+    <Wrapper style={{ paddingLeft: depth === 1 ? "1.5rem" : 0 }}>
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
-          <li css={(theme) => listItem(theme, depth)}>
+          <Item $depth={depth}>
             <RichText richText={item.numbered_list_item.rich_text} />
-          </li>
+          </Item>
           {item.numbered_list_item.children && (
             <NotionRenderer
               blocks={item.numbered_list_item.children}
@@ -72,7 +67,7 @@ const NumberedList = ({ blocks, depth }: Props) => {
           )}
         </React.Fragment>
       ))}
-    </ol>
+    </Wrapper>
   );
 };
 

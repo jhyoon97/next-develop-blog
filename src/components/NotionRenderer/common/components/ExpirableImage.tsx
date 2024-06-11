@@ -1,14 +1,13 @@
-import { css } from "@emotion/react";
+import type { CSSProperties } from "react";
+import type { ImageProps } from "next/image";
+import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { isFullBlock } from "@notionhq/client";
-import axios from "axios";
 import Image from "next/image";
 import dayjs from "dayjs";
 import Skeleton from "react-loading-skeleton";
 
 // types
-import type { CSSProperties } from "react";
-import type { ImageProps } from "next/image";
 import type {
   ImageBlockObjectResponse,
   CalloutBlockObjectResponse,
@@ -21,7 +20,7 @@ interface Props extends Omit<ImageProps, "src"> {
   expiryTime: string;
 }
 
-const box = css`
+const Wrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -54,9 +53,9 @@ const ExpirableImage = ({
       setBlockReloadState("LOADING");
 
       try {
-        const { data: newBlock } = await axios.get<
-          ImageBlockObjectResponse | CalloutBlockObjectResponse
-        >(`/api/block/${blockId}`);
+        const response = await fetch(`/api/block/${blockId}`);
+        const newBlock: ImageBlockObjectResponse | CalloutBlockObjectResponse =
+          await response.json();
 
         if (isFullBlock(newBlock)) {
           if (newBlock.type === "image" && newBlock.image.type === "file") {
@@ -88,9 +87,8 @@ const ExpirableImage = ({
   }, []);
 
   return (
-    <div
+    <Wrapper
       className="expirable-image"
-      css={box}
       style={{
         width: imageProps.width || "100%",
         height: imageProps.height || (imageLoading ? SKELETON_HEIGHT : "100%"),
@@ -133,7 +131,7 @@ const ExpirableImage = ({
             return null;
         }
       })()}
-    </div>
+    </Wrapper>
   );
 };
 

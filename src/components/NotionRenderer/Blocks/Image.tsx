@@ -1,8 +1,6 @@
-import { css } from "@emotion/react";
-import NextImage from "next/image";
-
-// types
 import type { ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import styled from "styled-components";
+import NextImage from "next/image";
 
 import ExpirableImage from "../common/components/ExpirableImage";
 import Caption from "../common/components/Caption";
@@ -12,13 +10,18 @@ interface Props {
   block: ImageBlockObjectResponse;
 }
 
-const figure = css`
+const Wrapper = styled.div`
+  ${commonBox}
+`;
+
+const Figure = styled.figure`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 
   img {
+    margin: 0.5rem auto;
     position: relative !important;
     width: auto !important;
   }
@@ -26,8 +29,8 @@ const figure = css`
 
 const Image = ({ block }: Props) => {
   return (
-    <div css={commonBox}>
-      <figure css={figure}>
+    <Wrapper>
+      <Figure>
         {block.image.type === "external" ? (
           <NextImage
             fill
@@ -53,8 +56,8 @@ const Image = ({ block }: Props) => {
         {block.image.caption.length > 0 && (
           <Caption richText={block.image.caption} />
         )}
-      </figure>
-    </div>
+      </Figure>
+    </Wrapper>
   );
 };
 

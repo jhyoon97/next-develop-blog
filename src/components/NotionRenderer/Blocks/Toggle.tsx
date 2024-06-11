@@ -1,7 +1,7 @@
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
 // types
-import type { HasChildrenToggle } from "types/notion";
+import type { HasChildrenToggle } from "@/types/notion";
 
 import ToggleOuter from "../common/components/ToggleOuter";
 import RichText from "../common/components/RichText";
@@ -12,28 +12,29 @@ interface Props {
   depth: number;
 }
 
-const box = css`
+const Wrapper = styled.div`
+  ${commonBox}
   margin-bottom: 1rem;
   font-size: 1rem;
 `;
 
-const textBox = css`
+const TextBox = styled.div`
   flex: 1;
 `;
 
 const Toggle = ({ block, depth }: Props) => {
   return (
-    <div css={[commonBox, box]}>
+    <Wrapper>
       <ToggleOuter
         childrenBlocks={block.toggle.children}
         isToggleable
         depth={depth}
       >
-        <div css={textBox}>
+        <TextBox>
           <RichText richText={block.toggle.rich_text} />
-        </div>
+        </TextBox>
       </ToggleOuter>
-    </div>
+    </Wrapper>
   );
 };
 

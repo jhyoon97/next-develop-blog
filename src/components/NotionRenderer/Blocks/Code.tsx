@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { css } from "@emotion/react";
+import styled from "styled-components";
 import Prism from "prismjs";
 import "prismjs/themes/prism-okaidia.min.css";
 
@@ -13,7 +13,11 @@ interface Props {
   block: CodeBlockObjectResponse;
 }
 
-const codeBox = css`
+const Wrapper = styled.figure`
+  ${commonBox}
+`;
+
+const CodeWrapper = styled.pre`
   && {
     margin: 0.5rem 0;
   }
@@ -25,16 +29,16 @@ const Code = ({ block }: Props) => {
   }, []);
 
   return (
-    <figure css={commonBox}>
-      <pre css={codeBox}>
+    <Wrapper>
+      <CodeWrapper>
         <code className={`language-${block.code.language}`}>
           {block.code.rich_text[0].plain_text}
         </code>
-      </pre>
+      </CodeWrapper>
       {block.code.caption.length > 0 && (
         <Caption richText={block.code.caption} />
       )}
-    </figure>
+    </Wrapper>
   );
 };
 

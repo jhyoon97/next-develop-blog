@@ -1,11 +1,11 @@
-// types
+import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
+
 import type {
   ProcessedBlock,
   BlockGroup,
   ProcessedRichTextItem,
   RichTextGroup,
-} from "types/notion";
-import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
+} from "@/types/notion";
 
 const contains = <T extends string>(
   list: ReadonlyArray<T>,

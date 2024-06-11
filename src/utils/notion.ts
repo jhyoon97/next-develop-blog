@@ -1,13 +1,11 @@
-// services
-import notionServices from "services/notion";
-import { isFullPage } from "@notionhq/client";
-
-// types
 import type {
   PageObjectResponse,
   PartialPageObjectResponse,
   BlockObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
+import { isFullPage } from "@notionhq/client";
+
+import notionServices from "@/services/notion";
 
 const getPageTitle = (
   page: PageObjectResponse | PartialPageObjectResponse

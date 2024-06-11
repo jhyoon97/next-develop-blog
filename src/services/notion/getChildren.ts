@@ -1,8 +1,6 @@
 /* eslint-disable no-restricted-syntax */
-import { iteratePaginatedAPI, isFullBlock } from "@notionhq/client";
-
-// types
 import type { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { iteratePaginatedAPI, isFullBlock } from "@notionhq/client";
 
 import client from "./client";
 

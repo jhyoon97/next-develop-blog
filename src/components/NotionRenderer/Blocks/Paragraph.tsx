@@ -1,11 +1,7 @@
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
-// components
-import NotionRenderer from "components/NotionRenderer";
-
-// types
-import type { HasChildrenParagraph } from "types/notion";
-import type { Theme } from "@emotion/react";
+import type { HasChildrenParagraph } from "@/types/notion";
+import NotionRenderer from "@/components/NotionRenderer";
 
 import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
@@ -15,7 +11,8 @@ interface Props {
   depth: number;
 }
 
-const box = (theme: Theme) => css`
+const Text = styled.p`
+  ${commonBox}
   margin-bottom: 0.25rem;
   font-size: 1rem;
 `;
@@ -23,9 +20,9 @@ const box = (theme: Theme) => css`
 const Paragraph = ({ block, depth }: Props) => {
   return (
     <>
-      <p css={[commonBox, box]}>
+      <Text>
         <RichText richText={block.paragraph.rich_text} />
-      </p>
+      </Text>
       {block.paragraph.children && (
         <NotionRenderer blocks={block.paragraph.children} depth={depth + 1} />
       )}

@@ -1,13 +1,9 @@
-import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { BiCaretRight } from "react-icons/bi";
+import styled from "styled-components";
 
-// components
-import NotionRenderer from "components/NotionRenderer";
-
-// types
-import type { HasChildrenBlockObject } from "types/notion";
-import type { Theme } from "@emotion/react";
+import type { HasChildrenBlockObject } from "@/types/notion";
+import NotionRenderer from "@/components/NotionRenderer";
 
 import { LINE_HEIGHT } from "../constants";
 
@@ -18,19 +14,19 @@ interface Props {
   children: React.ReactNode;
 }
 
-const box = css`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const titleRow = css`
+const TitleRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 `;
 
-const toggleButtonBox = css`
+const ToggleButtonWrpper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +34,7 @@ const toggleButtonBox = css`
   height: ${LINE_HEIGHT}em;
 `;
 
-const toggleButton = (theme: Theme) => css`
+const ToggleButton = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -53,11 +49,11 @@ const toggleButton = (theme: Theme) => css`
   }
 
   &:hover {
-    background: ${theme.hoverBackground};
+    background: ${({ theme }) => theme.hoverBackground};
   }
 `;
 
-const childrenBox = css`
+const ChildrenWrapper = styled.div`
   margin-left: 1.5rem;
 `;
 
@@ -70,38 +66,34 @@ const ToggleOuter = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div css={box}>
-      <div css={titleRow}>
+    <Wrapper>
+      <TitleRow>
         {isToggleable && (
-          <div css={toggleButtonBox}>
-            <button
-              type="button"
-              css={toggleButton}
-              onClick={() => setIsOpen(!isOpen)}
-            >
+          <ToggleButtonWrpper>
+            <ToggleButton type="button" onClick={() => setIsOpen(!isOpen)}>
               <BiCaretRight
                 size="20"
                 style={{
                   transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
                 }}
               />
-            </button>
-          </div>
+            </ToggleButton>
+          </ToggleButtonWrpper>
         )}
 
         {children}
-      </div>
+      </TitleRow>
 
       {childrenBlocks && isToggleable && isOpen && (
-        <div css={childrenBox}>
+        <ChildrenWrapper>
           <NotionRenderer
             blocks={childrenBlocks}
             depth={depth}
             style={{ marginTop: "0.5rem" }}
           />
-        </div>
+        </ChildrenWrapper>
       )}
-    </div>
+    </Wrapper>
   );
 };
 

@@ -1,14 +1,10 @@
-import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import styled from "styled-components";
 import Skeleton from "react-loading-skeleton";
 
-// types
 import type { BookmarkBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import type { MetaData } from "metadata-scraper";
-import type { Theme } from "@emotion/react";
+import type { OgObject } from "open-graph-scraper/dist/lib/types";
 
-import RichText from "../common/components/RichText";
 import Caption from "../common/components/Caption";
 import { commonBox } from "../common/styles";
 
@@ -16,17 +12,21 @@ interface Props {
   block: BookmarkBlockObjectResponse;
 }
 
-const bookmarkStyles = {
-  box: (theme: Theme) => css`
+const Wrapper = styled.div`
+  ${commonBox}
+`;
+
+const BookmarkStyles = {
+  Wrapper: styled.a`
     display: flex;
     flex-direction: row;
     margin: 0.5rem 0;
     width: 100%;
     border-radius: 3px;
-    border: 1px solid ${theme.boxBorder};
+    border: 1px solid ${({ theme }) => theme.boxBorder};
 
     &:hover {
-      background: ${theme.hoverBackground};
+      background: ${({ theme }) => theme.hoverBackground};
     }
 
     & .skeleton-container {
@@ -37,7 +37,7 @@ const bookmarkStyles = {
       line-height: 1;
     }
   `,
-  textBox: css`
+  TextBox: styled.div`
     flex: 4;
     display: flex;
     flex-direction: column;
@@ -46,49 +46,49 @@ const bookmarkStyles = {
     padding: 0.9rem;
     overflow: hidden;
   `,
-  textBoxHeader: css`
+  TextBoxHeader: styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
     overflow: hidden;
   `,
-  title: css`
+  Title: styled.span`
     width: 100%;
     font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   `,
-  description: (theme: Theme) => css`
+  Description: styled.span`
     font-size: 0.875rem;
-    color: ${theme.subText};
+    color: ${({ theme }) => theme.subText};
   `,
-  urlRow: css`
+  UrlRow: styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 1rem;
   `,
-  icon: css`
+  Icon: styled.img`
     margin-right: 6px;
     width: 16px;
     height: 16px;
     display: inline-block;
     vertical-align: top;
   `,
-  url: css`
+  Url: styled.span`
     flex: 1;
     font-size: 0.75rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   `,
-  thumbnailBox: css`
+  ThumbnailBox: styled.div`
     flex: 1;
     position: relative;
   `,
-  thumbnail: css`
+  Thumbnail: styled.img`
     position: absolute;
     top: 0;
     left: 0;
@@ -98,44 +98,46 @@ const bookmarkStyles = {
   `,
 };
 
+const IconSkeleton = styled(Skeleton)`
+  ${BookmarkStyles.Icon};
+`;
+
 const Bookmark = ({ block }: Props) => {
   const [loading, setLoading] = useState<"LOADING" | "SUCCESS" | "FAILURE">(
     "LOADING"
   );
   const [thumbnailError, setThumbnailError] = useState(false);
   const [iconError, setIconError] = useState(false);
-  const [metadata, setMetadata] = useState<MetaData>({});
-
-  const fetchMetadata = async () => {
-    try {
-      const { data } = await axios.get<MetaData>(
-        `/api/metadata?url=${block.bookmark.url}`
-      );
-
-      setMetadata(data);
-      setLoading("SUCCESS");
-    } catch (err) {
-      setLoading("FAILURE");
-      console.log(err);
-    }
-  };
+  const [metadata, setMetadata] = useState<OgObject>({});
 
   useEffect(() => {
     if (block.bookmark.url) {
-      fetchMetadata();
+      (async () => {
+        try {
+          const response = await fetch(
+            `/api/metadata?url=${encodeURI(block.bookmark.url)}`
+          );
+          const data: OgObject = await response.json();
+
+          setMetadata(data);
+          setLoading("SUCCESS");
+        } catch (err) {
+          setLoading("FAILURE");
+          console.log(err);
+        }
+      })();
     }
   }, [block]);
 
   return (
-    <div css={commonBox}>
-      <a
-        css={bookmarkStyles.box}
+    <Wrapper>
+      <BookmarkStyles.Wrapper
         href={block.bookmark.url}
         target="_blank"
         rel="noreferrer"
       >
-        <div css={bookmarkStyles.textBox}>
-          <div css={bookmarkStyles.textBoxHeader}>
+        <BookmarkStyles.TextBox>
+          <BookmarkStyles.TextBoxHeader>
             {(() => {
               switch (loading) {
                 case "LOADING":
@@ -147,57 +149,58 @@ const Bookmark = ({ block }: Props) => {
                   );
                 case "SUCCESS":
                   return (
-                    <span css={bookmarkStyles.title}>{metadata.title}</span>
+                    <BookmarkStyles.Title>
+                      {metadata.ogTitle}
+                    </BookmarkStyles.Title>
                   );
                 default:
                   return /(?:[\w-]+\.)+[\w-]+/.exec(block.bookmark.url);
               }
             })()}
 
-            {loading !== "LOADING" && metadata.description && (
-              <span css={bookmarkStyles.description}>
-                {metadata.description}
-              </span>
+            {loading !== "LOADING" && metadata.ogDescription && (
+              <BookmarkStyles.Description>
+                {metadata.ogDescription}
+              </BookmarkStyles.Description>
             )}
-          </div>
-          <div css={bookmarkStyles.urlRow}>
+          </BookmarkStyles.TextBoxHeader>
+          <BookmarkStyles.UrlRow>
             {loading === "LOADING" ? (
-              <Skeleton
+              <IconSkeleton
                 containerClassName="skeleton-icon-container"
-                css={bookmarkStyles.icon}
                 style={{ lineHeight: 1 }}
               />
             ) : (
-              metadata.icon &&
+              metadata.favicon &&
               !iconError && (
-                <img
+                <BookmarkStyles.Icon
                   onError={() => setIconError(true)}
-                  css={bookmarkStyles.icon}
-                  src={metadata.icon}
+                  src={metadata.favicon}
                   loading="lazy"
                   alt=""
                 />
               )
             )}
-            <span css={bookmarkStyles.url}>{block.bookmark.url}</span>
-          </div>
-        </div>
-        {loading !== "LOADING" && metadata.image && !thumbnailError && (
-          <div css={bookmarkStyles.thumbnailBox}>
-            <img
-              onError={() => setThumbnailError(true)}
-              css={bookmarkStyles.thumbnail}
-              src={metadata.image}
-              loading="lazy"
-              alt=""
-            />
-          </div>
-        )}
-      </a>
+            <BookmarkStyles.Url>{block.bookmark.url}</BookmarkStyles.Url>
+          </BookmarkStyles.UrlRow>
+        </BookmarkStyles.TextBox>
+        {loading !== "LOADING" &&
+          metadata.ogImage?.[0].url &&
+          !thumbnailError && (
+            <BookmarkStyles.ThumbnailBox>
+              <BookmarkStyles.Thumbnail
+                onError={() => setThumbnailError(true)}
+                src={metadata.ogImage[0].url}
+                loading="lazy"
+                alt=""
+              />
+            </BookmarkStyles.ThumbnailBox>
+          )}
+      </BookmarkStyles.Wrapper>
       {block.bookmark.caption.length > 0 && (
         <Caption richText={block.bookmark.caption} />
       )}
-    </div>
+    </Wrapper>
   );
 };
 

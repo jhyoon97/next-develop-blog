@@ -1,12 +1,8 @@
 import React from "react";
-import { css } from "@emotion/react";
+import styled, { css } from "styled-components";
 
-// components
-import NotionRenderer from "components/NotionRenderer";
-
-// types
-import type { HasChildrenBulletedList } from "types/notion";
-import type { Theme } from "@emotion/react";
+import type { HasChildrenBulletedList } from "@/types/notion";
+import NotionRenderer from "@/components/NotionRenderer";
 
 import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
@@ -16,22 +12,22 @@ interface Props {
   depth: number;
 }
 
-const listBox = css`
+const Wrapper = styled.ul`
+  ${commonBox}
   list-style: none;
 `;
 
-const listItem = (theme: Theme) =>
-  css`
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    position: relative;
-    margin-bottom: 0.25rem;
-    width: 100%;
-    font-size: 1rem;
-  `;
+const Item = styled.li`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  font-size: 1rem;
+`;
 
-const bulletBox = css`
+const BulletBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -40,55 +36,49 @@ const bulletBox = css`
   height: 1.5em;
 `;
 
-const textBox = css`
+const TextWrapper = styled.div`
   flex: 1;
 `;
 
-const bullet = (theme: Theme) => css`
+const Bullet = styled.i<{ $depth: number }>`
   width: 100%;
   height: 6px;
   background: currentcolor;
   border-color: currentcolor;
-`;
 
-const bulletDisc = css`
-  border-radius: 50%;
-`;
-
-const bulletCircle = css`
-  border-radius: 50%;
-  border-width: 1px;
-  border-style: solid;
-  background: transparent;
+  ${({ $depth }) =>
+    (() => {
+      switch ($depth % 3) {
+        case 1:
+          return css`
+            border-radius: 50%;
+          `;
+        case 0:
+          return css`
+            border-radius: 50%;
+            border-width: 1px;
+            border-style: solid;
+            background: transparent;
+          `;
+        default:
+          return css``;
+      }
+    })()}
 `;
 
 const BulletedList = ({ blocks, depth }: Props) => {
   return (
-    <ul css={[commonBox, listBox]}>
+    <Wrapper>
       {blocks.map((item) => (
         <React.Fragment key={item.id}>
-          <li css={listItem}>
-            <div css={bulletBox}>
-              <i
-                css={[
-                  bullet,
-                  (() => {
-                    switch (depth % 3) {
-                      case 1:
-                        return bulletDisc;
-                      case 0:
-                        return bulletCircle;
-                      default:
-                        return null;
-                    }
-                  })(),
-                ]}
-              />
-            </div>
-            <div css={textBox}>
+          <Item>
+            <BulletBox>
+              <Bullet $depth={depth} />
+            </BulletBox>
+            <TextWrapper>
               <RichText richText={item.bulleted_list_item.rich_text} />
-            </div>
-          </li>
+            </TextWrapper>
+          </Item>
           {item.bulleted_list_item.children && (
             <NotionRenderer
               blocks={item.bulleted_list_item.children}
@@ -97,7 +87,7 @@ const BulletedList = ({ blocks, depth }: Props) => {
           )}
         </React.Fragment>
       ))}
-    </ul>
+    </Wrapper>
   );
 };
 

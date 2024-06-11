@@ -1,25 +1,23 @@
-import { css } from "@emotion/react";
-
-// types
-import type { Theme } from "@emotion/react";
+import styled from "styled-components";
 
 import { commonBox } from "../common/styles";
 
-const box = css`
+const Wrapper = styled.div`
+  ${commonBox}
   margin: 1rem 0;
 `;
 
-const divider = (theme: Theme) => css`
+const DividerLine = styled.div`
   width: 100%;
   height: 1px;
-  background: ${theme.boxBorder};
+  background: ${({ theme }) => theme.boxBorder};
 `;
 
 const Divider = () => {
   return (
-    <div css={[commonBox, box]}>
-      <div css={divider} />
-    </div>
+    <Wrapper>
+      <DividerLine />
+    </Wrapper>
   );
 };
 

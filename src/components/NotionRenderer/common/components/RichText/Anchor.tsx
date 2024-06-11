@@ -1,12 +1,8 @@
 /* eslint-disable react/no-array-index-key */
-import { css, useTheme } from "@emotion/react";
+import styled from "styled-components";
 
-// utils
-import typeGuards from "utils/typeGuards";
-
-// types
-import type { Theme } from "@emotion/react";
-import type { ProcessedRichTextItem } from "types/notion";
+import type { ProcessedRichTextItem } from "@/types/notion";
+import typeGuards from "@/utils/typeGuards";
 
 import Span from "./Span";
 
@@ -14,9 +10,9 @@ interface Props {
   processedRichTextItem: ProcessedRichTextItem;
 }
 
-const anchorText = (theme: Theme) => css`
-  color: ${theme.link};
-  border-bottom: 1px solid ${theme.link};
+const AnchorText = styled.a`
+  color: ${({ theme }) => theme.link};
+  border-bottom: 1px solid ${({ theme }) => theme.link};
   opacity: 0.6;
 
   &:hover {
@@ -25,11 +21,8 @@ const anchorText = (theme: Theme) => css`
 `;
 
 const Anchor = ({ processedRichTextItem }: Props) => {
-  const theme = useTheme();
-
   return (
-    <a
-      css={() => anchorText(theme)}
+    <AnchorText
       href={(() => {
         if (
           typeGuards.isRichTextItemResponse(processedRichTextItem) &&
@@ -66,7 +59,7 @@ const Anchor = ({ processedRichTextItem }: Props) => {
 
         return processedRichTextItem.plain_text;
       })()}
-    </a>
+    </AnchorText>
   );
 };
 

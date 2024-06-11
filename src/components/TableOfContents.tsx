@@ -1,37 +1,30 @@
 import { useState, useMemo } from "react";
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
-// hooks
-import useScroll from "hooks/useScroll";
+import useScroll from "@/hooks/useScroll";
 
-// types
-import type { Theme } from "@emotion/react";
-import type { HasChildrenBlockObject } from "types/notion";
+import type { HasChildrenBlockObject } from "@/types/notion";
 
 interface Props {
   blocks: Array<HasChildrenBlockObject>;
 }
 
-const box = css`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
-const contentsItem = (theme: Theme) => css`
-  color: ${theme.text};
+const Item = styled.a<{ $isFocused: boolean }>`
+  color: ${({ theme, $isFocused }) => ($isFocused ? theme.blue : theme.text)};
   text-align: left;
   transform-origin: 0 50%;
   transition: transform 0.1s ease-in;
+  transform: scale(${({ $isFocused }) => ($isFocused ? 1.05 : 1)});
 
   &:hover {
-    color: ${theme.blue};
+    color: ${({ theme }) => theme.blue};
   }
-`;
-
-const focusedContentsItem = (theme: Theme) => css`
-  color: ${theme.blue};
-  transform: scale(1.05);
 `;
 
 const TableOfContents = ({ blocks }: Props) => {
@@ -65,24 +58,21 @@ const TableOfContents = ({ blocks }: Props) => {
   }, [tableOfContents]);
 
   return (
-    <div css={box}>
+    <Wrapper>
       {tableOfContents.map((item) => (
-        <a
+        <Item
           type="button"
           key={item.id}
-          css={(theme) => [
-            contentsItem,
-            focusHeadingId === item.id && focusedContentsItem,
-          ]}
+          $isFocused={focusHeadingId === item.id}
           style={{
             marginLeft: `${Number(item.type.replace("heading_", ""))}rem`,
           }}
           href={`#${item.id}`}
         >
           {item.text}
-        </a>
+        </Item>
       ))}
-    </div>
+    </Wrapper>
   );
 };
 

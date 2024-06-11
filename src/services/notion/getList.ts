@@ -1,18 +1,13 @@
 import dayjs from "dayjs";
 import { isFullPage } from "@notionhq/client";
 
-// config
-import config from "config";
-
-// utils
-import notionUtils from "utils/notion";
-
-// types
-import type { APIPostListResponse } from "types/api-route";
+import type { PostListResponse } from "@/types/app";
+import config from "@/config";
+import notionUtils from "@/utils/notion";
 
 import client from "./client";
 
-export default async (): Promise<APIPostListResponse> => {
+export default async (): Promise<PostListResponse> => {
   try {
     const response = await client.databases.query({
       database_id: config.notion.databaseId,

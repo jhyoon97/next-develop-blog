@@ -1,12 +1,7 @@
-import { css } from "@emotion/react";
-import { useMemo } from "react";
-
-// utils
-import utils from "utils";
-import typeGuards from "utils/typeGuards";
-
-// types
 import type { CSSProperties } from "react";
+import { useMemo } from "react";
+import styled from "styled-components";
+
 import type {
   BlockGroup,
   HasChildrenBlockObject,
@@ -14,7 +9,9 @@ import type {
   HasChildrenBulletedList,
   HasChildrenNumberedList,
   HasChildrenToDo,
-} from "types/notion";
+} from "@/types/notion";
+import utils from "@/utils";
+import typeGuards from "@/utils/typeGuards";
 
 import BlockGroups from "./BlockGroups";
 import Blocks from "./Blocks";
@@ -25,11 +22,11 @@ interface Props {
   style?: CSSProperties;
 }
 
-const box = (depth: number) => css`
+const Wrapper = styled.div<{ $depth: number }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-left: ${depth > 1 ? 1.5 : 0}rem;
+  padding-left: ${({ $depth }) => ($depth > 1 ? 1.5 : 0)}rem;
   width: 100%;
 `;
 
@@ -66,7 +63,7 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
   }, [blocks]);
 
   return (
-    <div css={box(depth)} style={style}>
+    <Wrapper $depth={depth} style={style}>
       {processedBlockArray.map((item) =>
         (() => {
           if (typeGuards.isBlockGroup(item)) {
@@ -154,7 +151,7 @@ const NotionRenderer = ({ blocks, depth = 1, style = {} }: Props) => {
           }
         })()
       )}
-    </div>
+    </Wrapper>
   );
 };
 

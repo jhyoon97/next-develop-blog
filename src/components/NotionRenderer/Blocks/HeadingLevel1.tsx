@@ -1,8 +1,6 @@
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
-// types
-import type { Theme } from "@emotion/react";
-import type { HasChildrenToggleableHeading1 } from "types/notion";
+import type { HasChildrenToggleableHeading1 } from "@/types/notion";
 
 import ToggleOuter from "../common/components/ToggleOuter";
 import RichText from "../common/components/RichText";
@@ -13,17 +11,18 @@ interface Props {
   depth: number;
 }
 
-const box = css`
+const Wrapper = styled.div`
+  ${commonBox}
   margin: 2rem 0 1rem;
   font-size: 1.6rem;
 `;
 
-const heading = (theme: Theme) => css`
+const Heading = styled.h3`
   flex: 1;
   font-weight: bold;
 `;
 
-const anchor = css`
+const Anchor = styled.div`
   display: hidden;
   position: relative;
   top: -90px;
@@ -33,18 +32,18 @@ const HeadingLevel1 = ({ block, depth }: Props) => {
   // 헤더에서 h1태그, 타이틀에서 h2 태그 사용중이므로 h3태그 사용
 
   return (
-    <div css={[commonBox, box]}>
-      <div css={anchor} id={block.id} />
+    <Wrapper>
+      <Anchor id={block.id} />
       <ToggleOuter
         childrenBlocks={block.heading_1.children}
         isToggleable={block.heading_1.is_toggleable}
         depth={depth}
       >
-        <h3 css={heading}>
+        <Heading>
           <RichText richText={block.heading_1.rich_text} />
-        </h3>
+        </Heading>
       </ToggleOuter>
-    </div>
+    </Wrapper>
   );
 };
 

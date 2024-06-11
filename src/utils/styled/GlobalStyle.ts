@@ -1,22 +1,29 @@
-import { css } from "@emotion/react";
+import { createGlobalStyle } from "styled-components";
 
-// utils
-import constants from "utils/constants";
+const styled = { createGlobalStyle };
 
-// types
-import type { Theme } from "@emotion/react";
-
-export default (theme: Theme) => css`
+const GlobalStyles = styled.createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     font: inherit;
     color: inherit;
-    font-family: "Noto Sans KR", sans-serif;
+    font-family:
+      Pretendard,
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      Roboto,
+      "Helvetica Neue",
+      "Segoe UI",
+      "Apple SD Gothic Neo",
+      "Noto Sans KR",
+      "Malgun Gothic",
+      "Apple Color Emoji",
+      "Segoe UI Emoji",
+      "Segoe UI Symbol",
+      sans-serif;
     font-size: inherit;
-  }
-  code[class*="language-"] * {
-    font-family: inherit;
   }
   *,
   :after,
@@ -35,11 +42,12 @@ export default (theme: Theme) => css`
     tab-size: 4;
   }
   html {
-    font-size: ${constants.rootFontSize}px;
-    background: ${theme.bg};
+    background: ${(props) => props.theme.bg};
+    font-size: 16px;
   }
   html,
-  body {
+  body,
+  #__next {
     height: 100%;
   }
   img,
@@ -62,4 +70,10 @@ export default (theme: Theme) => css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  ol,
+  ul {
+    list-style: none;
+  }
 `;
+
+export default GlobalStyles;

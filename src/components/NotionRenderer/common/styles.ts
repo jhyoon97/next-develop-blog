@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from "styled-components";
 import { LINE_HEIGHT } from "./constants";
 
 export const commonBox = css`

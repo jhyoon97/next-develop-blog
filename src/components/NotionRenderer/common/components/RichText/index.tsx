@@ -12,13 +12,10 @@ RichText
 */
 import { useMemo } from "react";
 
-// utils
-import utils from "utils";
-import typeGuards from "utils/typeGuards";
-
-// types
-import type { ProcessedRichTextArray } from "types/notion";
 import type { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { ProcessedRichTextArray } from "@/types/notion";
+import utils from "@/utils";
+import typeGuards from "@/utils/typeGuards";
 
 import Span from "./Span";
 import Anchor from "./Anchor";

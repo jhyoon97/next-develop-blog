@@ -1,14 +1,9 @@
-import { css, useTheme } from "@emotion/react";
+import styled, { useTheme } from "styled-components";
 import Image from "next/image";
 
-// components
-import NotionRenderer from "components/NotionRenderer";
-
-// utils
-import constants from "utils/constants";
-
-// types
-import type { HasChildrenCallout } from "types/notion";
+import type { HasChildrenCallout } from "@/types/notion";
+import NotionRenderer from "@/components/NotionRenderer";
+import constants from "@/utils/constants";
 
 import RichText from "../common/components/RichText";
 import ExpirableImage from "../common/components/ExpirableImage";
@@ -19,7 +14,8 @@ interface Props {
   block: HasChildrenCallout;
 }
 
-const box = css`
+const Wrapper = styled.div`
+  ${commonBox}
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -29,7 +25,7 @@ const box = css`
   font-size: 1rem;
 `;
 
-const iconBox = css`
+const IconBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +34,7 @@ const iconBox = css`
   height: ${LINE_HEIGHT}em;
 `;
 
-const contentBox = css`
+const ContentWrapper = styled.div`
   flex: 1;
 `;
 
@@ -46,8 +42,7 @@ const Callout = ({ block }: Props) => {
   const theme = useTheme();
 
   return (
-    <div
-      css={[commonBox, box]}
+    <Wrapper
       style={{
         color: (() => {
           if (block.callout.color.endsWith("background")) {
@@ -78,7 +73,7 @@ const Callout = ({ block }: Props) => {
       }}
     >
       {block.callout.icon && (
-        <div css={iconBox}>
+        <IconBox>
           {(() => {
             switch (block.callout.icon.type) {
               case "emoji":
@@ -110,16 +105,16 @@ const Callout = ({ block }: Props) => {
                 return null;
             }
           })()}
-        </div>
+        </IconBox>
       )}
-      <div css={contentBox}>
+      <ContentWrapper>
         <RichText richText={block.callout.rich_text} />
 
         {block.callout.children && (
           <NotionRenderer blocks={block.callout.children} />
         )}
-      </div>
-    </div>
+      </ContentWrapper>
+    </Wrapper>
   );
 };
 

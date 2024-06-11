@@ -1,4 +1,3 @@
-// types
 import type {
   BlockObjectResponse,
   RichTextItemResponse,

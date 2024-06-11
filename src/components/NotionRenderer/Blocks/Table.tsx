@@ -1,9 +1,7 @@
 /* eslint-disable react/no-array-index-key */
-import { css } from "@emotion/react";
+import styled from "styled-components";
 
-// types
-import type { Theme } from "@emotion/react";
-import type { HasChildrenTable } from "types/notion";
+import type { HasChildrenTable } from "@/types/notion";
 
 import RichText from "../common/components/RichText";
 import { commonBox } from "../common/styles";
@@ -13,69 +11,60 @@ interface Props {
   block: HasChildrenTable;
 }
 
-const box = css`
+const Wrapper = styled.div`
+  ${commonBox}
   margin: 1rem 0;
 `;
 
-const table = (theme: Theme) => css`
+const StyledTable = styled.table`
   width: 100%;
   table-layout: fixed;
-  border: 1px solid ${theme.boxBorder};
+  border: 1px solid ${({ theme }) => theme.boxBorder};
 `;
 
-const tableRow = css`
+const Row = styled.tr<{ $isTitle: boolean }>`
   height: ${LINE_HEIGHT + 1}em;
+  background: ${({ theme, $isTitle }) =>
+    $isTitle ? theme.notion.gray_background : "unset"};
 `;
 
-const tableCell = (theme: Theme) => css`
+const Cell = styled.td<{ $isTitle: boolean }>`
   padding: 0.5rem;
-  border: 1px solid ${theme.boxBorder};
+  border: 1px solid ${({ theme }) => theme.boxBorder};
   font-size: 1rem;
   text-align: center;
-`;
-
-const titleCell = (theme: Theme) => css`
-  background: ${theme.notion.gray_background};
+  background: ${({ theme, $isTitle }) =>
+    $isTitle ? theme.notion.gray_background : "unset"};
 `;
 
 const Table = ({ block }: Props) => {
   return (
-    <div css={[commonBox, box]}>
-      <table css={table}>
+    <Wrapper>
+      <StyledTable>
         <tbody>
           {block.table.children &&
             block.table.children.map((row, rowIndex) => {
               return (
-                <tr
+                <Row
                   key={row.id}
-                  css={[
-                    tableRow,
-                    rowIndex === 0 &&
-                      block.table.has_column_header &&
-                      titleCell,
-                  ]}
+                  $isTitle={rowIndex === 0 && block.table.has_column_header}
                 >
                   {row.table_row.cells.map((cell, cellIndex) => {
                     return (
-                      <td
+                      <Cell
                         key={cellIndex}
-                        css={[
-                          tableCell,
-                          cellIndex === 0 &&
-                            block.table.has_row_header &&
-                            titleCell,
-                        ]}
+                        $isTitle={cellIndex === 0 && block.table.has_row_header}
                       >
                         <RichText richText={cell} />
-                      </td>
+                      </Cell>
                     );
                   })}
-                </tr>
+                </Row>
               );
             })}
         </tbody>
-      </table>
-    </div>
+      </StyledTable>
+    </Wrapper>
   );
 };
 

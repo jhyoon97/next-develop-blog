@@ -1,31 +1,29 @@
+"use client";
+
 import React from "react";
-import { css, useTheme } from "@emotion/react";
+import styled from "styled-components";
 import Link from "next/link";
 
-// utils
-import constants from "utils/constants";
-
-// types
-import type { Theme } from "@emotion/react";
+import constants from "@/utils/constants";
 
 interface Props {
   children: React.ReactNode;
 }
 
-const box = css`
+const Wrapper = styled.div`
   width: 100%;
 `;
 
-const header = {
-  box: (theme: Theme) => css`
+const Header = {
+  Wrapper: styled.div`
     z-index: 2;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background: ${theme.headerBg};
+    background: ${({ theme }) => theme.headerBg};
   `,
-  innerBox: css`
+  InnerWrapper: styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -39,19 +37,19 @@ const header = {
       padding: 1rem;
     }
   `,
-  title: (theme: Theme) => css`
-    color: ${theme.headerText};
+  Title: styled.h1`
+    color: ${({ theme }) => theme.headerText};
     font-size: 1rem;
   `,
 };
 
-const body = {
-  box: css`
+const Body = {
+  Wrapper: styled.div`
     z-index: 1;
     padding-top: calc(1.5rem + 2rem);
     width: 100%;
   `,
-  contentBox: css`
+  InnerWrapper: styled.main`
     padding: 2rem;
     margin: 0 auto;
     width: 100%;
@@ -64,21 +62,19 @@ const body = {
 };
 
 const Layout = ({ children }: Props) => {
-  const theme = useTheme();
-
   return (
-    <div css={box}>
-      <header css={header.box(theme)}>
-        <div css={header.innerBox}>
+    <Wrapper>
+      <Header.Wrapper>
+        <Header.InnerWrapper>
           <Link href="/">
-            <h1 css={header.title(theme)}>jhdev</h1>
+            <Header.Title>jhdev</Header.Title>
           </Link>
-        </div>
-      </header>
-      <div css={body.box}>
-        <main css={body.contentBox}>{children}</main>
-      </div>
-    </div>
+        </Header.InnerWrapper>
+      </Header.Wrapper>
+      <Body.Wrapper>
+        <Body.InnerWrapper>{children}</Body.InnerWrapper>
+      </Body.Wrapper>
+    </Wrapper>
   );
 };
 
