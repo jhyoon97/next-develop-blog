@@ -2,7 +2,7 @@ import notionServices from "@/services/notion";
 
 import PostList from "./PostList";
 
-export const relalidate = 0;
+export const revalidate = 0;
 
 const Page = async () => {
   const postList = await notionServices.getList();
